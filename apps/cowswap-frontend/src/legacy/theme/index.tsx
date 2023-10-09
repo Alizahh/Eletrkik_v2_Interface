@@ -153,6 +153,10 @@ export const ThemedText = {
   Warn(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'warning'} {...props} />
   },
+  DeprecatedBody(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={16} color="textPrimary" {...props} />
+  },
+
 }
 
 export function theme(darkmode: boolean): DefaultTheme {
