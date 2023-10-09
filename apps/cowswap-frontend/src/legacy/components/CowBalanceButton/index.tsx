@@ -3,12 +3,14 @@ import { TokenAmount } from '@cowprotocol/ui'
 
 import { transparentize } from 'polished'
 import styled, { css } from 'styled-components/macro'
+import SVG from 'react-inlinesvg'
 
-import CowProtocolLogo from 'legacy/components/CowProtocolLogo'
 
 import { UI } from 'common/constants/theme'
 
 import { useCombinedBalance } from '../../hooks/useCombinedBalance'
+import { useDarkModeManager } from 'legacy/state/user/hooks'
+import { ElektrikLogoMini } from 'legacy/theme/cowSwapAssets'
 
 export const Wrapper = styled.div<{ isLoading: boolean }>`
   background-color: transparent;
@@ -83,10 +85,11 @@ interface CowBalanceButtonProps {
 
 export default function CowBalanceButton({ onClick, isUpToSmall }: CowBalanceButtonProps) {
   const { balance, isLoading } = useCombinedBalance()
+  const [darkMode, toggleDarkModeAux] = useDarkModeManager()
 
   return (
     <Wrapper isLoading={isLoading} onClick={onClick}>
-      <CowProtocolLogo />
+      <SVG src={ElektrikLogoMini(darkMode)} style={{width:25, height:'25'}}  />
       {!isUpToSmall && (
         <b>
           <TokenAmount

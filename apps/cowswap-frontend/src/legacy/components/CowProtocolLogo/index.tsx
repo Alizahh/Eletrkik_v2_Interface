@@ -1,5 +1,6 @@
 import CowProtocolIcon from '@cowprotocol/assets/cow-swap/cow_v2.svg'
 
+
 import styled from 'styled-components/macro'
 
 export const Icon = styled.span<Props>`

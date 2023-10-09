@@ -14,7 +14,6 @@ import CowBalanceButton from 'legacy/components/CowBalanceButton'
 import { NetworkSelector } from 'legacy/components/Header/NetworkSelector'
 import { LargeAndUp, upToLarge, upToMedium, upToSmall, useMediaQuery } from 'legacy/hooks/useMediaQuery'
 import { useDarkModeManager } from 'legacy/state/user/hooks'
-import { cowSwapLogo } from 'legacy/theme/cowSwapAssets'
 
 import { OrdersPanel } from 'modules/account/containers/OrdersPanel'
 import { useInjectedWidgetParams } from 'modules/injectedWidget'
@@ -44,6 +43,7 @@ import {
   UniIcon,
   Wrapper,
 } from './styled'
+import { ElektrikLogo } from 'legacy/theme/cowSwapAssets'
 
 const CHAIN_CURRENCY_LABELS: { [chainId in ChainId]?: string } = {
   [ChainId.GNOSIS_CHAIN]: 'xDAI',
@@ -134,7 +134,7 @@ export default function Header() {
                   {injectedWidgetParams.logoUrl ? (
                     <CustomLogoImg src={injectedWidgetParams.logoUrl} alt="Logo" />
                   ) : (
-                    <SVG src={cowSwapLogo(darkMode)} />
+                    <SVG src={ElektrikLogo(darkMode)} />
                   )}
                 </LogoImage>
               </UniIcon>
