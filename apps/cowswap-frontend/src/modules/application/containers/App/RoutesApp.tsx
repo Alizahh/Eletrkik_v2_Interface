@@ -23,6 +23,7 @@ const About = lazy(() => import(/* webpackChunkName: "about" */ 'pages/About'))
 const NotFound = lazy(() => import(/* webpackChunkName: "not_found" */ 'pages/error/NotFound'))
 const CowRunner = lazy(() => import(/* webpackChunkName: "cow_runner" */ 'pages/games/CowRunner'))
 const MevSlicer = lazy(() => import(/* webpackChunkName: "mev_slicer" */ 'pages/games/MevSlicer'))
+const Pool = lazy(() => import(/* webpackChunkName: "add_liquidity" */ 'pages/Pool'))
 
 // FAQ pages
 const Faq = lazy(() => import(/* webpackChunkName: "faq" */ 'pages/Faq'))
@@ -66,6 +67,8 @@ const lazyRoutes: LazyRouteProps[] = [
   { route: RoutesEnum.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { route: RoutesEnum.COOKIE_POLICY, element: <CookiePolicy /> },
   { route: RoutesEnum.TERMS_CONDITIONS, element: <TermsAndConditions /> },
+  { route: RoutesEnum.POOL, element: <Pool /> },
+
 ]
 
 export function RoutesApp() {

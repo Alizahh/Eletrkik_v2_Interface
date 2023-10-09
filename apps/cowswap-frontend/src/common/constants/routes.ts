@@ -31,6 +31,9 @@ export const Routes = {
   DOCS: '/docs',
   STATS: '/stats',
   TWITTER: '/twitter',
+  POOL: '/pools'
+
+  
 } as const
 
 export type RoutesKeys = keyof typeof Routes

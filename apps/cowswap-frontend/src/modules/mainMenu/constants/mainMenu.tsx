@@ -175,4 +175,7 @@ export const MAIN_MENU: MenuTreeItem[] = [
       },
     ],
   },
+
+  { id: MainMenuItemId.POOL, kind: MenuItemKind.PARAMETRIZED_LINK, title: 'Pools', url: Routes.POOL },
+
 ]

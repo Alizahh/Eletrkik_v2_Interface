@@ -12,6 +12,7 @@ export enum MenuItemKind {
 
 export enum MainMenuItemId {
   SWAP = 'SWAP',
+  POOL='POOL',
   LIMIT_ORDERS = 'LIMIT_ORDERS',
   ADVANCED_ORDERS = 'ADVANCED_ORDERS',
   FAQ_OVERVIEW = 'FAQ_OVERVIEW',
