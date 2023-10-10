@@ -31,7 +31,8 @@ export const Routes = {
   DOCS: '/docs',
   STATS: '/stats',
   TWITTER: '/twitter',
-  POOL: '/pools'
+  POOL: '/pools',
+  ADD_LIQUIDITY: 'add'
 
   
 } as const
