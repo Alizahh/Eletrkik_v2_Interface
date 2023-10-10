@@ -31,6 +31,7 @@ interface ColorsUniswap {
   backgroundSurface:Color
   backgroundOutline:Color
   backgroundInteractive:Color
+  accentAction: Color
 
   modalBG: Color
   advancedBG: Color

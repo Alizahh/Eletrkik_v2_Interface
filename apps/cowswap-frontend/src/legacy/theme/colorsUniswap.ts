@@ -28,6 +28,7 @@ export function colorsUniswap(darkMode: boolean): Colors {
     bg6: darkMode ? '#1A2028' : '#6C7284',
     backgroundSurface: darkMode ? '#FFFFFF' : '#FFFFFF',
     backgroundInteractive: darkMode ? '#E8ECFB': '#E8ECFB',
+    accentAction: darkMode ? '#4C82FB': '#4C82FB',
 
     // mod
     bg7: darkMode ? '#1F4471' : '#CEE7EF',
