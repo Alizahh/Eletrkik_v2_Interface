@@ -16,6 +16,7 @@ export function colorsUniswap(darkMode: boolean): Colors {
     text6: darkMode ? '#C5DAEF' : '#00000099',
     textSecondary: darkMode ? '#98A1C0': '#000000',
     backgroundOutline: darkMode ? '#D2D9EE' : '#D2D9EE',
+    deprecated_yellow3: darkMode ? '#5D4204' : '#5D4204',
 
     // backgrounds / greys
     bg0: darkMode ? '#191B1F' : '#FFF',
@@ -25,7 +26,8 @@ export function colorsUniswap(darkMode: boolean): Colors {
     bg4: darkMode ? '#565A69' : '#888D9B',
     bg5: darkMode ? '#6C7284' : '#888D9B',
     bg6: darkMode ? '#1A2028' : '#6C7284',
-    backgroundSurface: darkMode? '#FFFFFF' : '#FFFFFF',
+    backgroundSurface: darkMode ? '#FFFFFF' : '#FFFFFF',
+    backgroundInteractive: darkMode ? '#E8ECFB': '#E8ECFB',
 
     // mod
     bg7: darkMode ? '#1F4471' : '#CEE7EF',
