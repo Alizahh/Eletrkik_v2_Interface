@@ -83,3 +83,27 @@ const IconStyle = css`
 export const InboxIcon = styled(Inbox)`
   ${IconStyle}
 `
+export const PositionPageUnsupported = styled.div`
+  padding: 68px 16px 16px 16px;
+
+  min-width: 800px;
+  max-width: 960px;
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+    min-width: 100%;
+    padding: 16px;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+    min-width: 100%;
+    padding: 16px;
+  }
+  margin-bottom: 100px;
+`
+export const PositionPageButtonPrimary = styled(ButtonPrimary)`
+  width: 228px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 20px;
+  border-radius: 12px;
+`
