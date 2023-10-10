@@ -7,7 +7,6 @@ import { ButtonPrimary, ButtonText } from "../../../../../libs/ui/src/pure/Butto
 import { useToggleWalletModal } from "legacy/state/application/hooks";
 import { useUserHideClosedPositions } from "legacy/state/user/hooks";
 import { useWalletInfo } from '@cowprotocol/wallet'
-import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
 import { useV3Positions } from "legacy/hooks/pools/useV3positions";
 import { PositionDetails } from "legacy/types/position";
@@ -31,6 +30,7 @@ function PositionsLoadingPlaceholder() {
         </>
     )
 }
+
 export default function Pool() {
 
     const toggleWalletModal = useToggleWalletModal()
@@ -51,8 +51,7 @@ export default function Pool() {
         () => [...openPositions, ...(userHideClosedPositions ? [] : closedPositions)],
         [closedPositions, openPositions, userHideClosedPositions]
     )
-    // const filteredPositions = useFilterPossiblyMaliciousPositions(userSelectedPositionSet)
-    const filteredPositions = []
+    const filteredPositions = useFilterPossiblyMaliciousPositions(userSelectedPositionSet)
 
 
     const showConnectAWallet = Boolean(!account)
@@ -67,12 +66,11 @@ export default function Pool() {
                             <Trans>Pools</Trans>
                         </ThemedText.LargeHeader>
                         <ButtonRow>
-
                             <ResponsiveButtonPrimary
                                 data-cy="join-pool-button"
                                 id="join-pool-button"
                                 as={Link}
-                                to="/add/ETH"
+                                to="/add"
                                 style={{
                                     background: `linear-gradient(146deg, #a1eeff 0%, #029af0 100%)`,
                                     color: '#000',
