@@ -156,7 +156,21 @@ export const ThemedText = {
   DeprecatedBody(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={16} color="textPrimary" {...props} />
   },
-
+  HeadlineLarge(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={36} lineHeight="44px" color="textPrimary" {...props} />
+  },
+  BodyPrimary(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={16} color="textPrimary" {...props} />
+  },
+  DeprecatedLabel(props: TextProps) {
+    return <TextWrapper fontWeight={600} color="textPrimary" {...props} />
+  },
+  DeprecatedMain(props: TextProps) {
+    return <TextWrapper fontWeight={500} color="textSecondary" {...props} />
+  },
+  DeprecatedYellow(props: TextProps) {
+    return <TextWrapper fontWeight={500} color="deprecated_yellow3" {...props} />
+  },
 }
 
 export function theme(darkmode: boolean): DefaultTheme {
