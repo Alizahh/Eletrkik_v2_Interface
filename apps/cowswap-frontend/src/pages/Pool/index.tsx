@@ -11,6 +11,7 @@ import { useMemo } from "react";
 import { useV3Positions } from "legacy/hooks/pools/useV3positions";
 import { PositionDetails } from "legacy/types/position";
 import { useFilterPossiblyMaliciousPositions } from "legacy/hooks/pools/useFilterPossiblyMaliciousPositions";
+import PositionList from "modules/pools/containers/PositionList";
 
 function PositionsLoadingPlaceholder() {
     return (
@@ -84,12 +85,11 @@ export default function Pool() {
                         {positionsLoading ? (
                             <PositionsLoadingPlaceholder />
                         ) : filteredPositions && closedPositions && filteredPositions.length > 0 ? (
-                            // <PositionList
-                            //     positions={filteredPositions}
-                            //     setUserHideClosedPositions={setUserHideClosedPositions}
-                            //     userHideClosedPositions={userHideClosedPositions}
-                            // />
-                            <></>
+                            <PositionList
+                                positions={filteredPositions}
+                                setUserHideClosedPositions={setUserHideClosedPositions}
+                                userHideClosedPositions={userHideClosedPositions}
+                            />
                         ) : (
                             <ErrorContainer>
                                 <ThemedText.DeprecatedBody color={'black'} textAlign="center">
