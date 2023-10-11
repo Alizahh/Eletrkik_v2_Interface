@@ -18,6 +18,7 @@ interface ColorsUniswap {
   text6: Color
   textSecondary: Color
   deprecated_yellow3: Color
+  textPrimary: Color
 
   // backgrounds / greys
   bg0: Color
@@ -32,6 +33,10 @@ interface ColorsUniswap {
   backgroundOutline:Color
   backgroundInteractive:Color
   accentAction: Color
+  deprecated_bg1: Color
+  accentActionSoft:Color
+  deprecated_bg4: Color
+  textTertiary:Color
 
   modalBG: Color
   advancedBG: Color

@@ -17,6 +17,7 @@ export function colorsUniswap(darkMode: boolean): Colors {
     textSecondary: darkMode ? '#98A1C0': '#000000',
     backgroundOutline: darkMode ? '#D2D9EE' : '#D2D9EE',
     deprecated_yellow3: darkMode ? '#5D4204' : '#5D4204',
+    textPrimary: darkMode ? '#0D111C': '#0D111C',
 
     // backgrounds / greys
     bg0: darkMode ? '#191B1F' : '#FFF',
@@ -29,7 +30,10 @@ export function colorsUniswap(darkMode: boolean): Colors {
     backgroundSurface: darkMode ? '#FFFFFF' : '#FFFFFF',
     backgroundInteractive: darkMode ? '#E8ECFB': '#E8ECFB',
     accentAction: darkMode ? '#4C82FB': '#4C82FB',
-
+    deprecated_bg1: darkMode ? '#131A2A' : '#F5F6FC',
+    accentActionSoft: darkMode ? '#4C82FB':'#4C82FB',
+    deprecated_bg4: darkMode ? '#5D6785': '#98A1C0',
+    textTertiary: darkMode ? '#5D6785': '#98A1C0',
     // mod
     bg7: darkMode ? '#1F4471' : '#CEE7EF',
 
