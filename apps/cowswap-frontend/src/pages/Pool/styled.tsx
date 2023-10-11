@@ -89,12 +89,12 @@ export const PositionPageUnsupported = styled.div`
   min-width: 800px;
   max-width: 960px;
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+  @media only screen and (max-width: 768px) {
     min-width: 100%;
     padding: 16px;
   }
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+  @media only screen and (max-width: 640px) {
     min-width: 100%;
     padding: 16px;
   }

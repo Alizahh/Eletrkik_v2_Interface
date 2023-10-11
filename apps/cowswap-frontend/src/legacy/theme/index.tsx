@@ -177,6 +177,12 @@ export const ThemedText = {
   UtilityBadge(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize="8px" lineHeight="12px" {...props} />
   },
+  DeprecatedMediumHeader(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={20} {...props} />
+  },
+  DeprecatedBlue(props: TextProps) {
+    return <TextWrapper fontWeight={500} color="accentAction" {...props} />
+  },
 }
 
 export function theme(darkmode: boolean): DefaultTheme {

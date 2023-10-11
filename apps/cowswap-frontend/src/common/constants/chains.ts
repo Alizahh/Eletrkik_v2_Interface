@@ -21,6 +21,11 @@ export enum SupportedChainId {
     LIGHTLINK_PEGASUS_TESTNET = 1891,
   }
   
+
+  export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(SupportedChainId).filter(
+    (id) => typeof id === 'number'
+  ) as SupportedChainId[]
+  
 export function isSupportedChain(chainId: number | null | undefined): chainId is SupportedChainId {
   return !!chainId && !!SupportedChainId[chainId]
   }
