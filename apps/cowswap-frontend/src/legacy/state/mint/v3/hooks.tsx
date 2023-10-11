@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { AppState } from "legacy/state";
-import { useAppSelector } from "legacy/state/hooks";
-import { ReactNode, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "legacy/state/hooks";
+import { ReactNode, useCallback, useMemo } from "react";
 import { Currency, CurrencyAmount, Price, Rounding, Token } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import JSBI from 'jsbi'
@@ -19,7 +19,7 @@ import {
     tickToPrice,
   } from '@uniswap/v3-sdk'
 import { PoolState, usePool } from "modules/pools/hooks/usePools";
-import { Bound, Field } from "./actions";
+import { Bound, Field, typeInput, typeLeftRangeInput, typeRightRangeInput, typeStartPriceInput } from "./actions";
 import { BIG_INT_ZERO } from "../../../../../../../libs/common-const/src/misc";
 import { tryParseCurrencyAmount } from "../../../../../../../libs/common-utils/src/tryParseCurrencyAmount";
 import { getTickToPrice, tryParseTick } from "./utils";
@@ -28,6 +28,70 @@ export function useV3MintState(): AppState['mintV3'] {
     return useAppSelector((state) => state.mintV3)
   }
 
+  export function useV3MintActionHandlers(noLiquidity: boolean | undefined): {
+    onFieldAInput: (typedValue: string) => void
+    onFieldBInput: (typedValue: string) => void
+    onLeftRangeInput: (typedValue: string) => void
+    onRightRangeInput: (typedValue: string) => void
+    onStartPriceInput: (typedValue: string) => void
+  } {
+    const dispatch = useAppDispatch()
+  
+    const onFieldAInput = useCallback(
+      (typedValue: string) => {
+        dispatch(typeInput({ field: Field.CURRENCY_A, typedValue, noLiquidity: noLiquidity === true }))
+      },
+      [dispatch, noLiquidity]
+    )
+  
+    const onFieldBInput = useCallback(
+      (typedValue: string) => {
+        dispatch(typeInput({ field: Field.CURRENCY_B, typedValue, noLiquidity: noLiquidity === true }))
+      },
+      [dispatch, noLiquidity]
+    )
+  
+    const [searchParams, setSearchParams] = useSearchParams()
+  
+    const onLeftRangeInput = useCallback(
+      (typedValue: string) => {
+        dispatch(typeLeftRangeInput({ typedValue }))
+        const paramMinPrice = searchParams.get('minPrice')
+        if (!paramMinPrice || (paramMinPrice && paramMinPrice !== typedValue)) {
+          searchParams.set('minPrice', typedValue)
+          setSearchParams(searchParams)
+        }
+      },
+      [dispatch, searchParams, setSearchParams]
+    )
+  
+    const onRightRangeInput = useCallback(
+      (typedValue: string) => {
+        dispatch(typeRightRangeInput({ typedValue }))
+        const paramMaxPrice = searchParams.get('maxPrice')
+        if (!paramMaxPrice || (paramMaxPrice && paramMaxPrice !== typedValue)) {
+          searchParams.set('maxPrice', typedValue)
+          setSearchParams(searchParams)
+        }
+      },
+      [dispatch, searchParams, setSearchParams]
+    )
+  
+    const onStartPriceInput = useCallback(
+      (typedValue: string) => {
+        dispatch(typeStartPriceInput({ typedValue }))
+      },
+      [dispatch]
+    )
+  
+    return {
+      onFieldAInput,
+      onFieldBInput,
+      onLeftRangeInput,
+      onRightRangeInput,
+      onStartPriceInput,
+    }
+  }
   
 
   export function useV3DerivedMintInfo(
