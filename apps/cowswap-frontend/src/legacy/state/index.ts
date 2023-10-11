@@ -23,6 +23,7 @@ import price from './price/reducer'
 import profile from './profile/reducer'
 import swap from './swap/reducer'
 import user from './user/reducer'
+import mintV3 from './mint/v3/reducer'
 
 const reducers = {
   application,
@@ -39,6 +40,8 @@ const reducers = {
   profile,
   claim,
   cowToken,
+  //pools
+  mintV3,
 }
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'orders', 'lists', 'gas', 'affiliate', 'profile', 'swap']
