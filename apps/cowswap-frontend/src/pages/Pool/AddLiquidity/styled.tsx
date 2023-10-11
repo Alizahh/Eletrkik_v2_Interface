@@ -3,6 +3,16 @@ import styled, {css} from 'styled-components/macro'
 import { Box } from 'rebass/styled-components'
 import { AutoColumn } from 'legacy/components/Column'
 import Card from 'legacy/components/Card'
+import Input from 'legacy/components/NumericalInput'
+
+const gapValues = {
+  xs: '4px',
+  sm: '8px',
+  md: '12px',
+  lg: '24px',
+  xl: '32px',
+}
+export type Gap = keyof typeof gapValues
 
 export const ScrollablePage = styled.div`
   padding: 68px 8px 0px;
@@ -131,4 +141,13 @@ export const MediumOnly = styled.div`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     display: none;
   `};
+`
+
+
+
+export const StyledInput = styled(Input)`
+  background-color: ${({ theme }) => theme.backgroundSurface};
+  text-align: left;
+  font-size: 18px;
+  width: 100%;
 `
