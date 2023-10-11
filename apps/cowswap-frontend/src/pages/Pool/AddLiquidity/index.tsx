@@ -11,6 +11,13 @@ import { ThemedText } from "legacy/theme"
 import { Trans } from "@lingui/macro"
 import { AutoRow, RowFixed } from "../../../../../../libs/ui/src/pure/Row"
 import { BigNumber } from "ethers"
+import { useTransactionAdder } from "legacy/state/enhancedTransactions/hooks"
+import { useV3NFTPositionManagerContract } from "legacy/hooks/pools/useContract"
+import { useState } from "react"
+import { useV3PositionFromTokenId } from 'legacy/hooks/pools/useV3positions'
+import { useDerivedPositionInfo } from "legacy/hooks/pools/useDerivedPositionInfo"
+import { FeeAmount, NonfungiblePositionManager } from '@uniswap/v3-sdk'
+import { useCurrency } from "legacy/hooks/Tokens"
 
 
 export default function AddLiquidityWrapper() {
@@ -34,19 +41,41 @@ export function AddLiquidity() {
     const { account, chainId, provider } = useWeb3React()
     const theme = useTheme()
     const toggleWalletModal = useToggleWalletModal()
+    const addTransaction = useTransactionAdder()
+    const positionManager = useV3NFTPositionManagerContract()
 
-      // check for existing position if tokenId in url
-//   const { position: existingPositionDetails, loading: positionLoading } = useV3PositionFromTokenId(
-//     tokenId ? BigNumber.from(tokenId) : undefined
-//   )
+    const [showConfirm, setShowConfirm] = useState<boolean>(false)
+    const [attemptingTxn, setAttemptingTxn] = useState<boolean>(false)
+    const [txHash, setTxHash] = useState<string>('')
 
-    // const hasExistingPosition = !!existingPositionDetails && !positionLoading
 
-    // const { [Bound.LOWER]: tickLower, [Bound.UPPER]: tickUpper } = ticks
+    // check for existing position if tokenId in url
+    const { position: existingPositionDetails, loading: positionLoading } = useV3PositionFromTokenId(
+        tokenId ? BigNumber.from(tokenId) : undefined
+    )
 
+    const hasExistingPosition = !!existingPositionDetails && !positionLoading
+
+    const { position: existingPosition } = useDerivedPositionInfo(existingPositionDetails)
+    // fee selection from url
+    const feeAmount: FeeAmount | undefined =
+        feeAmountFromUrl && Object.values(FeeAmount).includes(parseFloat(feeAmountFromUrl))
+            ? parseFloat(feeAmountFromUrl)
+            : undefined
+
+    const baseCurrency = useCurrency(currencyIdA)
+    const currencyB = useCurrency(currencyIdB)
+
+     // prevent an error if they input ETH/WETH
+  const quoteCurrency =
+  baseCurrency && currencyB && baseCurrency.wrapped.equals(currencyB.wrapped) ? undefined : currencyB
+
+
+    // mint state
+    // const { independentField, typedValue, startPriceTypedValue } = useV3MintState()
     return (
         <ScrollablePage>
-          
+
 
 
         </ScrollablePage>
