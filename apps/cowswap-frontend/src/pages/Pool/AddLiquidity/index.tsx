@@ -18,7 +18,7 @@ import { useV3PositionFromTokenId } from 'legacy/hooks/pools/useV3positions'
 import { useDerivedPositionInfo } from "legacy/hooks/pools/useDerivedPositionInfo"
 import { FeeAmount, NonfungiblePositionManager } from '@uniswap/v3-sdk'
 import { useCurrency } from "legacy/hooks/Tokens"
-import { useV3MintState } from "legacy/state/mint/v3/hooks"
+import { useV3DerivedMintInfo, useV3MintState } from "legacy/state/mint/v3/hooks"
 
 
 export default function AddLiquidityWrapper() {
@@ -74,7 +74,37 @@ export function AddLiquidity() {
 
     // mint state
     const { independentField, typedValue, startPriceTypedValue } = useV3MintState()
+
+
+    const {
+        pool,
+        ticks,
+        dependentField,
+        price,
+        pricesAtTicks,
+        pricesAtLimit,
+        parsedAmounts,
+        currencyBalances,
+        position,
+        noLiquidity,
+        currencies,
+        errorMessage,
+        invalidPool,
+        invalidRange,
+        outOfRange,
+        depositADisabled,
+        depositBDisabled,
+        invertPrice,
+        ticksAtLimit,
+      } = useV3DerivedMintInfo(
+        baseCurrency ?? undefined,
+        quoteCurrency ?? undefined,
+        feeAmount,
+        baseCurrency ?? undefined,
+        existingPosition
+      )
     
+
     return (
         <ScrollablePage>
 
