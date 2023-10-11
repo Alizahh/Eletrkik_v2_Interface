@@ -171,6 +171,12 @@ export const ThemedText = {
   DeprecatedYellow(props: TextProps) {
     return <TextWrapper fontWeight={500} color="deprecated_yellow3" {...props} />
   },
+  Caption(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={12} color="textPrimary" {...props} />
+  },
+  UtilityBadge(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize="8px" lineHeight="12px" {...props} />
+  },
 }
 
 export function theme(darkmode: boolean): DefaultTheme {
