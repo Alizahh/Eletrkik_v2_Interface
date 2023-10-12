@@ -1,9 +1,41 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import Vibrant from 'node-vibrant/lib/bundle'
 import { shade } from 'polished'
 import { hex } from 'wcag-contrast'
 import { uriToHttp } from '@cowprotocol/common-utils'
+import { Token } from '@uniswap/sdk-core'
+import {SupportedChainId} from '../../../../apps/cowswap-frontend/src/common/constants/chains'
+import {WrappedTokenInfo} from '../../../../apps/cowswap-frontend/src/legacy/state/lists/wrappedTokenInfo'
+
+function URIForEthToken(address: string) {
+  return `https://raw.githubusercontent.com/uniswap/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+}
+
+export function useListColor(listImageUri?: string) {
+  const [color, setColor] = useState('#2172E5')
+
+  useLayoutEffect(() => {
+    let stale = false
+
+    if (listImageUri) {
+      getColorFromUriPath(listImageUri)
+        .then((color) => {
+          if (!stale && color !== null) {
+            setColor(color)
+          }
+        })
+        .catch(console.warn) // mod: error handling
+    }
+
+    return () => {
+      stale = true
+      setColor('#2172E5')
+    }
+  }, [listImageUri])
+
+  return color
+}
 
 export async function getColorFromUriPath(uri: string): Promise<string | null> {
   const formattedPath = uriToHttp(uri)[0]
@@ -29,27 +61,60 @@ export async function getColorFromUriPath(uri: string): Promise<string | null> {
   return detectedHex
 }
 
-export function useListColor(listImageUri?: string) {
+
+async function getColorFromToken(token: Token): Promise<string | null> {
+  if (!(token instanceof WrappedTokenInfo)) {
+    return null
+  }
+
+  const wrappedToken = token as WrappedTokenInfo
+  const { address } = wrappedToken
+  let { logoURI } = wrappedToken
+  if (!logoURI) {
+    if (token.chainId !== SupportedChainId.MAINNET) {
+      return null
+    } else {
+      logoURI = URIForEthToken(address)
+    }
+  }
+
+  try {
+    return await getColorFromUriPath(logoURI)
+  } catch (e) {
+    if (logoURI === URIForEthToken(address)) {
+      return null
+    }
+
+    try {
+      logoURI = URIForEthToken(address)
+      return await getColorFromUriPath(logoURI)
+    } catch (error) {
+      console.warn(`Unable to load logoURI (${token.symbol}): ${logoURI}`)
+      return null
+    }
+  }
+}
+
+
+export function useColor(token?: Token) {
   const [color, setColor] = useState('#2172E5')
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let stale = false
 
-    if (listImageUri) {
-      getColorFromUriPath(listImageUri)
-        .then((color) => {
-          if (!stale && color !== null) {
-            setColor(color)
-          }
-        })
-        .catch(console.warn) // mod: error handling
+    if (token) {
+      getColorFromToken(token).then((tokenColor) => {
+        if (!stale && tokenColor !== null) {
+          setColor(tokenColor)
+        }
+      })
     }
 
     return () => {
       stale = true
       setColor('#2172E5')
     }
-  }, [listImageUri])
+  }, [token])
 
   return color
 }

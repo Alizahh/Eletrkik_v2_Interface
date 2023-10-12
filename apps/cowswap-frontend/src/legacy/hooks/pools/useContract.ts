@@ -5,10 +5,14 @@ import { useMemo } from 'react'
 import { NonfungiblePositionManager } from '@uniswap/v3-sdk'
 import { Contract } from '@ethersproject/contracts'
 import { getContract } from '../../../../../../libs/common-utils/src/legacyAddressUtils'
-
+import { ARGENT_WALLET_DETECTOR_ADDRESS } from 'modules/pools/constants/addresses'
+import ARGENT_WALLET_DETECTOR_ABI from '../../../../../../libs/abis/src/abis-legacy/argent-wallet-detector.json'
 
 const { abi: NFTPositionManagerABI } = NonfungiblePositionManagerJson
 
+export function useArgentWalletDetectorContract() {
+  return useContract<any>(ARGENT_WALLET_DETECTOR_ADDRESS, ARGENT_WALLET_DETECTOR_ABI, false)
+}
 
 export function useContract<T extends Contract = Contract>(
     addressOrAddressMap: string | { [chainId: number]: string } | undefined,

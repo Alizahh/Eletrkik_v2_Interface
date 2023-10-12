@@ -18,6 +18,7 @@ export function colorsUniswap(darkMode: boolean): Colors {
     backgroundOutline: darkMode ? '#D2D9EE' : '#D2D9EE',
     deprecated_yellow3: darkMode ? '#5D4204' : '#5D4204',
     textPrimary: darkMode ? '#0D111C': '#0D111C',
+    deprecated_text4: darkMode ? '#B8C0DC' : '#98A1C0',
 
     // backgrounds / greys
     bg0: darkMode ? '#191B1F' : '#FFF',

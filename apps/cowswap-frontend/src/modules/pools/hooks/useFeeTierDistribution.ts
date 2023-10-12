@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { useBlockNumber } from '../../../../../../libs/common-hooks/src/useBlockNumber'
 import { PoolState, usePool } from './usePools'
 
+import useFeeTierDistributionQuery from '../graphql/graph/FeeTierDistributionQuery'
 const MAX_DATA_BLOCK_AGE = 20
 
 interface FeeTierDistribution {
@@ -74,6 +75,7 @@ export function useFeeTierDistribution(
 function usePoolTVL(token0: Token | undefined, token1: Token | undefined) {
     const latestBlock = useBlockNumber()
     const { isLoading, error, data } = useFeeTierDistributionQuery(token0?.address, token1?.address, ms`30s`)
+
 
     const { asToken0, asToken1, _meta } = data ?? {}
 

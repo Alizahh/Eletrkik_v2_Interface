@@ -19,6 +19,7 @@ interface ColorsUniswap {
   textSecondary: Color
   deprecated_yellow3: Color
   textPrimary: Color
+  deprecated_text4: Color
 
   // backgrounds / greys
   bg0: Color

@@ -3,7 +3,7 @@ import { Trans } from '@lingui/macro';
 import { LightCard } from 'legacy/components/Card';
 import { AutoColumn } from 'legacy/components/Column';
 import HoverInlineText from 'legacy/components/HoverInlineText';
-import { ThemedText } from 'legacy/theme';
+import { theme, ThemedText } from 'legacy/theme';
 import { RowBetween, RowFixed } from '../../../../../../../libs/ui/src/pure/Row';
 import { DoubleArrow, ExtentsText, FeeTierText, HideSmall, Label, LinkRow, PoolInfo, PrimaryPositionIdData, RangeLineItem, RangeText, SmallOnly } from "./styled";
 import { Currency, Percent, Price, Token } from '@uniswap/sdk-core'
@@ -17,7 +17,10 @@ import { Position } from '@uniswap/v3-sdk'
 import { usePool } from 'modules/pools/hooks/usePools';
 import { useV3PositionFees } from 'modules/pools/hooks/useV3Positions';
 
-import {DAI, USDC_MAINNET, USDT, WBTC, WRAPPED_NATIVE_CURRENCY } from '../../../../../../../libs/common-const/src/tokens'
+import { DAI, USDC_MAINNET, USDT, WBTC, WRAPPED_NATIVE_CURRENCY } from '../../../../../../../libs/common-const/src/tokens'
+// import { formatTickPrice } from 'modules/pools/utils/formatTickPrice';
+import { CurrencyLogo } from 'common/pure/CurrencyLogo';
+import Badge from '../FeeSelector/styled';
 
 interface PositionListItemProps {
     token0: string
@@ -58,84 +61,84 @@ function getRatio(
     lower: Price<Currency, Currency>,
     current: Price<Currency, Currency>,
     upper: Price<Currency, Currency>
-  ) {
+) {
     try {
-      if (!current.greaterThan(lower)) {
-        return 100
-      } else if (!current.lessThan(upper)) {
-        return 0
-      }
-  
-      const a = Number.parseFloat(lower.toSignificant(15))
-      const b = Number.parseFloat(upper.toSignificant(15))
-      const c = Number.parseFloat(current.toSignificant(15))
-  
-      const ratio = Math.floor((1 / ((Math.sqrt(a * b) - Math.sqrt(b * c)) / (c - Math.sqrt(b * c)) + 1)) * 100)
-  
-      if (ratio < 0 || ratio > 100) {
-        throw Error('Out of range')
-      }
-  
-      return ratio
+        if (!current.greaterThan(lower)) {
+            return 100
+        } else if (!current.lessThan(upper)) {
+            return 0
+        }
+
+        const a = Number.parseFloat(lower.toSignificant(15))
+        const b = Number.parseFloat(upper.toSignificant(15))
+        const c = Number.parseFloat(current.toSignificant(15))
+
+        const ratio = Math.floor((1 / ((Math.sqrt(a * b) - Math.sqrt(b * c)) / (c - Math.sqrt(b * c)) + 1)) * 100)
+
+        if (ratio < 0 || ratio > 100) {
+            throw Error('Out of range')
+        }
+
+        return ratio
     } catch {
-      return undefined
+        return undefined
     }
-  }
-  
-  export function getPriceOrderingFromPositionForUI(position?: Position): {
+}
+
+export function getPriceOrderingFromPositionForUI(position?: Position): {
     priceLower?: Price<Token, Token>
     priceUpper?: Price<Token, Token>
     quote?: Token
     base?: Token
-  } {
+} {
     if (!position) {
-      return {}
+        return {}
     }
-  
+
     const token0 = position.amount0.currency
     const token1 = position.amount1.currency
-  
+
     // if token0 is a dollar-stable asset, set it as the quote token
     const stables = [DAI, USDC_MAINNET, USDT]
     if (stables.some((stable) => stable.equals(token0))) {
-      return {
-        priceLower: position.token0PriceUpper.invert(),
-        priceUpper: position.token0PriceLower.invert(),
-        quote: token0,
-        base: token1,
-      }
+        return {
+            priceLower: position.token0PriceUpper.invert(),
+            priceUpper: position.token0PriceLower.invert(),
+            quote: token0,
+            base: token1,
+        }
     }
-  
+
     // if token1 is an ETH-/BTC-stable asset, set it as the base token
     const bases = [...Object.values(WRAPPED_NATIVE_CURRENCY), WBTC]
     if (bases.some((base) => base && base.equals(token1))) {
-      return {
-        priceLower: position.token0PriceUpper.invert(),
-        priceUpper: position.token0PriceLower.invert(),
-        quote: token0,
-        base: token1,
-      }
+        return {
+            priceLower: position.token0PriceUpper.invert(),
+            priceUpper: position.token0PriceLower.invert(),
+            quote: token0,
+            base: token1,
+        }
     }
-  
+
     // if both prices are below 1, invert
     if (position.token0PriceUpper.lessThan(1)) {
-      return {
-        priceLower: position.token0PriceUpper.invert(),
-        priceUpper: position.token0PriceLower.invert(),
-        quote: token0,
-        base: token1,
-      }
+        return {
+            priceLower: position.token0PriceUpper.invert(),
+            priceUpper: position.token0PriceLower.invert(),
+            quote: token0,
+            base: token1,
+        }
     }
-  
+
     // otherwise, just return the default
     return {
-      priceLower: position.token0PriceLower,
-      priceUpper: position.token0PriceUpper,
-      quote: token1,
-      base: token0,
+        priceLower: position.token0PriceLower,
+        priceUpper: position.token0PriceUpper,
+        quote: token1,
+        base: token0,
     }
-  }
-  
+}
+
 
 export default function PositionListItem({
     token0: token0Address,
@@ -252,10 +255,7 @@ export default function PositionListItem({
             ) : (
                 <>Loader</>
             )}
-
             <br />
-
-
             <PoolInfo style={{}}>
                 <div style={{ flex: 1 }}>
                     <AutoColumn gap="md" style={{ width: '100%' }}>
@@ -272,13 +272,13 @@ export default function PositionListItem({
                                         <ThemedText.DeprecatedMain>
                                             {inverted ? position?.amount0.toSignificant(4) : position?.amount1.toSignificant(4)}
                                         </ThemedText.DeprecatedMain>
-                                        {/* {typeof ratio === 'number' && !removed ? (
-                  <Badge style={{ marginLeft: '10px' }}>
-                    <ThemedText.DeprecatedMain color={'black'} fontSize={11}>
-                      <Trans>{inverted ? ratio : 100 - ratio}%</Trans>
-                    </ThemedText.DeprecatedMain>
-                  </Badge>
-                ) : null} */}
+                                        {typeof ratio === 'number' && !removed ? (
+                                            <Badge style={{ marginLeft: '10px' }}>
+                                                <ThemedText.DeprecatedMain color={'black'} fontSize={11}>
+                                                    <Trans>{inverted ? ratio : 100 - ratio}%</Trans>
+                                                </ThemedText.DeprecatedMain>
+                                            </Badge>
+                                        ) : null}
                                     </RowFixed>
                                 </RowBetween>
                                 <RowBetween>
@@ -287,13 +287,13 @@ export default function PositionListItem({
                                         <ThemedText.DeprecatedMain>
                                             {inverted ? position?.amount1.toSignificant(4) : position?.amount0.toSignificant(4)}
                                         </ThemedText.DeprecatedMain>
-                                        {/* {typeof ratio === 'number' && !removed ? (
-                  <Badge style={{ marginLeft: '10px' }}>
-                    <ThemedText.DeprecatedMain color={theme.textSecondary} fontSize={11}>
-                      <Trans>{inverted ? 100 - ratio : ratio}%</Trans>
-                    </ThemedText.DeprecatedMain>
-                  </Badge>
-                ) : null} */}
+                                        {typeof ratio === 'number' && !removed ? (
+                                            <Badge style={{ marginLeft: '10px' }}>
+                                                <ThemedText.DeprecatedMain color={'#98A1C0'} fontSize={11}>
+                                                    <Trans>{inverted ? 100 - ratio : ratio}%</Trans>
+                                                </ThemedText.DeprecatedMain>
+                                            </Badge>
+                                        ) : null}
                                     </RowFixed>
                                 </RowBetween>
                             </AutoColumn>
@@ -316,7 +316,7 @@ export default function PositionListItem({
                             <AutoColumn gap="md">
                                 <RowBetween>
                                     <RowFixed>
-                                        {/* <CurrencyLogo currency={feeValueUpper?.currency} size="20px" style={{ marginRight: '0.5rem' }} /> */}
+                                        <CurrencyLogo currency={feeValueUpper?.currency} size="20px" style={{ marginRight: '0.5rem' }} />
                                         <ThemedText.DeprecatedMain>{feeValueUpper?.currency?.symbol}</ThemedText.DeprecatedMain>
                                     </RowFixed>
                                     <RowFixed>
@@ -327,7 +327,7 @@ export default function PositionListItem({
                                 </RowBetween>
                                 <RowBetween>
                                     <RowFixed>
-                                        {/* <CurrencyLogo currency={feeValueLower?.currency} size="20px" style={{ marginRight: '0.5rem' }} /> */}
+                                        <CurrencyLogo currency={feeValueLower?.currency} size="20px" style={{ marginRight: '0.5rem' }} />
                                         <ThemedText.DeprecatedMain>{feeValueLower?.currency?.symbol}</ThemedText.DeprecatedMain>
                                     </RowFixed>
                                     <RowFixed>
