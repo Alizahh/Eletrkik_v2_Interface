@@ -4,6 +4,7 @@ import { FeeAmount } from '@uniswap/v3-sdk'
 import { useWeb3React } from '@web3-react/core'
 import { AutoColumn } from 'legacy/components/Column'
 import { ThemedText } from 'legacy/theme'
+import { useFeeTierDistribution } from 'modules/pools/hooks/useFeeTierDistribution'
 import { PoolState, usePools } from 'modules/pools/hooks/usePools'
 import { DynamicSection } from 'pages/Pool/AddLiquidity/styled'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -13,6 +14,7 @@ import { usePrevious } from '../../../../../../../libs/common-hooks/src/usePrevi
 import { ButtonGray } from '../../../../../../../libs/ui/src/pure/Button'
 import { RowBetween } from '../../../../../../../libs/ui/src/pure/Row'
 import { FeeOption } from './FeeOption'
+import { FeeTierPercentageBadge } from './FeeTierPercentageaBadge'
 import { FEE_AMOUNT_DETAIL } from './shared'
 import { FocusedOutlineCard, Select } from './styled'
 
@@ -136,12 +138,11 @@ export default function FeeSelector({
                   </ThemedText.DeprecatedLabel>
                   <Box style={{ width: 'fit-content', marginTop: '8px' }} className="selected-fee-percentage">
                     {distributions && (
-                    //   <FeeTierPercentageBadge
-                    //     distributions={distributions}
-                    //     feeAmount={feeAmount}
-                    //     poolState={poolsByFeeTier[feeAmount]}
-                    //   />
-                    <></>
+                      <FeeTierPercentageBadge
+                        distributions={distributions}
+                        feeAmount={feeAmount}
+                        poolState={poolsByFeeTier[feeAmount]}
+                      />
                     )}
                   </Box>
                 </>

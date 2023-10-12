@@ -1,0 +1,36 @@
+import { Trans } from '@lingui/macro'
+import { FeeAmount } from '@uniswap/v3-sdk'
+import { ThemedText } from 'legacy/theme'
+import { useFeeTierDistribution } from 'modules/pools/hooks/useFeeTierDistribution'
+import { PoolState } from 'modules/pools/hooks/usePools'
+import Badge from './styled'
+
+
+
+
+export function FeeTierPercentageBadge({
+  feeAmount,
+  distributions,
+  poolState,
+}: {
+  feeAmount: FeeAmount
+  distributions: ReturnType<typeof useFeeTierDistribution>['distributions']
+  poolState: PoolState
+}) {
+  return (
+    <Badge>
+      <ThemedText.DeprecatedLabel fontSize={10}>
+        {!distributions || poolState === PoolState.NOT_EXISTS || poolState === PoolState.INVALID ? (
+          <Trans>Not created</Trans>
+        ) : distributions[feeAmount] !== undefined ? (
+          <Trans>{distributions[feeAmount]?.toFixed(0)}% select</Trans>
+        ) : (
+          <Trans>No data</Trans>
+        )}
+      </ThemedText.DeprecatedLabel>
+
+    </Badge>
+
+
+  )
+}

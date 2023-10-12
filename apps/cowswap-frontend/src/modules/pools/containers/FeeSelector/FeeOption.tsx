@@ -36,8 +36,7 @@ export function FeeOption({ feeAmount, active, poolState, distributions, onClick
         </AutoColumn>
 
         {distributions && (
-        //   <FeeTierPercentageBadge distributions={distributions} feeAmount={feeAmount} poolState={poolState} />
-        <></>
+          <FeeTierPercentageBadge distributions={distributions} feeAmount={feeAmount} poolState={poolState} />
         )}
       </AutoColumn>
     </ButtonRadioChecked>
