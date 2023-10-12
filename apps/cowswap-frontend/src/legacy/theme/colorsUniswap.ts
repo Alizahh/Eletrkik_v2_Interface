@@ -34,6 +34,14 @@ export function colorsUniswap(darkMode: boolean): Colors {
     accentActionSoft: darkMode ? '#4C82FB':'#4C82FB',
     deprecated_bg4: darkMode ? '#5D6785': '#98A1C0',
     textTertiary: darkMode ? '#5D6785': '#98A1C0',
+    accentCritical : darkMode ? '#FD766B' : '#FD766B',
+    accentSuccess: darkMode ? '#76D191' : '#76D191',
+    accentWarning: darkMode ?  '#EEB317': '#EEB317',
+    accentTextDarkPrimary: darkMode ? '#0D111C' : '#0D111C',
+    accentFailure: darkMode ? '#FD766B': '#FD766B',
+    brandedGradient: 'linear-gradient(139.57deg, #FF79C9 4.35%, #FFB8E2 96.44%);',
+    promotionalGradient: 'radial-gradient(101.8% 4091.31% at 0% 0%, #4673FA 0%, #9646FA 100%);',
+
     // mod
     bg7: darkMode ? '#1F4471' : '#CEE7EF',
 

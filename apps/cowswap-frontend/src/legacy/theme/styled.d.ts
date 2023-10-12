@@ -37,6 +37,13 @@ interface ColorsUniswap {
   accentActionSoft:Color
   deprecated_bg4: Color
   textTertiary:Color
+  brandedGradient:Color
+  accentCritical:Color
+  accentSuccess:Color
+  accentWarning:Color
+  promotionalGradient:Color
+  accentTextDarkPrimary:Color
+  accentFailure:Color
 
   modalBG: Color
   advancedBG: Color
