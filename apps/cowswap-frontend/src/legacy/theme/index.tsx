@@ -183,6 +183,12 @@ export const ThemedText = {
   DeprecatedBlue(props: TextProps) {
     return <TextWrapper fontWeight={500} color="accentAction" {...props} />
   },
+  DeprecatedSmall(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={11} {...props} />
+  },
+  DeprecatedWhite(props: TextProps) {
+    return <TextWrapper fontWeight={500} color="white" {...props} />
+  },
 }
 
 export function theme(darkmode: boolean): DefaultTheme {
