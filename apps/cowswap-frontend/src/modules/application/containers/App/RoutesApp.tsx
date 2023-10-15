@@ -13,6 +13,7 @@ import Account, { AccountOverview } from 'pages/Account'
 import AnySwapAffectedUsers from 'pages/error/AnySwapAffectedUsers'
 import { SwapPage } from 'pages/Swap'
 import AddLiquidityWrapper from 'pages/Pool/AddLiquidity'
+import { RedirectDuplicateTokenIds } from 'modules/pools/containers/Redirect'
 
 // Async routes
 const PrivacyPolicy = lazy(() => import(/* webpackChunkName: "privacy_policy" */ 'pages/PrivacyPolicy'))
@@ -69,7 +70,7 @@ const lazyRoutes: LazyRouteProps[] = [
   { route: RoutesEnum.COOKIE_POLICY, element: <CookiePolicy /> },
   { route: RoutesEnum.TERMS_CONDITIONS, element: <TermsAndConditions /> },
   { route: RoutesEnum.POOL, element: <Pool /> },
-  { route: RoutesEnum.ADD_LIQUIDITY, element: <AddLiquidityWrapper /> }
+  { route: RoutesEnum.ADD_LIQUIDITY, element: <RedirectDuplicateTokenIds /> }
 
 
 ]
