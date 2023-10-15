@@ -189,6 +189,12 @@ export const ThemedText = {
   DeprecatedWhite(props: TextProps) {
     return <TextWrapper fontWeight={500} color="white" {...props} />
   },
+  DeprecatedLargeHeader(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={24} {...props} />
+  },
+  DeprecatedItalic(props: TextProps) {
+    return <TextWrapper fontWeight={500} fontSize={12} fontStyle="italic" color="textSecondary" {...props} />
+  },
 }
 
 export function theme(darkmode: boolean): DefaultTheme {

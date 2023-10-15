@@ -48,6 +48,9 @@ import UnsupportedCurrencyFooter from "legacy/components/swap/UnsupportedCurrenc
 import { useSingleCallResult } from "lib/hooks/multicall"
 import { TransactionConfirmationModal } from "legacy/components/TransactionConfirmationModal"
 import { LegacyConfirmationModalContent } from "legacy/components/TransactionConfirmationModal/LegacyConfirmationModalContent"
+import LiquidityChartRangeInput from "modules/pools/containers/LiquidityChartRanegInput"
+import { currencyId } from "../../../../../../libs/common-utils/src/currencyId"
+import { WRAPPED_NATIVE_CURRENCY } from "modules/pools/constants/tokens"
 
 
 export default function AddLiquidityWrapper() {
@@ -239,6 +242,68 @@ export function AddLiquidity() {
   const showApprovalB =
     !argentWalletContract && approvalB !== ApprovalState.APPROVED && !!parsedAmounts[Field.CURRENCY_B]
 
+    const handleCurrencySelect = useCallback(
+      (currencyNew: Currency, currencyIdOther?: string): (string | undefined)[] => {
+        const currencyIdNew = currencyId(currencyNew)
+  
+        if (currencyIdNew === currencyIdOther) {
+          // not ideal, but for now clobber the other if the currency ids are equal
+          return [currencyIdNew, undefined]
+        } else {
+          // prevent weth + eth
+          const isETHOrWETHNew =
+            currencyIdNew === 'ETH' ||
+            (chainId !== undefined && currencyIdNew === WRAPPED_NATIVE_CURRENCY[chainId]?.address)
+          const isETHOrWETHOther =
+            currencyIdOther !== undefined &&
+            (currencyIdOther === 'ETH' ||
+              (chainId !== undefined && currencyIdOther === WRAPPED_NATIVE_CURRENCY[chainId]?.address))
+  
+          if (isETHOrWETHNew && isETHOrWETHOther) {
+            return [currencyIdNew, undefined]
+          } else {
+            return [currencyIdNew, currencyIdOther]
+          }
+        }
+      },
+      [chainId]
+    )
+  
+    const handleCurrencyASelect = useCallback(
+      (currencyANew: Currency) => {
+        const [idA, idB] = handleCurrencySelect(currencyANew, currencyIdB)
+        if (idB === undefined) {
+          navigate(`/add/${idA}`)
+        } else {
+          navigate(`/add/${idA}/${idB}`)
+        }
+      },
+      [handleCurrencySelect, currencyIdB, navigate]
+    )
+
+    const handleCurrencyBSelect = useCallback(
+      (currencyBNew: Currency) => {
+        const [idB, idA] = handleCurrencySelect(currencyBNew, currencyIdA)
+        if (idA === undefined) {
+          navigate(`/add/${idB}`)
+        } else {
+          navigate(`/add/${idA}/${idB}`)
+        }
+      },
+      [handleCurrencySelect, currencyIdA, navigate]
+    )
+  
+    const handleDismissConfirmation = useCallback(() => {
+      setShowConfirm(false)
+      // if there was a tx hash, we want to clear the input
+      if (txHash) {
+        onFieldAInput('')
+        // dont jump to pool page if creating
+        navigate('/pools')
+      }
+      setTxHash('')
+    }, [navigate, onFieldAInput, txHash])
+
   const Buttons = () =>
     // addIsUnsupported ? (
     //   <ButtonPrimary disabled={true} $borderRadius="12px" padding="12px">
@@ -403,7 +468,7 @@ export function AddLiquidity() {
                           onMax={() => {
                             onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')
                           }}
-                          onCurrencySelect={()=>{}}
+                          onCurrencySelect={handleCurrencyASelect}
                           showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
                           currency={currencies[Field.CURRENCY_A] ?? null}
                           id="add-liquidity-input-tokena"
@@ -417,7 +482,7 @@ export function AddLiquidity() {
                           value={formattedAmounts[Field.CURRENCY_B]}
                           hideInput={true}
                           onUserInput={onFieldBInput}
-                          onCurrencySelect={()=>{}}
+                          onCurrencySelect={handleCurrencyBSelect}
                           onMax={() => {
                             onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
                           }}
@@ -428,13 +493,13 @@ export function AddLiquidity() {
                         />
                     </RowBetween>
 
-                    {/* <FeeSelector
+                    <FeeSelector
                         disabled={!quoteCurrency || !baseCurrency}
                         feeAmount={feeAmount}
                         handleFeePoolSelect={handleFeePoolSelect}
                         currencyA={baseCurrency ?? undefined}
                         currencyB={quoteCurrency ?? undefined}
-                      /> */}
+                      />
                   </AutoColumn>
                 </>
               )}
@@ -532,7 +597,7 @@ export function AddLiquidity() {
                           </AutoRow>
                         )}
 
-                        {/* <LiquidityChartRangeInput
+                        <LiquidityChartRangeInput
                             currencyA={baseCurrency ?? undefined}
                             currencyB={quoteCurrency ?? undefined}
                             feeAmount={feeAmount}
@@ -545,7 +610,7 @@ export function AddLiquidity() {
                             onLeftRangeInput={onLeftRangeInput}
                             onRightRangeInput={onRightRangeInput}
                             interactive={!hasExistingPosition}
-                          /> */}
+                          />
                       </>
                     ) : (
                       <AutoColumn gap="md">

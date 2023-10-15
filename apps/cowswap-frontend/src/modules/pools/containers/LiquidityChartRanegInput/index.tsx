@@ -15,6 +15,7 @@ import { useColor } from '../../../../../../../libs/common-hooks/src/useColor'
 import { ChartWrapper } from './styled'
 import { Loader } from '../../../../../../../libs/ui/src/pure/Loader'
 import { Chart } from './Chart'
+import { useDensityChartData } from 'modules/pools/hooks/useDensityChartData'
 
 
 const ZOOM_LEVELS: Record<FeeAmount, ZoomLevels> = {

@@ -1,6 +1,7 @@
 import { ApolloError, useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import { useMemo } from 'react'
+import { apolloClient } from './apollo';
 
 
 const query = gql`

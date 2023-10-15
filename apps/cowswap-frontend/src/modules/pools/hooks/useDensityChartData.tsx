@@ -1,7 +1,7 @@
 import { Currency } from '@uniswap/sdk-core'
 import { FeeAmount } from '@uniswap/v3-sdk'
 import { useCallback, useMemo } from 'react'
-import { TickProcessed } from './usePoolTickData'
+import { TickProcessed, usePoolActiveLiquidity } from './usePoolTickData'
 
 
 export interface ChartEntry {

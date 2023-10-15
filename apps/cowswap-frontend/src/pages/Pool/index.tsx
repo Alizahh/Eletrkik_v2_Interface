@@ -71,7 +71,7 @@ export default function Pool() {
                                 data-cy="join-pool-button"
                                 id="join-pool-button"
                                 as={Link}
-                                to="/add"
+                                to="/add/ETH"
                                 style={{
                                     background: `linear-gradient(146deg, #a1eeff 0%, #029af0 100%)`,
                                     color: '#000',

@@ -2,7 +2,7 @@ import { AutoColumn } from 'legacy/components/Column'
 import { ThemedText } from 'legacy/theme'
 import { Inbox } from 'react-feather'
 import styled, {css} from 'styled-components/macro'
-import { ButtonPrimary } from '../../../../../libs/ui/src/pure/Button'
+import { ButtonConfirmed, ButtonPrimary } from '../../../../../libs/ui/src/pure/Button'
 import { RowBetween, RowFixed } from '../../../../../libs/ui/src/pure/Row'
 import { LoadingRows as BaseLoadingRows } from '../../modules/pools/pure/Loader'
 
@@ -171,6 +171,49 @@ export const ActionButtonResponsiveRow = styled(ResponsiveRow)`
     flex-direction: row;
     * {
       width: 100%;
+    }
+  }
+`
+
+export const Label = styled(({ end, ...props }) => <ThemedText.DeprecatedLabel {...props} />)<{ end?: boolean }>`
+  display: flex;
+  font-size: 16px;
+  justify-content: ${({ end }) => (end ? 'flex-end' : 'flex-start')};
+  align-items: center;
+`
+
+export const ResponsiveButtonConfirmed = styled(ButtonConfirmed)`
+  border-radius: 12px;
+  padding: 6px 8px;
+  width: fit-content;
+  font-size: 16px;
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+    width: fit-content;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+    width: fit-content;
+  }
+`
+// styles
+export const Dots = styled.span`
+  &::after {
+    display: inline-block;
+    animation: ellipsis 1.25s infinite;
+    content: '.';
+    width: 1em;
+    text-align: left;
+  }
+  @keyframes ellipsis {
+    0% {
+      content: '.';
+    }
+    33% {
+      content: '..';
+    }
+    66% {
+      content: '...';
     }
   }
 `
