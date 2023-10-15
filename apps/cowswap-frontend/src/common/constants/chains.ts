@@ -49,3 +49,10 @@ export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(Support
 export function isSupportedChain(chainId: number | null | undefined): chainId is SupportedChainId {
   return !!chainId && !!SupportedChainId[chainId]
 }
+
+export function isSupportedChainLightLink(chainId: number | null | undefined): boolean {
+  return (
+    (!!chainId && chainId === SupportedChainId.LIGHTLINK_PEGASUS_TESTNET) ||
+    chainId === SupportedChainId.LIGHTLINK_PHOENIX_MAINNET
+  )
+}

@@ -273,3 +273,11 @@ export const ButtonStar = ({
     </HoverIcon>
   )
 }
+
+export const SmallButtonPrimary = styled(ButtonPrimary)`
+  width: auto;
+  font-size: 16px;
+  padding: ${({ padding }) => padding ?? '8px 12px'};
+
+  border-radius: 12px;
+`

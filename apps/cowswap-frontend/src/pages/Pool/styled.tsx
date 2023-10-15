@@ -1,8 +1,10 @@
 import { AutoColumn } from 'legacy/components/Column'
+import { ThemedText } from 'legacy/theme'
 import { Inbox } from 'react-feather'
 import styled, {css} from 'styled-components/macro'
 import { ButtonPrimary } from '../../../../../libs/ui/src/pure/Button'
 import { RowBetween, RowFixed } from '../../../../../libs/ui/src/pure/Row'
+import { LoadingRows as BaseLoadingRows } from '../../modules/pools/pure/Loader'
 
 export const PageWrapper = styled(AutoColumn)`
   padding: 68px 8px 0px;
@@ -106,4 +108,69 @@ export const PositionPageButtonPrimary = styled(ButtonPrimary)`
   font-size: 16px;
   line-height: 20px;
   border-radius: 12px;
+`
+export const LoadingRows = styled(BaseLoadingRows)`
+  padding-top: 36px;
+  min-width: 75%;
+  max-width: 960px;
+  grid-column-gap: 0.5em;
+  grid-row-gap: 0.8em;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 8px;
+
+  & > div:nth-child(4n + 1) {
+    grid-column: 1 / 3;
+  }
+  & > div:nth-child(4n) {
+    grid-column: 3 / 4;
+    margin-bottom: 2em;
+  }
+`
+export const PositionPageWrapper = styled.div`
+  padding: 68px 16px 16px 16px;
+
+  min-width: 800px;
+  max-width: 960px;
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+    min-width: 100%;
+    padding: 16px;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+    min-width: 100%;
+    padding: 16px;
+  }
+  margin-bottom: 100px;
+`
+
+export const HoverText = styled(ThemedText.DeprecatedMain)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.textTertiary};
+  :hover {
+    color: ${({ theme }) => theme.textPrimary};
+    text-decoration: none;
+  }
+`
+
+export const ResponsiveRow = styled(RowBetween)`
+  @media only screen and (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 16px;
+    width: 100%;
+  }
+`
+
+export const ActionButtonResponsiveRow = styled(ResponsiveRow)`
+  width: 50%;
+  justify-content: flex-end;
+
+  @media only screen and (max-width: 640px) {
+    width: 100%;
+    flex-direction: row;
+    * {
+      width: 100%;
+    }
+  }
 `

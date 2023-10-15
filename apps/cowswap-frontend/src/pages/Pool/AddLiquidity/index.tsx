@@ -42,6 +42,12 @@ import { ApprovalState } from "lib/hooks/useApproval"
 import { NONFUNGIBLE_POSITION_MANAGER_ADDRESSES } from "modules/pools/constants/addresses"
 import { useApproveCallback } from "legacy/hooks/pools/useApproveCallback"
 import CurrencyInputPanel from "modules/pools/containers/CurrencyInputPanel"
+import OwnershipWarning from "modules/pools/pure/OwnershipWarning"
+import { ApprovalWarning } from "modules/pools/pure/ApprovalWarning"
+import UnsupportedCurrencyFooter from "legacy/components/swap/UnsupportedCurrencyFooter"
+import { useSingleCallResult } from "lib/hooks/multicall"
+import { TransactionConfirmationModal } from "legacy/components/TransactionConfirmationModal"
+import { LegacyConfirmationModalContent } from "legacy/components/TransactionConfirmationModal/LegacyConfirmationModalContent"
 
 
 export default function AddLiquidityWrapper() {
@@ -49,7 +55,7 @@ export default function AddLiquidityWrapper() {
   if (isSupportedChain(chainId)) {
     return <AddLiquidity />
   } else {
-    return <AddLiquidity />
+    return <PositionPageUnsupportedContent />
   }
 }
 
@@ -301,10 +307,45 @@ export function AddLiquidity() {
         </ButtonError>
       </AutoColumn>
     )
+    // const owner = useSingleCallResult(tokenId ? positionManager : null, 'ownerOf', [tokenId]).result?.[0]
+    //   const ownsNFT =
+    // addressesAreEquivalent(owner, account) || addressesAreEquivalent(existingPositionDetails?.operator, account)
+    // const showOwnershipWarning = Boolean(hasExistingPosition && account && !ownsNFT)
 
   return (
     <>
     <ScrollablePage>
+          {/* <TransactionConfirmationModal
+          isOpen={showConfirm}
+          onDismiss={handleDismissConfirmation}
+          attemptingTxn={attemptingTxn}
+          hash={txHash}
+          reviewContent={() => (
+            <LegacyConfirmationModalContent
+              title={<Trans>Add Liquidity</Trans>}
+              onDismiss={handleDismissConfirmation}
+              topContent={() => (
+                <Review
+                  parsedAmounts={parsedAmounts}
+                  position={position}
+                  existingPosition={existingPosition}
+                  priceLower={priceLower}
+                  priceUpper={priceUpper}
+                  outOfRange={outOfRange}
+                  ticksAtLimit={ticksAtLimit}
+                />
+              )}
+              bottomContent={() => (
+                <ButtonPrimary style={{ marginTop: '1rem' }} onClick={onAdd}>
+                  <Text fontWeight={500} fontSize={20}>
+                    <Trans>Add</Trans>
+                  </Text>
+                </ButtonPrimary>
+              )}
+            />
+          )}
+          pendingText={pendingText}
+        /> */}
       <LiquidityPageWrapper wide={!hasExistingPosition}>
         <AddRemoveTabs
           creating={false}
@@ -643,6 +684,17 @@ export function AddLiquidity() {
 
 
       </LiquidityPageWrapper>
+      {/* {showOwnershipWarning && <OwnershipWarning ownerAddress={owner} />}
+        {(approvalA === ApprovalState.NOT_APPROVED ||
+          approvalA === ApprovalState.PENDING ||
+          approvalB === ApprovalState.NOT_APPROVED ||
+          approvalB === ApprovalState.PENDING) && <ApprovalWarning />}
+        {addIsUnsupported && (
+          <UnsupportedCurrencyFooter
+            show={addIsUnsupported}
+            currencies={[currencies.CURRENCY_A, currencies.CURRENCY_B]}
+          />
+        )} */}
     </ScrollablePage>
 
     </>
