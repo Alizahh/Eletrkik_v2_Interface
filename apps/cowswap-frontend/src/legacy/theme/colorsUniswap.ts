@@ -40,6 +40,8 @@ export function colorsUniswap(darkMode: boolean): Colors {
     accentWarning: darkMode ?  '#EEB317': '#EEB317',
     accentTextDarkPrimary: darkMode ? '#0D111C' : '#0D111C',
     accentFailure: darkMode ? '#FD766B': '#FD766B',
+    deprecated_bg3: darkMode ? '#404A67': '#B8C0DC',
+    deprecated_primary5: darkMode ? '#153d6f70':'#FDEAF1',
     brandedGradient: 'linear-gradient(139.57deg, #FF79C9 4.35%, #FFB8E2 96.44%);',
     promotionalGradient: 'radial-gradient(101.8% 4091.31% at 0% 0%, #4673FA 0%, #9646FA 100%);',
 
