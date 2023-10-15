@@ -4,6 +4,7 @@ import { Box } from 'rebass/styled-components'
 import { AutoColumn } from 'legacy/components/Column'
 import Card from 'legacy/components/Card'
 import Input from 'legacy/components/NumericalInput'
+import CurrencyInputPanel from 'modules/pools/containers/CurrencyInputPanel'
 
 const gapValues = {
   xs: '4px',
@@ -171,4 +172,8 @@ export const Dots = styled.span`
       content: '...';
     }
   }
+`
+
+export const CurrencyDropdown = styled(CurrencyInputPanel)`
+  width: 48.5%;
 `

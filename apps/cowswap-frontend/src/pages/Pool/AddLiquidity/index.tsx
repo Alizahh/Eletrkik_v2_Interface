@@ -5,7 +5,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useTheme } from 'styled-components/macro'
 import { useWeb3React } from "@web3-react/core"
 import { useToggleWalletModal } from "legacy/state/application/hooks"
-import { DynamicSection, HideMedium, MediumOnly, ResponsiveTwoColumns, RightContainer, RowBetween, ScrollablePage, StackedContainer, StackedItem, Wrapper, YellowCard, LiquidityPageWrapper, StyledInput, Dots } from "./styled"
+import { DynamicSection, HideMedium, MediumOnly, ResponsiveTwoColumns, RightContainer, RowBetween, ScrollablePage, StackedContainer, StackedItem, Wrapper, YellowCard, LiquidityPageWrapper, StyledInput, Dots, CurrencyDropdown } from "./styled"
 import { AutoColumn } from "legacy/components/Column"
 import { ThemedText } from "legacy/theme"
 import { Trans } from "@lingui/macro"
@@ -41,6 +41,7 @@ import { useArgentWalletContract } from "modules/pools/hooks/useArgentWalletCont
 import { ApprovalState } from "lib/hooks/useApproval"
 import { NONFUNGIBLE_POSITION_MANAGER_ADDRESSES } from "modules/pools/constants/addresses"
 import { useApproveCallback } from "legacy/hooks/pools/useApproveCallback"
+import CurrencyInputPanel from "modules/pools/containers/CurrencyInputPanel"
 
 
 export default function AddLiquidityWrapper() {
@@ -173,7 +174,7 @@ export function AddLiquidity() {
     },
     {}
   )
-    const argentWalletContract = useArgentWalletContract()
+  const argentWalletContract = useArgentWalletContract()
 
   // check whether the user has approved the router on the tokens
   // const [approvalA, approveACallback] = useApproveCallback(
@@ -215,16 +216,16 @@ export function AddLiquidity() {
   }, [getSetFullRange, pricesAtLimit, searchParams, setSearchParams])
 
 
-    // check whether the user has approved the router on the tokens
-    const [approvalA, approveACallback] = useApproveCallback(
-      argentWalletContract ? undefined : parsedAmounts[Field.CURRENCY_A],
-      chainId ? NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId] : undefined
-    )
-    const [approvalB, approveBCallback] = useApproveCallback(
-      argentWalletContract ? undefined : parsedAmounts[Field.CURRENCY_B],
-      chainId ? NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId] : undefined
-    )
-  
+  // check whether the user has approved the router on the tokens
+  const [approvalA, approveACallback] = useApproveCallback(
+    argentWalletContract ? undefined : parsedAmounts[Field.CURRENCY_A],
+    chainId ? NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId] : undefined
+  )
+  const [approvalB, approveBCallback] = useApproveCallback(
+    argentWalletContract ? undefined : parsedAmounts[Field.CURRENCY_B],
+    chainId ? NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId] : undefined
+  )
+
   // const addIsUnsupported = useIsConversionUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
   // we need an existence check on parsed amounts for single-asset deposits
   const showApprovalA =
@@ -241,10 +242,10 @@ export function AddLiquidity() {
     //   </ButtonPrimary>
     // ) : 
     !account ? (
-     
-        <ButtonLight onClick={toggleWalletModal} $borderRadius="12px" padding="12px">
-          <Trans>Connect Wallet</Trans>
-        </ButtonLight>
+
+      <ButtonLight onClick={toggleWalletModal} $borderRadius="12px" padding="12px">
+        <Trans>Connect Wallet</Trans>
+      </ButtonLight>
     ) : (
       <AutoColumn gap="md">
         {(approvalA === ApprovalState.NOT_APPROVED ||
@@ -302,6 +303,7 @@ export function AddLiquidity() {
     )
 
   return (
+    <>
     <ScrollablePage>
       <LiquidityPageWrapper wide={!hasExistingPosition}>
         <AddRemoveTabs
@@ -353,27 +355,28 @@ export function AddLiquidity() {
                       </ThemedText.DeprecatedLabel>
                     </RowBetween>
                     <RowBetween>
-                      {/* <CurrencyDropdown
+                      <CurrencyDropdown
                           value={formattedAmounts[Field.CURRENCY_A]}
                           onUserInput={onFieldAInput}
                           hideInput={true}
                           onMax={() => {
                             onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')
                           }}
-                          onCurrencySelect={handleCurrencyASelect}
+                          onCurrencySelect={()=>{}}
                           showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
                           currency={currencies[Field.CURRENCY_A] ?? null}
                           id="add-liquidity-input-tokena"
                           showCommonBases
-                        /> */}
+                        />
+                  
 
                       <div style={{ width: '12px' }} />
 
-                      {/* <CurrencyDropdown
+                      <CurrencyDropdown
                           value={formattedAmounts[Field.CURRENCY_B]}
                           hideInput={true}
                           onUserInput={onFieldBInput}
-                          onCurrencySelect={handleCurrencyBSelect}
+                          onCurrencySelect={()=>{}}
                           onMax={() => {
                             onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
                           }}
@@ -381,10 +384,10 @@ export function AddLiquidity() {
                           currency={currencies[Field.CURRENCY_B] ?? null}
                           id="add-liquidity-input-tokenb"
                           showCommonBases
-                        /> */}
+                        />
                     </RowBetween>
 
-                      {/* <FeeSelector
+                    {/* <FeeSelector
                         disabled={!quoteCurrency || !baseCurrency}
                         feeAmount={feeAmount}
                         handleFeePoolSelect={handleFeePoolSelect}
@@ -413,7 +416,7 @@ export function AddLiquidity() {
                     {hasExistingPosition ? <Trans>Add more liquidity</Trans> : <Trans>Deposit Amounts</Trans>}
                   </ThemedText.DeprecatedLabel>
 
-                  {/* <CurrencyInputPanel
+                  <CurrencyInputPanel
                                         value={formattedAmounts[Field.CURRENCY_A]}
                                         onUserInput={onFieldAInput}
                                         onMax={() => {
@@ -422,11 +425,11 @@ export function AddLiquidity() {
                                         showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
                                         currency={currencies[Field.CURRENCY_A] ?? null}
                                         id="add-liquidity-input-tokena"
-                                        fiatValue={currencyAFiat}
+                                        // fiatValue={}
                                         showCommonBases
                                         locked={depositADisabled}
-                                    /> */}
-                  {/* 
+                                    />
+                  
                                     <CurrencyInputPanel
                                         value={formattedAmounts[Field.CURRENCY_B]}
                                         onUserInput={onFieldBInput}
@@ -434,12 +437,12 @@ export function AddLiquidity() {
                                             onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
                                         }}
                                         showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
-                                        fiatValue={currencyBFiat}
+                                        // fiatValue={currencyBFiat}
                                         currency={currencies[Field.CURRENCY_B] ?? null}
                                         id="add-liquidity-input-tokenb"
                                         showCommonBases
                                         locked={depositBDisabled}
-                                    /> */}
+                                    />
                 </AutoColumn>
               </DynamicSection>
             </div>
@@ -641,6 +644,8 @@ export function AddLiquidity() {
 
       </LiquidityPageWrapper>
     </ScrollablePage>
+
+    </>
 
 
   )
