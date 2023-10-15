@@ -14,6 +14,7 @@ import AnySwapAffectedUsers from 'pages/error/AnySwapAffectedUsers'
 import { SwapPage } from 'pages/Swap'
 import AddLiquidityWrapper from 'pages/Pool/AddLiquidity'
 import { RedirectDuplicateTokenIds } from 'modules/pools/containers/Redirect'
+import PositionPage from 'pages/Pool/PositionPage'
 
 // Async routes
 const PrivacyPolicy = lazy(() => import(/* webpackChunkName: "privacy_policy" */ 'pages/PrivacyPolicy'))
@@ -69,8 +70,8 @@ const lazyRoutes: LazyRouteProps[] = [
   { route: RoutesEnum.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { route: RoutesEnum.COOKIE_POLICY, element: <CookiePolicy /> },
   { route: RoutesEnum.TERMS_CONDITIONS, element: <TermsAndConditions /> },
-  { route: RoutesEnum.POOL, element: <Pool /> },
-  { route: RoutesEnum.ADD_LIQUIDITY, element: <RedirectDuplicateTokenIds /> }
+  // { route: RoutesEnum.POOL, element: <Pool /> },
+  // { route: RoutesEnum.ADD_LIQUIDITY, element: <RedirectDuplicateTokenIds /> }
 
 
 ]
@@ -92,6 +93,25 @@ export function RoutesApp() {
         <Route path={RoutesEnum.SWAP} element={<SwapPage />} />
         <Route path={RoutesEnum.SEND} element={<RedirectPathToSwapOnly />} />
 
+        <Route path="pool" element={<Pool />} />
+        <Route path="pool/:tokenId" element={<PositionPage />} />
+
+        <Route path="pools" element={<Pool />} />
+        <Route path="pools/:tokenId" element={<PositionPage />} />
+
+        <Route path="add" element={<RedirectDuplicateTokenIds />}>
+          {/* this is workaround since react-router-dom v6 doesn't support optional parameters any more */}
+          <Route path=":currencyIdA" />
+          <Route path=":currencyIdA/:currencyIdB" />
+          <Route path=":currencyIdA/:currencyIdB/:feeAmount" />
+        </Route>
+
+        <Route path="increase" element={<AddLiquidityWrapper />}>
+          <Route path=":currencyIdA" />
+          <Route path=":currencyIdA/:currencyIdB" />
+          <Route path=":currencyIdA/:currencyIdB/:feeAmount" />
+          <Route path=":currencyIdA/:currencyIdB/:feeAmount/:tokenId" />
+        </Route>
         {lazyRoutes.map((item, key) => LazyRoute({ ...item, key }))}
 
         <Route path={RoutesEnum.ANYSWAP_AFFECTED} element={<AnySwapAffectedUsers />} />
