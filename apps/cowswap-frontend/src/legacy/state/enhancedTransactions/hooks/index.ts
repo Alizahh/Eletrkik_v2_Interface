@@ -152,3 +152,11 @@ export function useAllClaimingTransactionIndices() {
 
 //   return { claimSubmitted: !!claimTxn, claimTxn }
 // }
+
+export function useIsTransactionPending(transactionHash?: string): boolean {
+  const transactions = useAllTransactions()
+
+  if (!transactionHash || !transactions[transactionHash]) return false
+
+  return !transactions[transactionHash].receipt
+}

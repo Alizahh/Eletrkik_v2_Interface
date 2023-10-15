@@ -5,10 +5,12 @@ import { useMemo } from 'react'
 import { NonfungiblePositionManager } from '@uniswap/v3-sdk'
 import { Contract } from '@ethersproject/contracts'
 import { getContract } from '../../../../../../libs/common-utils/src/legacyAddressUtils'
-import { ARGENT_WALLET_DETECTOR_ADDRESS } from 'modules/pools/constants/addresses'
+import { ARGENT_WALLET_DETECTOR_ADDRESS, TICK_LENS_ADDRESSES } from 'modules/pools/constants/addresses'
 import ARGENT_WALLET_DETECTOR_ABI from '../../../../../../libs/abis/src/abis-legacy/argent-wallet-detector.json'
+import TickLensJson from '@uniswap/v3-periphery/artifacts/contracts/lens/TickLens.sol/TickLens.json'
 
 const { abi: NFTPositionManagerABI } = NonfungiblePositionManagerJson
+const { abi: TickLensABI } = TickLensJson
 
 export function useArgentWalletDetectorContract() {
   return useContract<any>(ARGENT_WALLET_DETECTOR_ADDRESS, ARGENT_WALLET_DETECTOR_ABI, false)
@@ -42,5 +44,12 @@ export function useV3NFTPositionManagerContract(withSignerIfPossible?: boolean):
       NFTPositionManagerABI,
       withSignerIfPossible
     )
+  }
+  
+
+  export function useTickLens(): any | null {
+    const { chainId } = useWeb3React()
+    const address = chainId ? TICK_LENS_ADDRESSES[chainId] : undefined
+    return useContract(address, TickLensABI) as any | null
   }
   
