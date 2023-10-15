@@ -47,6 +47,7 @@ interface ColorsUniswap {
   accentTextDarkPrimary:Color
   accentFailure:Color
   deprecated_bg3:Color
+  accentWarningSoft:Color
 
   modalBG: Color
   advancedBG: Color
