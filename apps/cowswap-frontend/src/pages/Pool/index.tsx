@@ -57,7 +57,6 @@ export default function Pool() {
 
     const showConnectAWallet = Boolean(!account)
 
-
     return (
         <PageWrapper>
             <AutoColumn gap="lg" justify="center">
