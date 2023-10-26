@@ -129,7 +129,6 @@ export const StyledMenuButton = styled.button`
 export const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
   grid-template-columns: 1fr 120px;
-  //align-items: center;
   justify-content: space-between;
   align-items: center;
   flex-direction: row;

@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro"
 import { useWeb3React } from "@web3-react/core"
-import { isSupportedChainLightLink } from "common/constants/chains"
+import { CHAIN_IDS_TO_NAMES, SupportedChainId, isSupportedChainLightLink } from "common/constants/chains"
 import { useV3PositionFromTokenId } from "legacy/hooks/pools/useV3positions"
 import { HideExtraSmall, HideSmall, ThemedText } from "legacy/theme"
 import { PoolState, usePool } from "modules/pools/hooks/usePools"
@@ -34,25 +34,11 @@ import { useIsTransactionPending, useTransactionAdder } from "legacy/state/enhan
 import { useStablecoinPrice } from "legacy/state/claim/hooks"
 import { useV3NFTPositionManagerContract } from "legacy/hooks/pools/useContract"
 import { useSingleCallResult } from "lib/hooks/multicall"
-import { Bound } from "legacy/state/mint/v3/actions"
-// import { formatPrice, NumberType } from '@uniswap/conedison/format'
 import { formatCurrencyAmount, formatPrice } from "../../../../../libs/common-utils/src/formatCurrencyAmount"
 import { ExplorerDataType, getExplorerLink } from "../../../../../libs/common-utils/src/getExplorerLink"
 import { usePositionTokenURI } from "modules/pools/hooks/usePositionTokenURI"
 import { currencyId } from "../../../../../libs/common-utils/src/currencyId"
-
-export default function PositionPage() {
-  const { chainId } = useWeb3React()
-  // if (SupportedChainId.LIGHTLINK_PEGASUS_TESTNET === chainId) {
-  if (isSupportedChainLightLink(chainId)) {
-    // isSupportedChain(chainId)
-    return <PositionPageContent />
-  } else {
-    return <PositionPageUnsupportedContent />
-  }
-}
-
-
+import { getTokenLink } from "modules/pools/utils/getTokenlist"
 
 function CurrentPriceCard({
   inverted,
@@ -96,6 +82,8 @@ function CurrentPriceCard({
     </LightCard>
   )
 }
+
+
 
 function LinkedCurrency({ chainId, currency }: { chainId?: number; currency?: Currency }) {
   const address = (currency as Token)?.address
@@ -169,6 +157,7 @@ function getSnapshot(src: HTMLImageElement, canvas: HTMLCanvasElement, targetHei
   }
 }
 
+
 function NFT({ image, height: targetHeight }: { image: string; height: number }) {
   const [animate, setAnimate] = useState(false)
 
@@ -204,6 +193,7 @@ function NFT({ image, height: targetHeight }: { image: string; height: number })
   )
 }
 
+
 function getRatio(
   lower: Price<Currency, Currency>,
   current: Price<Currency, Currency>,
@@ -231,6 +221,40 @@ function getRatio(
     return undefined
   }
 }
+
+export function PositionPageUnsupportedContent() {
+  return (
+    <PositionPageUnsupported>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <ThemedText.HeadlineLarge style={{ marginBottom: '8px' }}>
+          <Trans>Position unavailable</Trans>
+        </ThemedText.HeadlineLarge>
+        <ThemedText.BodyPrimary style={{ marginBottom: '32px' }}>
+          <Trans>To view a position, you must be connected to the network it belongs to.</Trans>
+        </ThemedText.BodyPrimary>
+        <PositionPageButtonPrimary as={Link} to="/pools" width="fit-content">
+          <Trans>Back to Pools</Trans>
+        </PositionPageButtonPrimary>
+      </div>
+    </PositionPageUnsupported>
+  )
+}
+
+export default function PositionPage() {
+
+
+  const { chainId } = useWeb3React()
+  // if (SupportedChainId.LIGHTLINK_PEGASUS_TESTNET === chainId) {
+  if (isSupportedChainLightLink(chainId)) {
+    // isSupportedChain(chainId)
+    return <PositionPageContent />
+  } else {
+    return <PositionPageUnsupportedContent />
+  }
+}
+
+
+
 function PositionPageContent() {
 
   const { tokenId: tokenIdFromUrl } = useParams<{ tokenId?: string }>()
@@ -239,7 +263,6 @@ function PositionPageContent() {
 
   const parsedTokenId = tokenIdFromUrl ? BigNumber.from(tokenIdFromUrl) : undefined
   const { loading, position: positionDetails } = useV3PositionFromTokenId(parsedTokenId)
-
 
   const {
     token0: token0Address,
@@ -252,6 +275,7 @@ function PositionPageContent() {
   } = positionDetails || {}
 
   const removed = liquidity?.eq(0)
+
   const metadata = usePositionTokenURI(parsedTokenId)
 
   const token0 = useToken(token0Address)
@@ -267,12 +291,14 @@ function PositionPageContent() {
 
   // construct Position from details returned
   const [poolState, pool] = usePool(token0 ?? undefined, token1 ?? undefined, feeAmount)
+
   const position = useMemo(() => {
     if (pool && liquidity && typeof tickLower === 'number' && typeof tickUpper === 'number') {
       return new Position({ pool, liquidity: liquidity.toString(), tickLower, tickUpper })
     }
     return undefined
   }, [liquidity, pool, tickLower, tickUpper])
+  
 
   const tickAtLimit = useIsTickAtLimit(feeAmount, tickLower, tickUpper)
 
@@ -858,21 +884,3 @@ function PositionPageContent() {
 
 
 
-
-export function PositionPageUnsupportedContent() {
-  return (
-    <PositionPageUnsupported>
-      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <ThemedText.HeadlineLarge style={{ marginBottom: '8px' }}>
-          <Trans>Position unavailable</Trans>
-        </ThemedText.HeadlineLarge>
-        <ThemedText.BodyPrimary style={{ marginBottom: '32px' }}>
-          <Trans>To view a position, you must be connected to the network it belongs to.</Trans>
-        </ThemedText.BodyPrimary>
-        <PositionPageButtonPrimary as={Link} to="/pools" width="fit-content">
-          <Trans>Back to Pools</Trans>
-        </PositionPageButtonPrimary>
-      </div>
-    </PositionPageUnsupported>
-  )
-}

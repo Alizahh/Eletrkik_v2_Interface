@@ -20,6 +20,25 @@ export enum SupportedChainId {
   LIGHTLINK_PHOENIX_MAINNET = 1890,
   LIGHTLINK_PEGASUS_TESTNET = 1891,
 }
+
+export const CHAIN_IDS_TO_NAMES = {
+  [SupportedChainId.MAINNET]: 'mainnet',
+  [SupportedChainId.GOERLI]: 'goerli',
+  [SupportedChainId.SEPOLIA]: 'sepolia',
+  [SupportedChainId.POLYGON]: 'polygon',
+  [SupportedChainId.POLYGON_MUMBAI]: 'polygon_mumbai',
+  [SupportedChainId.CELO]: 'celo',
+  [SupportedChainId.CELO_ALFAJORES]: 'celo_alfajores',
+  [SupportedChainId.ARBITRUM_ONE]: 'arbitrum',
+  [SupportedChainId.ARBITRUM_GOERLI]: 'arbitrum_goerli',
+  [SupportedChainId.OPTIMISM]: 'optimism',
+  [SupportedChainId.OPTIMISM_GOERLI]: 'optimism_goerli',
+  [SupportedChainId.BNB]: 'bnb',
+  // [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'local',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'lightlink_phoenix_mainnet',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'lightlink_pegasus_testnet',
+}
+
 export const L1_CHAIN_IDS = [
   SupportedChainId.MAINNET,
   SupportedChainId.GOERLI,
@@ -30,7 +49,7 @@ export const L1_CHAIN_IDS = [
   SupportedChainId.CELO_ALFAJORES,
   SupportedChainId.BNB,
 ] as const
-export type SupportedL1ChainId = typeof L1_CHAIN_IDS[number]
+export type SupportedL1ChainId = (typeof L1_CHAIN_IDS)[number]
 export const L2_CHAIN_IDS = [
   SupportedChainId.ARBITRUM_ONE,
   SupportedChainId.ARBITRUM_GOERLI,
@@ -41,7 +60,7 @@ export const L2_CHAIN_IDS = [
   SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
 ] as const
 
-export type SupportedL2ChainId = typeof L2_CHAIN_IDS[number]
+export type SupportedL2ChainId = (typeof L2_CHAIN_IDS)[number]
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(SupportedChainId).filter(
   (id) => typeof id === 'number'
 ) as SupportedChainId[]

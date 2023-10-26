@@ -21,7 +21,7 @@ export function colorsUniswap(darkMode: boolean): Colors {
     deprecated_text4: darkMode ? '#B8C0DC' : '#98A1C0',
 
     // backgrounds / greys
-    bg0: darkMode ? '#191B1F' : '#FFF',
+    bg0: darkMode ? '#191B1F' : '#191B1F',
     bg1: darkMode ? '#212429' : '#F7F8FA',
     bg2: darkMode ? '#2C2F36' : '#EDEEF2',
     bg3: darkMode ? '#40444F' : '#CED0D9',

@@ -6,12 +6,14 @@ import { Link } from 'react-router-dom'
 import { ButtonPrimary, ButtonText } from "../../../../../libs/ui/src/pure/Button";
 import { useToggleWalletModal } from "legacy/state/application/hooks";
 import { useUserHideClosedPositions } from "legacy/state/user/hooks";
-import { useWalletInfo } from '@cowprotocol/wallet'
 import { useMemo } from "react";
 import { useV3Positions } from "legacy/hooks/pools/useV3positions";
 import { PositionDetails } from "legacy/types/position";
 import { useFilterPossiblyMaliciousPositions } from "legacy/hooks/pools/useFilterPossiblyMaliciousPositions";
 import PositionList from "modules/pools/containers/PositionList";
+import { SupportedChainId } from "common/constants/chains";
+import { NetworkIcon } from "modules/wallet/pure/Web3StatusInner/styled";
+import { useWeb3React } from "@web3-react/core";
 
 function PositionsLoadingPlaceholder() {
     return (
@@ -32,11 +34,40 @@ function PositionsLoadingPlaceholder() {
     )
 }
 
+function WrongNetworkCard() {
+    return (
+        <>
+            <PageWrapper>
+                <AutoColumn gap="lg" justify="center">
+                    <AutoColumn gap="lg" style={{ width: '100%' }}>
+                        <TitleRow padding="0">
+                            <ThemedText.LargeHeader>
+                                <Trans>Pools</Trans>
+                            </ThemedText.LargeHeader>
+                        </TitleRow>
+                        <MainContentWrapper>
+                            <ErrorContainer>
+                                <ThemedText.DeprecatedBody color={'#fff'} textAlign="center">
+                                    <NetworkIcon strokeWidth={1.2} />
+                                    <div data-testid="pools-unsupported-err">
+                                        <Trans>Your connected network is unsupported.</Trans>
+                                    </div>
+                                </ThemedText.DeprecatedBody>
+                            </ErrorContainer>
+                        </MainContentWrapper>
+                    </AutoColumn>
+                </AutoColumn>
+            </PageWrapper>
+        </>
+    )
+}
+
 export default function Pool() {
 
+    const { account, chainId } = useWeb3React()
     const toggleWalletModal = useToggleWalletModal()
+
     const [userHideClosedPositions, setUserHideClosedPositions] = useUserHideClosedPositions()
-    const { account } = useWalletInfo()
 
     const { positions, loading: positionsLoading } = useV3Positions(account)
 
@@ -52,10 +83,14 @@ export default function Pool() {
         () => [...openPositions, ...(userHideClosedPositions ? [] : closedPositions)],
         [closedPositions, openPositions, userHideClosedPositions]
     )
+
     const filteredPositions = useFilterPossiblyMaliciousPositions(userSelectedPositionSet)
 
-
     const showConnectAWallet = Boolean(!account)
+
+    if (!(SupportedChainId.LIGHTLINK_PEGASUS_TESTNET === chainId)) {
+        return <WrongNetworkCard />
+    }
 
     return (
         <PageWrapper>
