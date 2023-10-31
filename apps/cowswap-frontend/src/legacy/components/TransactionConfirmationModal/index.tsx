@@ -24,11 +24,11 @@ export interface ConfirmationModalProps {
   isOpen: boolean
   onDismiss: () => void
   hash?: string | undefined
-  content?: () => ReactNode
+  content?: () => ReactNode 
   attemptingTxn: boolean
   pendingText?: ReactNode
   currencyToAdd?: Currency | undefined
-  operationType: ConfirmOperationType
+  operationType: any
   tradeAmounts?: TradeAmounts | undefined
   swapConfirmState?: SwapConfirmState | undefined
 }

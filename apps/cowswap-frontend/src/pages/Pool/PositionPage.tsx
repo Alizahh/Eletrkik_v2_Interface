@@ -1,44 +1,58 @@
-import { Trans } from "@lingui/macro"
-import { useWeb3React } from "@web3-react/core"
-import { CHAIN_IDS_TO_NAMES, SupportedChainId, isSupportedChainLightLink } from "common/constants/chains"
-import { useV3PositionFromTokenId } from "legacy/hooks/pools/useV3positions"
-import { HideExtraSmall, HideSmall, ThemedText } from "legacy/theme"
-import { PoolState, usePool } from "modules/pools/hooks/usePools"
-import { PositionPageUnsupported, PositionPageButtonPrimary, LoadingRows, PositionPageWrapper, HoverText, ResponsiveRow, ActionButtonResponsiveRow, Label, ResponsiveButtonConfirmed, Dots } from "./styled"
+import { Trans } from '@lingui/macro'
+import { useWeb3React } from '@web3-react/core'
+import { CHAIN_IDS_TO_NAMES, SupportedChainId, isSupportedChainLightLink } from 'common/constants/chains'
+import { useV3PositionFromTokenId } from 'legacy/hooks/pools/useV3positions'
+import { HideExtraSmall, HideSmall, ThemedText } from 'legacy/theme'
+import { PoolState, usePool } from 'modules/pools/hooks/usePools'
+import {
+  PositionPageUnsupported,
+  PositionPageButtonPrimary,
+  LoadingRows,
+  PositionPageWrapper,
+  HoverText,
+  ResponsiveRow,
+  ActionButtonResponsiveRow,
+  Label,
+  ResponsiveButtonConfirmed,
+  Dots,
+  BadgeText,
+} from './styled'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Link, useParams } from 'react-router-dom'
 import styled, { useTheme } from 'styled-components/macro'
-import { useToken } from "legacy/hooks/Tokens"
-import { AutoColumn } from "legacy/components/Column"
-import { RowBetween, RowFixed } from "../../../../../libs/ui/src/pure/Row"
-import DoubleCurrencyLogo from "legacy/components/DoubleLogo"
-import Badge from "legacy/components/Badge"
-import { ButtonGray, ButtonPrimary, SmallButtonPrimary } from "../../../../../libs/ui/src/pure/Button"
-import RangeBadge from "legacy/components/Badge/RangeBadge"
-import { DarkCard, LightCard } from "legacy/components/Card"
-import { ExternalLink } from "../../../../../libs/ui/src/pure/ExternalLink"
-import { CurrencyLogo } from "common/pure/CurrencyLogo"
-import RateToggle from "modules/pools/pure/RateToggle"
-import { DoubleArrow, ExtentsText } from "modules/pools/containers/PositionListItem/styled"
+import { useToken } from 'legacy/hooks/Tokens'
+import { AutoColumn } from 'legacy/components/Column'
+import { RowBetween, RowFixed } from '../../../../../libs/ui/src/pure/Row'
+import DoubleCurrencyLogo from 'legacy/components/DoubleLogo'
+import Badge from 'legacy/components/Badge'
+import { ButtonGray, ButtonPrimary, SmallButtonPrimary } from '../../../../../libs/ui/src/pure/Button'
+import RangeBadge from 'legacy/components/Badge/RangeBadge'
+import { DarkCard, LightCard } from 'legacy/components/Card'
+import { ExternalLink } from '../../../../../libs/ui/src/pure/ExternalLink'
+import { CurrencyLogo } from 'common/pure/CurrencyLogo'
+import RateToggle from 'modules/pools/pure/RateToggle'
+import { DoubleArrow, ExtentsText } from 'modules/pools/containers/PositionListItem/styled'
 import { NonfungiblePositionManager, Pool, Position } from '@uniswap/v3-sdk'
 import { Currency, CurrencyAmount, Fraction, Percent, Price, Token } from '@uniswap/sdk-core'
-import { Loader } from "../../../../../libs/ui/src/pure/Loader"
-import Toggle from "modules/pools/pure/Toggle"
-import { unwrappedToken } from "modules/pools/utils/unwrappedToken"
-import { useCallback, useMemo, useState } from "react"
-import useNativeCurrency from "lib/hooks/useNativeCurrency"
-import useIsTickAtLimit from "modules/pools/hooks/useIsTickAtLimit"
-import { getPriceOrderingFromPositionForUI } from "modules/pools/containers/PositionListItem"
-import { useV3PositionFees } from "modules/pools/hooks/useV3Positions"
-import { useIsTransactionPending, useTransactionAdder } from "legacy/state/enhancedTransactions/hooks"
-import { useStablecoinPrice } from "legacy/state/claim/hooks"
-import { useV3NFTPositionManagerContract } from "legacy/hooks/pools/useContract"
-import { useSingleCallResult } from "lib/hooks/multicall"
-import { formatCurrencyAmount, formatPrice } from "../../../../../libs/common-utils/src/formatCurrencyAmount"
-import { ExplorerDataType, getExplorerLink } from "../../../../../libs/common-utils/src/getExplorerLink"
-import { usePositionTokenURI } from "modules/pools/hooks/usePositionTokenURI"
-import { currencyId } from "../../../../../libs/common-utils/src/currencyId"
-import { getTokenLink } from "modules/pools/utils/getTokenlist"
+import { Loader } from '../../../../../libs/ui/src/pure/Loader'
+import Toggle from 'modules/pools/pure/Toggle'
+import { unwrappedToken } from 'modules/pools/utils/unwrappedToken'
+import { Fragment, useCallback, useMemo, useState } from 'react'
+import useNativeCurrency from 'lib/hooks/useNativeCurrency'
+import useIsTickAtLimit from 'modules/pools/hooks/useIsTickAtLimit'
+import { getPriceOrderingFromPositionForUI } from 'modules/pools/containers/PositionListItem'
+import { useV3PositionFees } from 'modules/pools/hooks/useV3Positions'
+import { useIsTransactionPending, useTransactionAdder } from 'legacy/state/enhancedTransactions/hooks'
+import { useStablecoinPrice } from 'legacy/state/claim/hooks'
+import { useV3NFTPositionManagerContract } from 'legacy/hooks/pools/useContract'
+import { useSingleCallResult } from 'lib/hooks/multicall'
+import { formatCurrencyAmount, formatPrice } from '../../../../../libs/common-utils/src/formatCurrencyAmount'
+import { ExplorerDataType, getExplorerLink } from '../../../../../libs/common-utils/src/getExplorerLink'
+import { usePositionTokenURI } from 'modules/pools/hooks/usePositionTokenURI'
+import { currencyId } from '../../../../../libs/common-utils/src/currencyId'
+import { getTokenLink } from 'modules/pools/utils/getTokenlist'
+import { TransactionConfirmationModal } from 'legacy/components/TransactionConfirmationModal'
+import { LegacyConfirmationModalContent } from 'legacy/components/TransactionConfirmationModal/LegacyConfirmationModalContent'
 
 function CurrentPriceCard({
   inverted,
@@ -82,8 +96,6 @@ function CurrentPriceCard({
     </LightCard>
   )
 }
-
-
 
 function LinkedCurrency({ chainId, currency }: { chainId?: number; currency?: Currency }) {
   const address = (currency as Token)?.address
@@ -157,7 +169,6 @@ function getSnapshot(src: HTMLImageElement, canvas: HTMLCanvasElement, targetHei
   }
 }
 
-
 function NFT({ image, height: targetHeight }: { image: string; height: number }) {
   const [animate, setAnimate] = useState(false)
 
@@ -193,10 +204,9 @@ function NFT({ image, height: targetHeight }: { image: string; height: number })
   )
 }
 
-
 function getRatio(
   lower: Price<Currency, Currency>,
-  current: Price<Currency, Currency>,
+  current: Price<Currency, Currency> | any,
   upper: Price<Currency, Currency>
 ) {
   try {
@@ -241,8 +251,6 @@ export function PositionPageUnsupportedContent() {
 }
 
 export default function PositionPage() {
-
-
   const { chainId } = useWeb3React()
   // if (SupportedChainId.LIGHTLINK_PEGASUS_TESTNET === chainId) {
   if (isSupportedChainLightLink(chainId)) {
@@ -253,10 +261,7 @@ export default function PositionPage() {
   }
 }
 
-
-
 function PositionPageContent() {
-
   const { tokenId: tokenIdFromUrl } = useParams<{ tokenId?: string }>()
   const { chainId, account, provider } = useWeb3React()
   const theme = useTheme()
@@ -298,7 +303,6 @@ function PositionPageContent() {
     }
     return undefined
   }, [liquidity, pool, tickLower, tickUpper])
-  
 
   const tickAtLimit = useIsTickAtLimit(feeAmount, tickLower, tickUpper)
 
@@ -314,7 +318,6 @@ function PositionPageContent() {
     invert: manuallyInverted,
   })
 
-
   const inverted = token1 ? base?.equals(token1) : undefined
   const currencyQuote = inverted ? currency0 : currency1
   const currencyBase = inverted ? currency1 : currency0
@@ -329,11 +332,10 @@ function PositionPageContent() {
       : undefined
   }, [inverted, pool, priceLower, priceUpper])
 
+  // fees
+  const [feeValue0, feeValue1] = useV3PositionFees(pool ?? undefined, positionDetails?.tokenId, receiveWETH)
 
-   // fees
-   const [feeValue0, feeValue1] = useV3PositionFees(pool ?? undefined, positionDetails?.tokenId, receiveWETH)
-
-     // these currencies will match the feeValue{0,1} currencies for the purposes of fee collection
+  // these currencies will match the feeValue{0,1} currencies for the purposes of fee collection
   const currency0ForFeeCollectionPurposes = pool ? (receiveWETH ? pool.token0 : unwrappedToken(pool.token0)) : undefined
   const currency1ForFeeCollectionPurposes = pool ? (receiveWETH ? pool.token1 : unwrappedToken(pool.token1)) : undefined
 
@@ -342,26 +344,25 @@ function PositionPageContent() {
   const isCollectPending = useIsTransactionPending(collectMigrationHash ?? undefined)
   const [showConfirm, setShowConfirm] = useState(false)
 
+  // usdc prices always in terms of tokens
+  const price0 = useStablecoinPrice(token0 ?? undefined)
+  const price1 = useStablecoinPrice(token1 ?? undefined)
 
-   // usdc prices always in terms of tokens
-   const price0 = useStablecoinPrice(token0 ?? undefined)
-   const price1 = useStablecoinPrice(token1 ?? undefined)
- 
-   const fiatValueOfFees: CurrencyAmount<Currency> | null = useMemo(() => {
-     if (!price0 || !price1 || !feeValue0 || !feeValue1) return null
- 
-     // we wrap because it doesn't matter, the quote returns a USDC amount
-     const feeValue0Wrapped = feeValue0?.wrapped
-     const feeValue1Wrapped = feeValue1?.wrapped
- 
-     if (!feeValue0Wrapped || !feeValue1Wrapped) return null
- 
-     const amount0 = price0.quote(feeValue0Wrapped)
-     const amount1 = price1.quote(feeValue1Wrapped)
-     return amount0.add(amount1)
-   }, [price0, price1, feeValue0, feeValue1])
+  const fiatValueOfFees: CurrencyAmount<Currency> | null = useMemo(() => {
+    if (!price0 || !price1 || !feeValue0 || !feeValue1) return null
 
-   const fiatValueOfLiquidity: CurrencyAmount<Token> | null = useMemo(() => {
+    // we wrap because it doesn't matter, the quote returns a USDC amount
+    const feeValue0Wrapped = feeValue0?.wrapped
+    const feeValue1Wrapped = feeValue1?.wrapped
+
+    if (!feeValue0Wrapped || !feeValue1Wrapped) return null
+
+    const amount0 = price0.quote(feeValue0Wrapped)
+    const amount1 = price1.quote(feeValue1Wrapped)
+    return amount0.add(amount1)
+  }, [price0, price1, feeValue0, feeValue1])
+
+  const fiatValueOfLiquidity: CurrencyAmount<Token> | null = useMemo(() => {
     if (!price0 || !price1 || !position) return null
     const amount0 = price0.quote(position.amount0)
     const amount1 = price1.quote(position.amount1)
@@ -446,19 +447,17 @@ function PositionPageContent() {
     addTransaction,
     provider,
   ])
-   
+
   const owner = useSingleCallResult(tokenId ? positionManager : null, 'ownerOf', [tokenId]).result?.[0]
   const ownsNFT = owner === account || positionDetails?.operator === account
 
   const feeValueUpper = inverted ? feeValue0 : feeValue1
   const feeValueLower = inverted ? feeValue1 : feeValue0
 
-
   // check if price is within range
   const below = pool && typeof tickLower === 'number' ? pool.tickCurrent < tickLower : undefined
   const above = pool && typeof tickUpper === 'number' ? pool.tickCurrent >= tickUpper : undefined
   const inRange: boolean = typeof below === 'boolean' && typeof above === 'boolean' ? !below && !above : false
-
 
   function modalHeader() {
     return (
@@ -523,364 +522,366 @@ function PositionPageContent() {
       <div />
       <div />
     </LoadingRows>
-  ) : (<>
-    <PositionPageWrapper>
-      <AutoColumn gap="md">
-        <AutoColumn gap="sm">
-          <Link
-            data-cy="visit-pool"
-            style={{ textDecoration: 'none', width: 'fit-content', marginBottom: '0.5rem' }}
-            to="/pools"
-          >
-            <HoverText>
-              <Trans>← Back to Pools</Trans>
-            </HoverText>
-          </Link>
-          <ResponsiveRow>
-            <RowFixed>
-              <DoubleCurrencyLogo currency0={currencyBase} currency1={currencyQuote} size={24} margin={true} />
-              <ThemedText.DeprecatedLabel fontSize="24px" mr="10px">
-                &nbsp;{currencyQuote?.symbol}&nbsp;/&nbsp;{currencyBase?.symbol}
-              </ThemedText.DeprecatedLabel>
-              <Badge style={{ marginRight: '8px' }}>
-                {/* <BadgeText>
+  ) : (
+    <Fragment>
+      <PositionPageWrapper>
+        <TransactionConfirmationModal
+          isOpen={showConfirm}
+          onDismiss={() => setShowConfirm(false)}
+          hash={collectMigrationHash ?? ''}
+          content={() => (
+            <LegacyConfirmationModalContent
+              title={<Trans>Claim fees</Trans>}
+              onDismiss={() => setShowConfirm(false)}
+              topContent={modalHeader}
+            />
+          )}
+          attemptingTxn={collecting}
+          operationType=""
+          pendingText={<Trans>Collecting fees</Trans>}
+        />
+        <AutoColumn gap="md">
+          <AutoColumn gap="sm">
+            <Link
+              data-cy="visit-pool"
+              style={{ textDecoration: 'none', width: 'fit-content', marginBottom: '0.5rem' }}
+              to="/pools"
+            >
+              <HoverText>
+                <Trans>← Back to Pools</Trans>
+              </HoverText>
+            </Link>
+            <ResponsiveRow>
+              <RowFixed>
+                <DoubleCurrencyLogo currency0={currencyBase} currency1={currencyQuote} size={24} margin={true} />
+                <ThemedText.DeprecatedLabel fontSize="24px" mr="10px">
+                  &nbsp;{currencyQuote?.symbol}&nbsp;/&nbsp;{currencyBase?.symbol}
+                </ThemedText.DeprecatedLabel>
+                <Badge style={{ marginRight: '8px' }}>
+                  <BadgeText>
                   <Trans>{new Percent(feeAmount, 1_000_000).toSignificant()}%</Trans>
-                </BadgeText> */}
-              </Badge>
-              <RangeBadge removed={removed} inRange={inRange} />
-            </RowFixed>
-            {ownsNFT && (
-              <ActionButtonResponsiveRow>
-                {currency0 && currency1 && feeAmount && tokenId ? (
-                  <ButtonGray
-                    as={Link}
-                    to={`/increase/${currencyId(currency0)}/${currencyId(currency1)}/${feeAmount}/${tokenId}`}
-                    padding="6px 8px"
-                    width="fit-content"
-                    $borderRadius="12px"
-                    style={{ marginRight: '8px' }}
-                  >
-                    <Trans>Increase Liquidity</Trans>
-                  </ButtonGray>
-                ) : null}
-                {tokenId && !removed ? (
-                  <SmallButtonPrimary
-                    as={Link}
-                    to={`/remove/${tokenId}`}
-                    padding="6px 8px"
-                    width="fit-content"
-                    $borderRadius="12px"
-                  >
-                    <Trans>Remove Liquidity</Trans>
-                  </SmallButtonPrimary>
-                ) : null}
-              </ActionButtonResponsiveRow>
-            )}
-          </ResponsiveRow>
-          <RowBetween></RowBetween>
-        </AutoColumn>
-        <ResponsiveRow align="flex-start">
-              <HideSmall
-                style={{
-                  marginRight: '12px',
-                }}
-              >
-                {'result' in metadata ? (
-                  <DarkCard
-                    width="100%"
-                    height="100%"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      flexDirection: 'column',
-                      justifyContent: 'space-around',
-                      minWidth: '340px',
-                    }}
-                  >
-                    <NFT image={metadata.result.image} height={400} />
-                    {typeof chainId === 'number' && owner && !ownsNFT ? (
-                      <ExternalLink href={getExplorerLink(chainId, owner, ExplorerDataType.ADDRESS)}>
-                        <Trans>Owner</Trans>
-                      </ExternalLink>
-                    ) : null}
-                  </DarkCard>
-                ) : (
-                  <DarkCard
-                    width="100%"
-                    height="100%"
-                    style={{
-                      minWidth: '340px',
-                    }}
-                  >
-                    <Loader />
-                  </DarkCard>
-                )}
-              </HideSmall>
-              <AutoColumn gap="sm" style={{ width: '100%', height: '100%' }}>
-                <DarkCard>
-                  <AutoColumn gap="md" style={{ width: '100%' }}>
-                    <AutoColumn gap="md">
-                      <Label>
-                        <Trans>Liquidity</Trans>
-                      </Label>
-                      {fiatValueOfLiquidity?.greaterThan(new Fraction(1, 100)) ? (
-                        <ThemedText.DeprecatedLargeHeader fontSize="36px" fontWeight={500}>
-                          <Trans>${fiatValueOfLiquidity.toFixed(2, { groupSeparator: ',' })}</Trans>
-                        </ThemedText.DeprecatedLargeHeader>
-                      ) : (
-                        <ThemedText.DeprecatedLargeHeader color={theme.textPrimary} fontSize="36px" fontWeight={500}>
-                          <Trans>$-</Trans>
-                        </ThemedText.DeprecatedLargeHeader>
-                      )}
-                    </AutoColumn>
-                    <LightCard padding="12px 16px">
-                      <AutoColumn gap="md">
-                        <RowBetween>
-                          <LinkedCurrency chainId={chainId} currency={currencyQuote} />
-                          <RowFixed>
-                            <ThemedText.DeprecatedMain>
-                              {inverted ? position?.amount0.toSignificant(4) : position?.amount1.toSignificant(4)}
-                            </ThemedText.DeprecatedMain>
-                            {typeof ratio === 'number' && !removed ? (
-                              <Badge style={{ marginLeft: '10px' }}>
-                                <ThemedText.DeprecatedMain color={theme.textSecondary} fontSize={11}>
-                                  <Trans>{inverted ? ratio : 100 - ratio}%</Trans>
-                                </ThemedText.DeprecatedMain>
-                              </Badge>
-                            ) : null}
-                          </RowFixed>
-                        </RowBetween>
-                        <RowBetween>
-                          <LinkedCurrency chainId={chainId} currency={currencyBase} />
-                          <RowFixed>
-                            <ThemedText.DeprecatedMain>
-                              {inverted ? position?.amount1.toSignificant(4) : position?.amount0.toSignificant(4)}
-                            </ThemedText.DeprecatedMain>
-                            {typeof ratio === 'number' && !removed ? (
-                              <Badge style={{ marginLeft: '10px' }}>
-                                <ThemedText.DeprecatedMain color={theme.textSecondary} fontSize={11}>
-                                  <Trans>{inverted ? 100 - ratio : ratio}%</Trans>
-                                </ThemedText.DeprecatedMain>
-                              </Badge>
-                            ) : null}
-                          </RowFixed>
-                        </RowBetween>
-                      </AutoColumn>
-                    </LightCard>
-                  </AutoColumn>
+                </BadgeText>
+                </Badge>
+                <RangeBadge removed={removed} inRange={inRange} />
+              </RowFixed>
+¬                <ActionButtonResponsiveRow>
+                  {currency0 && currency1 && feeAmount && tokenId ? (
+                    <ButtonGray
+                      as={Link}
+                      to={`/increase/${currencyId(currency0)}/${currencyId(currency1)}/${feeAmount}/${tokenId}`}
+                      padding="6px 8px"
+                      width="fit-content"
+                      $borderRadius="12px"
+                      style={{ marginRight: '8px' }}
+                    >
+                      <Trans>Increase Liquidity</Trans>
+                    </ButtonGray>
+                  ) : null}
+                  {tokenId && !removed ? (
+                    <SmallButtonPrimary
+                      as={Link}
+                      to={`/remove/${tokenId}`}
+                      padding="6px 8px"
+                      width="fit-content"
+                      $borderRadius="12px"
+                    >
+                      <Trans>Remove Liquidity</Trans>
+                    </SmallButtonPrimary>
+                  ) : null}
+                </ActionButtonResponsiveRow>
+              )}
+            </ResponsiveRow>
+            <RowBetween></RowBetween>
+          </AutoColumn>
+          <ResponsiveRow align="flex-start">
+            <HideSmall
+              style={{
+                marginRight: '12px',
+              }}
+            >
+              {'result' in metadata ? (
+                <DarkCard
+                  width="100%"
+                  height="100%"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    justifyContent: 'space-around',
+                    minWidth: '340px',
+                  }}
+                >
+                  <NFT image={metadata.result.image} height={400} />
+                  {typeof chainId === 'number' && owner && !ownsNFT ? (
+                    <ExternalLink href={getExplorerLink(chainId, owner, ExplorerDataType.ADDRESS)}>
+                      <Trans>Owner</Trans>
+                    </ExternalLink>
+                  ) : null}
                 </DarkCard>
-                <DarkCard>
-                  <AutoColumn gap="md" style={{ width: '100%' }}>
+              ) : (
+                <DarkCard
+                  width="100%"
+                  height="100%"
+                  style={{
+                    minWidth: '340px',
+                  }}
+                >
+                  <Loader />
+                </DarkCard>
+              )}
+            </HideSmall>
+            <AutoColumn gap="sm" style={{ width: '100%', height: '100%' }}>
+              <DarkCard>
+                <AutoColumn gap="md" style={{ width: '100%' }}>
+                  <AutoColumn gap="md">
+                    <Label>
+                      <Trans>Liquidity</Trans>
+                    </Label>
+                    {fiatValueOfLiquidity?.greaterThan(new Fraction(1, 100)) ? (
+                      <ThemedText.DeprecatedLargeHeader fontSize="36px" fontWeight={500}>
+                        <Trans>${fiatValueOfLiquidity.toFixed(2, { groupSeparator: ',' })}</Trans>
+                      </ThemedText.DeprecatedLargeHeader>
+                    ) : (
+                      <ThemedText.DeprecatedLargeHeader color={theme.textPrimary} fontSize="36px" fontWeight={500}>
+                        <Trans>$-</Trans>
+                      </ThemedText.DeprecatedLargeHeader>
+                    )}
+                  </AutoColumn>
+                  <LightCard padding="12px 16px">
                     <AutoColumn gap="md">
-                      <RowBetween style={{ alignItems: 'flex-start' }}>
-                        <AutoColumn gap="md">
-                          <Label>
-                            <Trans>Unclaimed fees</Trans>
-                          </Label>
-                          {fiatValueOfFees?.greaterThan(new Fraction(1, 100)) ? (
-                            <ThemedText.DeprecatedLargeHeader
-                              color={theme.accentSuccess}
-                              fontSize="36px"
-                              fontWeight={500}
-                            >
-                              <Trans>${fiatValueOfFees.toFixed(2, { groupSeparator: ',' })}</Trans>
-                            </ThemedText.DeprecatedLargeHeader>
-                          ) : (
-                            <ThemedText.DeprecatedLargeHeader
-                              color={theme.textPrimary}
-                              fontSize="36px"
-                              fontWeight={500}
-                            >
-                              <Trans>$-</Trans>
-                            </ThemedText.DeprecatedLargeHeader>
-                          )}
-                        </AutoColumn>
-                        {ownsNFT &&
-                        (feeValue0?.greaterThan(0) || feeValue1?.greaterThan(0) || !!collectMigrationHash) ? (
-                          <ResponsiveButtonConfirmed
-                            disabled={collecting || !!collectMigrationHash}
-                            confirmed={!!collectMigrationHash && !isCollectPending}
-                            width="fit-content"
-                            style={{ borderRadius: '12px' }}
-                            padding="4px 8px"
-                            onClick={() => setShowConfirm(true)}
-                          >
-                            {!!collectMigrationHash && !isCollectPending ? (
-                              <ThemedText.DeprecatedMain color={theme.textPrimary}>
-                                <Trans> Collected</Trans>
+                      <RowBetween>
+                        <LinkedCurrency chainId={chainId} currency={currencyQuote} />
+                        <RowFixed>
+                          <ThemedText.DeprecatedMain>
+                            {inverted ? position?.amount0.toSignificant(4) : position?.amount1.toSignificant(4)}
+                          </ThemedText.DeprecatedMain>
+                          {typeof ratio === 'number' && !removed ? (
+                            <Badge style={{ marginLeft: '10px' }}>
+                              <ThemedText.DeprecatedMain color={theme.textSecondary} fontSize={11}>
+                                <Trans>{inverted ? ratio : 100 - ratio}%</Trans>
                               </ThemedText.DeprecatedMain>
-                            ) : isCollectPending || collecting ? (
-                              <ThemedText.DeprecatedMain color={theme.textPrimary}>
-                                {' '}
-                                <Dots>
-                                  <Trans>Collecting</Trans>
-                                </Dots>
+                            </Badge>
+                          ) : null}
+                        </RowFixed>
+                      </RowBetween>
+                      <RowBetween>
+                        <LinkedCurrency chainId={chainId} currency={currencyBase} />
+                        <RowFixed>
+                          <ThemedText.DeprecatedMain>
+                            {inverted ? position?.amount1.toSignificant(4) : position?.amount0.toSignificant(4)}
+                          </ThemedText.DeprecatedMain>
+                          {typeof ratio === 'number' && !removed ? (
+                            <Badge style={{ marginLeft: '10px' }}>
+                              <ThemedText.DeprecatedMain color={theme.textSecondary} fontSize={11}>
+                                <Trans>{inverted ? 100 - ratio : ratio}%</Trans>
                               </ThemedText.DeprecatedMain>
-                            ) : (
-                              <>
-                                <ThemedText.DeprecatedMain color={theme.white}>
-                                  <Trans>Collect fees</Trans>
-                                </ThemedText.DeprecatedMain>
-                              </>
-                            )}
-                          </ResponsiveButtonConfirmed>
-                        ) : null}
+                            </Badge>
+                          ) : null}
+                        </RowFixed>
                       </RowBetween>
                     </AutoColumn>
-                    <LightCard padding="12px 16px">
+                  </LightCard>
+                </AutoColumn>
+              </DarkCard>
+              <DarkCard>
+                <AutoColumn gap="md" style={{ width: '100%' }}>
+                  <AutoColumn gap="md">
+                    <RowBetween style={{ alignItems: 'flex-start' }}>
                       <AutoColumn gap="md">
-                        <RowBetween>
-                          <RowFixed>
-                            <CurrencyLogo
-                              currency={feeValueUpper?.currency}
-                              size="20px"
-                              style={{ marginRight: '0.5rem' }}
-                            />
-                            <ThemedText.DeprecatedMain>{feeValueUpper?.currency?.symbol}</ThemedText.DeprecatedMain>
-                          </RowFixed>
-                          <RowFixed>
-                            <ThemedText.DeprecatedMain>
-                              {feeValueUpper ? formatCurrencyAmount(feeValueUpper, 4) : '-'}
-                            </ThemedText.DeprecatedMain>
-                          </RowFixed>
-                        </RowBetween>
-                        <RowBetween>
-                          <RowFixed>
-                            <CurrencyLogo
-                              currency={feeValueLower?.currency}
-                              size="20px"
-                              style={{ marginRight: '0.5rem' }}
-                            />
-                            <ThemedText.DeprecatedMain>{feeValueLower?.currency?.symbol}</ThemedText.DeprecatedMain>
-                          </RowFixed>
-                          <RowFixed>
-                            <ThemedText.DeprecatedMain>
-                              {feeValueLower ? formatCurrencyAmount(feeValueLower, 4) : '-'}
-                            </ThemedText.DeprecatedMain>
-                          </RowFixed>
-                        </RowBetween>
+                        <Label>
+                          <Trans>Unclaimed fees</Trans>
+                        </Label>
+                        {fiatValueOfFees?.greaterThan(new Fraction(1, 100)) ? (
+                          <ThemedText.DeprecatedLargeHeader
+                            color={theme.accentSuccess}
+                            fontSize="36px"
+                            fontWeight={500}
+                          >
+                            <Trans>${fiatValueOfFees.toFixed(2, { groupSeparator: ',' })}</Trans>
+                          </ThemedText.DeprecatedLargeHeader>
+                        ) : (
+                          <ThemedText.DeprecatedLargeHeader color={theme.textPrimary} fontSize="36px" fontWeight={500}>
+                            <Trans>$-</Trans>
+                          </ThemedText.DeprecatedLargeHeader>
+                        )}
                       </AutoColumn>
-                    </LightCard>
-                    {showCollectAsWeth && (
-                      <AutoColumn gap="md">
-                        <RowBetween>
-                          <ThemedText.DeprecatedMain>
-                            <Trans>Collect as {nativeWrappedSymbol}</Trans>
-                          </ThemedText.DeprecatedMain>
-                          <Toggle
-                            id="receive-as-weth"
-                            isActive={receiveWETH}
-                            toggle={() => setReceiveWETH((receiveWETH) => !receiveWETH)}
-                          />
-                        </RowBetween>
-                      </AutoColumn>
-                    )}
+                      {ownsNFT && (feeValue0?.greaterThan(0) || feeValue1?.greaterThan(0) || !!collectMigrationHash) ? (
+                        <ResponsiveButtonConfirmed
+                          disabled={collecting || !!collectMigrationHash}
+                          confirmed={!!collectMigrationHash && !isCollectPending}
+                          width="fit-content"
+                          style={{ borderRadius: '12px' }}
+                          padding="4px 8px"
+                          onClick={() => setShowConfirm(true)}
+                        >
+                          {!!collectMigrationHash && !isCollectPending ? (
+                            <ThemedText.DeprecatedMain color={theme.textPrimary}>
+                              <Trans> Collected</Trans>
+                            </ThemedText.DeprecatedMain>
+                          ) : isCollectPending || collecting ? (
+                            <ThemedText.DeprecatedMain color={theme.textPrimary}>
+                              {' '}
+                              <Dots>
+                                <Trans>Collecting</Trans>
+                              </Dots>
+                            </ThemedText.DeprecatedMain>
+                          ) : (
+                            <>
+                              <ThemedText.DeprecatedMain color={theme.white}>
+                                <Trans>Collect fees</Trans>
+                              </ThemedText.DeprecatedMain>
+                            </>
+                          )}
+                        </ResponsiveButtonConfirmed>
+                      ) : null}
+                    </RowBetween>
                   </AutoColumn>
-                </DarkCard>
-              </AutoColumn>
-            </ResponsiveRow>
+                  <LightCard padding="12px 16px">
+                    <AutoColumn gap="md">
+                      <RowBetween>
+                        <RowFixed>
+                          <CurrencyLogo
+                            currency={feeValueUpper?.currency}
+                            size="20px"
+                            style={{ marginRight: '0.5rem' }}
+                          />
+                          <ThemedText.DeprecatedMain>{feeValueUpper?.currency?.symbol}</ThemedText.DeprecatedMain>
+                        </RowFixed>
+                        <RowFixed>
+                          <ThemedText.DeprecatedMain>
+                            {feeValueUpper ? formatCurrencyAmount(feeValueUpper, 4) : '-'}
+                          </ThemedText.DeprecatedMain>
+                        </RowFixed>
+                      </RowBetween>
+                      <RowBetween>
+                        <RowFixed>
+                          <CurrencyLogo
+                            currency={feeValueLower?.currency}
+                            size="20px"
+                            style={{ marginRight: '0.5rem' }}
+                          />
+                          <ThemedText.DeprecatedMain>{feeValueLower?.currency?.symbol}</ThemedText.DeprecatedMain>
+                        </RowFixed>
+                        <RowFixed>
+                          <ThemedText.DeprecatedMain>
+                            {feeValueLower ? formatCurrencyAmount(feeValueLower, 4) : '-'}
+                          </ThemedText.DeprecatedMain>
+                        </RowFixed>
+                      </RowBetween>
+                    </AutoColumn>
+                  </LightCard>
+                  {showCollectAsWeth && (
+                    <AutoColumn gap="md">
+                      <RowBetween>
+                        <ThemedText.DeprecatedMain>
+                          <Trans>Collect as {nativeWrappedSymbol}</Trans>
+                        </ThemedText.DeprecatedMain>
+                        <Toggle
+                          id="receive-as-weth"
+                          isActive={receiveWETH}
+                          toggle={() => setReceiveWETH((receiveWETH) => !receiveWETH)}
+                        />
+                      </RowBetween>
+                    </AutoColumn>
+                  )}
+                </AutoColumn>
+              </DarkCard>
+            </AutoColumn>
+          </ResponsiveRow>
 
-            <DarkCard>
-              <AutoColumn gap="md">
-                <RowBetween>
-                  <RowFixed>
-                    <Label display="flex" style={{ marginRight: '12px' }}>
-                      <Trans>Price range</Trans>
-                    </Label>
-                    <HideExtraSmall>
-                      <>
-                        <RangeBadge removed={removed} inRange={inRange} />
-                        <span style={{ width: '8px' }} />
-                      </>
-                    </HideExtraSmall>
-                  </RowFixed>
-                  <RowFixed>
-                    {currencyBase && currencyQuote && (
-                      <RateToggle
-                        currencyA={currencyBase}
-                        currencyB={currencyQuote}
-                        handleRateToggle={() => setManuallyInverted(!manuallyInverted)}
-                      />
-                    )}
-                  </RowFixed>
-                </RowBetween>
+          <DarkCard>
+            <AutoColumn gap="md">
+              <RowBetween>
+                <RowFixed>
+                  <Label display="flex" style={{ marginRight: '12px' }}>
+                    <Trans>Price range</Trans>
+                  </Label>
+                  <HideExtraSmall>
+                    <>
+                      <RangeBadge removed={removed} inRange={inRange} />
+                      <span style={{ width: '8px' }} />
+                    </>
+                  </HideExtraSmall>
+                </RowFixed>
+                <RowFixed>
+                  {currencyBase && currencyQuote && (
+                    <RateToggle
+                      currencyA={currencyBase}
+                      currencyB={currencyQuote}
+                      handleRateToggle={() => setManuallyInverted(!manuallyInverted)}
+                    />
+                  )}
+                </RowFixed>
+              </RowBetween>
 
-                <RowBetween>
-                  <LightCard padding="12px" width="100%">
-                    <AutoColumn gap="sm" justify="center">
-                      <ExtentsText>
-                        <Trans>Min price</Trans>
-                      </ExtentsText>
-                      <ThemedText.DeprecatedMediumHeader textAlign="center">
-                        {/* {formatTickPrice({
+              <RowBetween>
+                <LightCard padding="12px" width="100%">
+                  <AutoColumn gap="sm" justify="center">
+                    <ExtentsText>
+                      <Trans>Min price</Trans>
+                    </ExtentsText>
+                    <ThemedText.DeprecatedMediumHeader textAlign="center">
+                      {/* {formatTickPrice({
                           price: priceLower,
                           atLimit: tickAtLimit,
                           direction: Bound.LOWER,
                           numberType: NumberType.TokenTx,
                         })} */}
-                      </ThemedText.DeprecatedMediumHeader>
-                      <ExtentsText>
-                        {' '}
-                        <Trans>
-                          {currencyQuote?.symbol} per {currencyBase?.symbol}
-                        </Trans>
-                      </ExtentsText>
+                    </ThemedText.DeprecatedMediumHeader>
+                    <ExtentsText>
+                      {' '}
+                      <Trans>
+                        {currencyQuote?.symbol} per {currencyBase?.symbol}
+                      </Trans>
+                    </ExtentsText>
 
-                      {inRange && (
-                        <ThemedText.DeprecatedSmall color={theme.textTertiary}>
-                          <Trans>Your position will be 100% {currencyBase?.symbol} at this price.</Trans>
-                        </ThemedText.DeprecatedSmall>
-                      )}
-                    </AutoColumn>
-                  </LightCard>
+                    {inRange && (
+                      <ThemedText.DeprecatedSmall color={theme.textTertiary}>
+                        <Trans>Your position will be 100% {currencyBase?.symbol} at this price.</Trans>
+                      </ThemedText.DeprecatedSmall>
+                    )}
+                  </AutoColumn>
+                </LightCard>
 
-                  <DoubleArrow>⟷</DoubleArrow>
-                  <LightCard padding="12px" width="100%">
-                    <AutoColumn gap="sm" justify="center">
-                      <ExtentsText>
-                        <Trans>Max price</Trans>
-                      </ExtentsText>
-                      <ThemedText.DeprecatedMediumHeader textAlign="center">
-                        {/* {formatTickPrice({
+                <DoubleArrow>⟷</DoubleArrow>
+                <LightCard padding="12px" width="100%">
+                  <AutoColumn gap="sm" justify="center">
+                    <ExtentsText>
+                      <Trans>Max price</Trans>
+                    </ExtentsText>
+                    <ThemedText.DeprecatedMediumHeader textAlign="center">
+                      {/* {formatTickPrice({
                           price: priceUpper,
                           atLimit: tickAtLimit,
                           direction: Bound.UPPER,
                           numberType: NumberType.TokenTx,
                         })} */}
-                      </ThemedText.DeprecatedMediumHeader>
-                      <ExtentsText>
-                        {' '}
-                        <Trans>
-                          {currencyQuote?.symbol} per {currencyBase?.symbol}
-                        </Trans>
-                      </ExtentsText>
+                    </ThemedText.DeprecatedMediumHeader>
+                    <ExtentsText>
+                      {' '}
+                      <Trans>
+                        {currencyQuote?.symbol} per {currencyBase?.symbol}
+                      </Trans>
+                    </ExtentsText>
 
-                      {inRange && (
-                        <ThemedText.DeprecatedSmall color={theme.textTertiary}>
-                          <Trans>Your position will be 100% {currencyQuote?.symbol} at this price.</Trans>
-                        </ThemedText.DeprecatedSmall>
-                      )}
-                    </AutoColumn>
-                  </LightCard>
-                </RowBetween>
-                <CurrentPriceCard
-                  inverted={inverted}
-                  pool={pool}
-                  currencyQuote={currencyQuote}
-                  currencyBase={currencyBase}
-                />
-              </AutoColumn>
-            </DarkCard>
-      </AutoColumn>
-
-
-    </PositionPageWrapper>
-
-
-  </>
+                    {inRange && (
+                      <ThemedText.DeprecatedSmall color={theme.textTertiary}>
+                        <Trans>Your position will be 100% {currencyQuote?.symbol} at this price.</Trans>
+                      </ThemedText.DeprecatedSmall>
+                    )}
+                  </AutoColumn>
+                </LightCard>
+              </RowBetween>
+              <CurrentPriceCard
+                inverted={inverted}
+                pool={pool}
+                currencyQuote={currencyQuote}
+                currencyBase={currencyBase}
+              />
+            </AutoColumn>
+          </DarkCard>
+        </AutoColumn>
+      </PositionPageWrapper>
+    </Fragment>
   )
-
 }
-
-
-

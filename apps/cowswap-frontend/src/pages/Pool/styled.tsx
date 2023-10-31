@@ -217,3 +217,7 @@ export const Dots = styled.span`
     }
   }
 `
+export const BadgeText = styled.div`
+  font-weight: 500;
+  font-size: 14px;
+`
