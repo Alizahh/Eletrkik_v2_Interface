@@ -43,16 +43,21 @@ import useIsTickAtLimit from 'modules/pools/hooks/useIsTickAtLimit'
 import { getPriceOrderingFromPositionForUI } from 'modules/pools/containers/PositionListItem'
 import { useV3PositionFees } from 'modules/pools/hooks/useV3Positions'
 import { useIsTransactionPending, useTransactionAdder } from 'legacy/state/enhancedTransactions/hooks'
-import { useStablecoinPrice } from 'legacy/state/claim/hooks'
+import  useStablecoinPrice from 'modules/pools/hooks/useStableCoinPrice'
 import { useV3NFTPositionManagerContract } from 'legacy/hooks/pools/useContract'
 import { useSingleCallResult } from 'lib/hooks/multicall'
-import { formatCurrencyAmount, formatPrice } from '../../../../../libs/common-utils/src/formatCurrencyAmount'
+import { formatCurrencyAmount } from '../../../../../libs/common-utils/src/formatCurrencyAmount'
 import { ExplorerDataType, getExplorerLink } from '../../../../../libs/common-utils/src/getExplorerLink'
 import { usePositionTokenURI } from 'modules/pools/hooks/usePositionTokenURI'
 import { currencyId } from '../../../../../libs/common-utils/src/currencyId'
 import { getTokenLink } from 'modules/pools/utils/getTokenlist'
 import { TransactionConfirmationModal } from 'legacy/components/TransactionConfirmationModal'
 import { LegacyConfirmationModalContent } from 'legacy/components/TransactionConfirmationModal/LegacyConfirmationModalContent'
+import { calculateGasMargin } from '../../../../../libs/common-utils/src/calculateGasMargin'
+import type { TransactionResponse } from '@ethersproject/providers'
+import { Bound } from 'legacy/state/mint/v3/actions'
+import { formatTickPrice } from 'modules/pools/utils/formatTickPrice'
+import { formatPrice, NumberType } from '@uniswap/conedison/format'
 
 function CurrentPriceCard({
   inverted,
@@ -119,45 +124,64 @@ function LinkedCurrency({ chainId, currency }: { chainId?: number; currency?: Cu
   )
 }
 
-const useInverter = ({
-  priceLower,
-  priceUpper,
-  quote,
-  base,
-  invert,
-}: {
-  priceLower?: Price<Token, Token>
-  priceUpper?: Price<Token, Token>
-  quote?: Token
-  base?: Token
-  invert?: boolean
-}): {
-  priceLower?: Price<Token, Token>
-  priceUpper?: Price<Token, Token>
-  quote?: Token
-  base?: Token
-} => {
-  return {
-    priceUpper: invert ? priceLower?.invert() : priceUpper,
-    priceLower: invert ? priceUpper?.invert() : priceLower,
-    quote: invert ? base : quote,
-    base: invert ? quote : base,
+function LinkedCurrencyDeprecated({ chainId, currency }: { chainId?: number; currency?: Currency }) {
+  const address = (currency as Token)?.address
+
+  if (typeof chainId === 'number' && address) {
+    return (
+      <RowFixed>
+        <CurrencyLogo currency={currency} size="20px" style={{ marginRight: '0.5rem' }} />
+        <ThemedText.DeprecatedMain>{currency?.symbol}</ThemedText.DeprecatedMain>
+      </RowFixed>
+    )
+  }
+
+  return (
+    <RowFixed>
+      <CurrencyLogo currency={currency} size="20px" style={{ marginRight: '0.5rem' }} />
+      <ThemedText.DeprecatedMain>{currency?.symbol}</ThemedText.DeprecatedMain>
+    </RowFixed>
+  )
+}
+
+function getRatio(
+  lower: Price<Currency, Currency>,
+  current: Price<Currency, Currency> | any,
+  upper: Price<Currency, Currency>
+) {
+  try {
+    if (!current.greaterThan(lower)) {
+      return 100
+    } else if (!current.lessThan(upper)) {
+      return 0
+    }
+
+    const a = Number.parseFloat(lower.toSignificant(15))
+    const b = Number.parseFloat(upper.toSignificant(15))
+    const c = Number.parseFloat(current.toSignificant(15))
+
+    const ratio = Math.floor((1 / ((Math.sqrt(a * b) - Math.sqrt(b * c)) / (c - Math.sqrt(b * c)) + 1)) * 100)
+
+    if (ratio < 0 || ratio > 100) {
+      throw Error('Out of range')
+    }
+
+    return ratio
+  } catch {
+    return undefined
   }
 }
 
-// snapshots a src img into a canvas
 function getSnapshot(src: HTMLImageElement, canvas: HTMLCanvasElement, targetHeight: number) {
   const context = canvas.getContext('2d')
 
   if (context) {
     let { width, height } = src
 
-    // src may be hidden and not have the target dimensions
     const ratio = width / height
     height = targetHeight
     width = Math.round(ratio * targetHeight)
 
-    // Ensure crispness at high DPIs
     canvas.width = width * devicePixelRatio
     canvas.height = height * devicePixelRatio
     canvas.style.width = width + 'px'
@@ -204,33 +228,32 @@ function NFT({ image, height: targetHeight }: { image: string; height: number })
   )
 }
 
-function getRatio(
-  lower: Price<Currency, Currency>,
-  current: Price<Currency, Currency> | any,
-  upper: Price<Currency, Currency>
-) {
-  try {
-    if (!current.greaterThan(lower)) {
-      return 100
-    } else if (!current.lessThan(upper)) {
-      return 0
-    }
-
-    const a = Number.parseFloat(lower.toSignificant(15))
-    const b = Number.parseFloat(upper.toSignificant(15))
-    const c = Number.parseFloat(current.toSignificant(15))
-
-    const ratio = Math.floor((1 / ((Math.sqrt(a * b) - Math.sqrt(b * c)) / (c - Math.sqrt(b * c)) + 1)) * 100)
-
-    if (ratio < 0 || ratio > 100) {
-      throw Error('Out of range')
-    }
-
-    return ratio
-  } catch {
-    return undefined
+const useInverter = ({
+  priceLower,
+  priceUpper,
+  quote,
+  base,
+  invert,
+}: {
+  priceLower?: Price<Token, Token>
+  priceUpper?: Price<Token, Token>
+  quote?: Token
+  base?: Token
+  invert?: boolean
+}): {
+  priceLower?: Price<Token, Token>
+  priceUpper?: Price<Token, Token>
+  quote?: Token
+  base?: Token
+} => {
+  return {
+    priceUpper: invert ? priceLower?.invert() : priceUpper,
+    priceLower: invert ? priceUpper?.invert() : priceLower,
+    quote: invert ? base : quote,
+    base: invert ? quote : base,
   }
 }
+
 
 export function PositionPageUnsupportedContent() {
   return (
@@ -252,9 +275,7 @@ export function PositionPageUnsupportedContent() {
 
 export default function PositionPage() {
   const { chainId } = useWeb3React()
-  // if (SupportedChainId.LIGHTLINK_PEGASUS_TESTNET === chainId) {
   if (isSupportedChainLightLink(chainId)) {
-    // isSupportedChain(chainId)
     return <PositionPageContent />
   } else {
     return <PositionPageUnsupportedContent />
@@ -289,12 +310,10 @@ function PositionPageContent() {
   const currency0 = token0 ? unwrappedToken(token0) : undefined
   const currency1 = token1 ? unwrappedToken(token1) : undefined
 
-  // flag for receiving WETH
   const [receiveWETH, setReceiveWETH] = useState(false)
   const nativeCurrency = useNativeCurrency()
   const nativeWrappedSymbol = nativeCurrency.wrapped.symbol
 
-  // construct Position from details returned
   const [poolState, pool] = usePool(token0 ?? undefined, token1 ?? undefined, feeAmount)
 
   const position = useMemo(() => {
@@ -309,7 +328,6 @@ function PositionPageContent() {
   const pricesFromPosition = getPriceOrderingFromPositionForUI(position)
   const [manuallyInverted, setManuallyInverted] = useState(false)
 
-  // handle manual inversion
   const { priceLower, priceUpper, base } = useInverter({
     priceLower: pricesFromPosition.priceLower,
     priceUpper: pricesFromPosition.priceUpper,
@@ -332,10 +350,8 @@ function PositionPageContent() {
       : undefined
   }, [inverted, pool, priceLower, priceUpper])
 
-  // fees
   const [feeValue0, feeValue1] = useV3PositionFees(pool ?? undefined, positionDetails?.tokenId, receiveWETH)
 
-  // these currencies will match the feeValue{0,1} currencies for the purposes of fee collection
   const currency0ForFeeCollectionPurposes = pool ? (receiveWETH ? pool.token0 : unwrappedToken(pool.token0)) : undefined
   const currency1ForFeeCollectionPurposes = pool ? (receiveWETH ? pool.token1 : unwrappedToken(pool.token1)) : undefined
 
@@ -344,7 +360,6 @@ function PositionPageContent() {
   const isCollectPending = useIsTransactionPending(collectMigrationHash ?? undefined)
   const [showConfirm, setShowConfirm] = useState(false)
 
-  // usdc prices always in terms of tokens
   const price0 = useStablecoinPrice(token0 ?? undefined)
   const price1 = useStablecoinPrice(token1 ?? undefined)
 
@@ -370,6 +385,7 @@ function PositionPageContent() {
   }, [price0, price1, position])
 
   const addTransaction = useTransactionAdder()
+
   const positionManager = useV3NFTPositionManagerContract()
   const collect = useCallback(() => {
     if (
@@ -385,8 +401,6 @@ function PositionPageContent() {
 
     setCollecting(true)
 
-    // we fall back to expecting 0 fees in case the fetch fails, which is safe in the
-    // vast majority of cases
     const { calldata, value } = NonfungiblePositionManager.collectCallParameters({
       tokenId: tokenId.toString(),
       expectedCurrencyOwed0: feeValue0 ?? CurrencyAmount.fromRawAmount(currency0ForFeeCollectionPurposes, 0),
@@ -403,7 +417,7 @@ function PositionPageContent() {
     provider
       .getSigner()
       .estimateGas(txn)
-      .then((estimate) => {
+      .then((estimate:any) => {
         const newTxn = {
           ...txn,
           gasLimit: calculateGasMargin(estimate),
@@ -416,22 +430,22 @@ function PositionPageContent() {
             setCollectMigrationHash(response.hash)
             setCollecting(false)
 
-            sendEvent({
-              category: 'Liquidity',
-              action: 'CollectV3',
-              label: [currency0ForFeeCollectionPurposes.symbol, currency1ForFeeCollectionPurposes.symbol].join('/'),
-            })
+            // sendEvent({
+            //   category: 'Liquidity',
+            //   action: 'CollectV3',
+            //   label: [currency0ForFeeCollectionPurposes.symbol, currency1ForFeeCollectionPurposes.symbol].join('/'),
+            // })
 
-            addTransaction(response, {
-              type: TransactionType.COLLECT_FEES,
-              currencyId0: currencyId(currency0ForFeeCollectionPurposes),
-              currencyId1: currencyId(currency1ForFeeCollectionPurposes),
-              expectedCurrencyOwed0: CurrencyAmount.fromRawAmount(currency0ForFeeCollectionPurposes, 0).toExact(),
-              expectedCurrencyOwed1: CurrencyAmount.fromRawAmount(currency1ForFeeCollectionPurposes, 0).toExact(),
-            })
+            // addTransaction(response, {
+            //   type: TransactionType.COLLECT_FEES,
+            //   currencyId0: currencyId(currency0ForFeeCollectionPurposes),
+            //   currencyId1: currencyId(currency1ForFeeCollectionPurposes),
+            //   expectedCurrencyOwed0: CurrencyAmount.fromRawAmount(currency0ForFeeCollectionPurposes, 0).toExact(),
+            //   expectedCurrencyOwed1: CurrencyAmount.fromRawAmount(currency1ForFeeCollectionPurposes, 0).toExact(),
+            // })
           })
       })
-      .catch((error) => {
+      .catch((error:any) => {
         setCollecting(false)
         console.error(error)
       })
@@ -779,7 +793,7 @@ function PositionPageContent() {
                         <Toggle
                           id="receive-as-weth"
                           isActive={receiveWETH}
-                          toggle={() => setReceiveWETH((receiveWETH) => !receiveWETH)}
+                          toggle={() => setReceiveWETH((receiveWETH:any) => !receiveWETH)}
                         />
                       </RowBetween>
                     </AutoColumn>
@@ -821,12 +835,12 @@ function PositionPageContent() {
                       <Trans>Min price</Trans>
                     </ExtentsText>
                     <ThemedText.DeprecatedMediumHeader textAlign="center">
-                      {/* {formatTickPrice({
+                      {formatTickPrice({
                           price: priceLower,
                           atLimit: tickAtLimit,
                           direction: Bound.LOWER,
                           numberType: NumberType.TokenTx,
-                        })} */}
+                        })}
                     </ThemedText.DeprecatedMediumHeader>
                     <ExtentsText>
                       {' '}
@@ -850,12 +864,12 @@ function PositionPageContent() {
                       <Trans>Max price</Trans>
                     </ExtentsText>
                     <ThemedText.DeprecatedMediumHeader textAlign="center">
-                      {/* {formatTickPrice({
+                      {formatTickPrice({
                           price: priceUpper,
                           atLimit: tickAtLimit,
                           direction: Bound.UPPER,
                           numberType: NumberType.TokenTx,
-                        })} */}
+                        })}
                     </ThemedText.DeprecatedMediumHeader>
                     <ExtentsText>
                       {' '}
