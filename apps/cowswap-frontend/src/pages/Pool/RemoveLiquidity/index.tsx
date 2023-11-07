@@ -40,11 +40,12 @@ import { Break } from 'legacy/components/earn/styled'
 
 const DEFAULT_REMOVE_V3_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
 
-// redirect invalid tokenIds
 export default function RemoveLiquidityV3() {
+
   const { chainId } = useWeb3React()
   const { tokenId } = useParams<{ tokenId: string }>()
   const location = useLocation()
+
   const parsedTokenId = useMemo(() => {
     try {
       return BigNumber.from(tokenId)
@@ -89,10 +90,9 @@ function Remove({ tokenId }: { tokenId: BigNumber }) {
 
   const removed = position?.liquidity?.eq(0)
 
-  // boilerplate for the slider
   const [percentForSlider, onPercentSelectForSlider] = useDebouncedChangeHandler(percent, onPercentSelect)
 
-  const deadline = useTransactionDeadline() // custom from users settings
+  const deadline = useTransactionDeadline()
   const allowedSlippage = useUserSlippageToleranceWithDefault(DEFAULT_REMOVE_V3_LIQUIDITY_SLIPPAGE_TOLERANCE) // custom from users
 
   const [showConfirm, setShowConfirm] = useState(false)
@@ -100,6 +100,7 @@ function Remove({ tokenId }: { tokenId: BigNumber }) {
   const [txnHash, setTxnHash] = useState<string | undefined>()
   const addTransaction = useTransactionAdder()
   const positionManager = useV3NFTPositionManagerContract()
+
   const burn = useCallback(async () => {
     setAttemptingTxn(true)
     if (
@@ -116,8 +117,7 @@ function Remove({ tokenId }: { tokenId: BigNumber }) {
       return
     }
 
-    // we fall back to expecting 0 fees in case the fetch fails, which is safe in the
-    // vast majority of cases
+  
     const { calldata, value } = NonfungiblePositionManager.removeCallParameters(positionSDK, {
       tokenId: tokenId.toString(),
       liquidityPercentage,
@@ -193,7 +193,6 @@ function Remove({ tokenId }: { tokenId: BigNumber }) {
 
   const handleDismissConfirmation = useCallback(() => {
     setShowConfirm(false)
-    // if there was a tx hash, we want to clear the input
     if (txnHash) {
       onPercentSelectForSlider(0)
     }

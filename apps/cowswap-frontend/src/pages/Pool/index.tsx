@@ -92,6 +92,10 @@ export default function Pool() {
         return <WrongNetworkCard />
     }
 
+    const onClicksetUserHideClosedPositions = useCallback(() => {
+        setUserHideClosedPositions(!userHideClosedPositions);
+      }, []);
+      
     return (
         <PageWrapper>
             <AutoColumn gap="lg" justify="center">
