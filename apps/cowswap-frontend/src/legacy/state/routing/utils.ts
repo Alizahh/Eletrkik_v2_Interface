@@ -1,11 +1,9 @@
 import { MixedRouteSDK } from '@uniswap/router-sdk'
 import { Currency, CurrencyAmount, Token, TradeType } from '@uniswap/sdk-core'
-import { AlphaRouter, ChainId } from '@aaran1337/smart-order-router-test'
 import { Pair, Route as V2Route } from '@uniswap/v2-sdk'
 import { FeeAmount, Pool, Route as V3Route } from '@uniswap/v3-sdk'
-import { RPC_PROVIDERS } from 'constants/providers'
-import { isBsc, isMatic, nativeOnChain } from 'constants/tokens'
 import { toSupportedChainId } from 'lib/hooks/routing/clientSideSmartOrderRouter'
+import { AlphaRouter, ChainId } from '@aaran1337/smart-order-router-test'
 
 import { GetQuoteArgs, INTERNAL_ROUTER_PREFERENCE_PRICE, RouterPreference } from './slice'
 import {
@@ -19,6 +17,8 @@ import {
   V3PoolInRoute,
 } from './types'
 import { BigNumber } from 'ethers'
+import {RPC_PROVIDERS} from '../../../../../../libs/common-const/src/providers'
+import { isBsc, isMatic, nativeOnChain } from '../../../../../../libs/common-const/src/tokens'
 
 const routers = new Map<ChainId, AlphaRouter>()
 export function getRouter(chainId: ChainId): AlphaRouter {

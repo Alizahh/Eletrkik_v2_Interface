@@ -2,23 +2,21 @@ import { IMetric, MetricLoggerUnit, setGlobalMetric } from '@aaran1337/smart-ord
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
 import { AVERAGE_L1_BLOCK_TIME } from '../../../../../../libs/common-const/src/chainInfo'
-import { useRoutingAPIV2Enabled } from 'featureFlags/flags/unifiedRouter'
 import ms from 'ms.macro'
 import { useMemo } from 'react'
-import { INTERNAL_ROUTER_PREFERENCE_PRICE, RouterPreference, useGetQuoteQuery } from 'state/routing/slice'
 
 import { InterfaceTrade, QuoteState, TradeState } from './types'
+import { useRoutingAPIArguments } from 'lib/hooks/routing/useRoutingAPIArguments'
+import { INTERNAL_ROUTER_PREFERENCE_PRICE, RouterPreference, useGetQuoteQuery } from './slice'
 
 const TRADE_INVALID = { state: TradeState.INVALID, trade: undefined } as const
 const TRADE_NOT_FOUND = { state: TradeState.NO_ROUTE_FOUND, trade: undefined } as const
 const TRADE_LOADING = { state: TradeState.LOADING, trade: undefined } as const
 
-/**
- * Returns the best trade by invoking the routing api or the smart order router on the client
- * @param tradeType whether the swap is an exact in/out
- * @param amountSpecified the exact amount to swap in/out
- * @param otherCurrency the desired output/payment currency
- */
+export function useRoutingAPIV2Enabled(): boolean {
+  return false;
+}
+
 export function useRoutingAPITrade<TTradeType extends TradeType>(
   tradeType: TTradeType,
   amountSpecified: CurrencyAmount<Currency> | undefined,
@@ -51,27 +49,14 @@ export function useRoutingAPITrade<TTradeType extends TradeType>(
     data: legacyAPITradeResult,
     currentData: currentLegacyAPITradeResult,
   } = useGetQuoteQuery(shouldUseRoutingApiV2 ? skipToken : queryArgs ?? skipToken, {
-    // Price-fetching is informational and costly, so it's done less frequently.
     pollingInterval: routerPreference === INTERNAL_ROUTER_PREFERENCE_PRICE ? ms`1m` : AVERAGE_L1_BLOCK_TIME,
-    // If latest quote from cache was fetched > 2m ago, instantly repoll for another instead of waiting for next poll period
     refetchOnMountOrArgChange: 2 * 60,
   })
 
-  // const {
-  //   isError: isV2APIError,
-  //   data: v2TradeResult,
-  //   currentData: currentV2TradeResult,
-  // } = useGetQuoteQueryV2(!shouldUseRoutingApiV2 ? skipToken : queryArgs ?? skipToken, {
-  //   // Price-fetching is informational and costly, so it's done less frequently.
-  //   pollingInterval: routerPreference === INTERNAL_ROUTER_PREFERENCE_PRICE ? ms`1m` : AVERAGE_L1_BLOCK_TIME,
-  //   // If latest quote from cache was fetched > 2m ago, instantly repoll for another instead of waiting for next poll period
-  //   refetchOnMountOrArgChange: 2 * 60,
-  // })
+
 
   const [tradeResult, currentTradeResult, isError] =
-    // shouldUseRoutingApiV2
-    // ? [v2TradeResult, currentV2TradeResult, isV2APIError]
-    // :
+ 
     [legacyAPITradeResult, currentLegacyAPITradeResult, isLegacyAPIError]
 
   const isCurrent = currentTradeResult === tradeResult
@@ -82,7 +67,6 @@ export function useRoutingAPITrade<TTradeType extends TradeType>(
     } else if (tradeResult?.state === QuoteState.NOT_FOUND && isCurrent) {
       return TRADE_NOT_FOUND
     } else if (!tradeResult?.trade) {
-      // TODO(WEB-3307): use `isLoading` returned by rtk-query hook instead of checking for `trade` status
       return TRADE_LOADING
     } else {
       return {

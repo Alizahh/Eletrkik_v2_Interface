@@ -309,3 +309,12 @@ export const TOKEN_DISTRO_CONTRACT_ADDRESSES: Record<number, string> = {
   [SupportedChainId.GOERLI]: '0x2f453f48a374Dd286d0Dc9aa110309c1623b29Fd',
   [SupportedChainId.GNOSIS_CHAIN]: '0x3d610e917130f9D036e85A030596807f57e11093',
 }
+
+
+export function isMatic(chainId: number): chainId is SChainId.POLYGON | SChainId.POLYGON_MUMBAI {
+  return chainId === SChainId.POLYGON_MUMBAI || chainId === SChainId.POLYGON
+}
+
+export function isBsc(chainId: number): chainId is SChainId.BNB {
+  return chainId === SChainId.BNB
+}

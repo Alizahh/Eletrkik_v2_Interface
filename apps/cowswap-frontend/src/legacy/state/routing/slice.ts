@@ -9,7 +9,6 @@ import { TradeType } from "@uniswap/sdk-core";
 import { getClientSideQuote } from "lib/hooks/routing/clientSideSmartOrderRouter";
 import ms from "ms.macro";
 import qs from "qs";
-import { trace } from "tracing/trace";
 
 import { QuoteData, TradeResult } from "./types";
 import {
@@ -25,8 +24,7 @@ export enum RouterPreference {
   CLIENT = "client",
 }
 
-// This is excluded from `RouterPreference` enum because it's only used
-// internally for token -> USDC trades to get a USD value.
+
 export const INTERNAL_ROUTER_PREFERENCE_PRICE = "price" as const;
 
 const API_QUERY_PARAMS = {
@@ -58,43 +56,12 @@ enum QuoteState {
 export const routingApi = createApi({
   reducerPath: "routingApi",
   baseQuery: fetchBaseQuery({
-    //to check IF ROUTING API SERVER NEEDS TO BE ADDED HERE
-    baseUrl: "https://tkg8sfwhd9.execute-api.us-east-1.amazonaws.com/prod/ ", //@nabeel
-    // baseUrl: 'https://uaorvq46t7.execute-api.eu-central-1.amazonaws.com/prod/',
+    baseUrl: "https://tkg8sfwhd9.execute-api.us-east-1.amazonaws.com/prod/ ",
   }),
   endpoints: (build) => ({
     getQuote: build.query<TradeResult, GetQuoteArgs>({
       async onQueryStarted(args: GetQuoteArgs, { queryFulfilled }) {
-        trace(
-          "quote",
-          async ({ setTraceError, setTraceStatus }) => {
-            try {
-              await queryFulfilled;
-            } catch (error: unknown) {
-              if (error && typeof error === "object" && "error" in error) {
-                const queryError = (
-                  error as Record<"error", FetchBaseQueryError>
-                ).error;
-                if (typeof queryError.status === "number") {
-                  setTraceStatus(queryError.status);
-                }
-                setTraceError(queryError);
-              } else {
-                throw error;
-              }
-            }
-          },
-          {
-            data: {
-              ...args,
-              isPrice:
-                args.routerPreference === INTERNAL_ROUTER_PREFERENCE_PRICE,
-              isAutoRouter:
-                args.routerPreference === RouterPreference.AUTO ||
-                args.routerPreference === RouterPreference.API,
-            },
-          }
-        );
+      
       },
       async queryFn(args, _api, _extraOptions, fetch) {
         if (shouldUseAPIRouter(args.routerPreference)) {
@@ -120,9 +87,7 @@ export const routingApi = createApi({
             const response = await fetch(`quote?${query}`);
             if (response.error) {
               try {
-                // cast as any here because we do a runtime check on it being an object before indexing into .errorCode
                 const errorData = response.error.data as any;
-                // NO_ROUTE should be treated as a valid response to prevent retries.
                 if (
                   typeof errorData === "object" &&
                   errorData?.errorCode === "NO_ROUTE"

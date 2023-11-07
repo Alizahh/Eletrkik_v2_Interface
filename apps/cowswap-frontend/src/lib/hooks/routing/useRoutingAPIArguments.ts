@@ -1,11 +1,9 @@
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
+import { GetQuoteArgs, INTERNAL_ROUTER_PREFERENCE_PRICE, RouterPreference } from 'legacy/state/routing/slice'
+import { currencyAddressForSwapQuote } from 'legacy/state/routing/utils'
 import { useMemo } from 'react'
 
-/**
- * Returns query arguments for the Routing API query or undefined if the
- * query should be skipped. Input arguments do not need to be memoized, as they will
- * be destructured.
- */
+
 export function useRoutingAPIArguments({
   tokenIn,
   tokenOut,

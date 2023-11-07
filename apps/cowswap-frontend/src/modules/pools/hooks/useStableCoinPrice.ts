@@ -9,6 +9,7 @@ import {
   USDC_POLYGON,
   USDT_BSC,
 } from '../../../../../../libs/common-const/src/tokens'
+import { useRoutingAPITrade } from 'legacy/state/routing/useRoutingAPITrade';
 
 
 export const INTERNAL_ROUTER_PREFERENCE_PRICE = "price" as const;
