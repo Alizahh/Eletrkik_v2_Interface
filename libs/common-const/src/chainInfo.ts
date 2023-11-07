@@ -3,6 +3,7 @@ import { SupportedChainId } from '@cowprotocol/cow-sdk'
 import GnosisChainLogo from '@cowprotocol/assets/cow-swap/network-gnosis-chain-logo.svg'
 import GoerliLogo from '@cowprotocol/assets/cow-swap/network-goerli-logo.svg'
 import EthereumLogo from '@cowprotocol/assets/cow-swap/network-mainnet-logo.svg'
+import ms from 'ms.macro'
 
 export enum NetworkType {
   L1,
@@ -75,3 +76,4 @@ export const CHAIN_INFO: ChainInfoMap = {
 export function getChainInfo(chainId: SupportedChainId): L1ChainInfo {
   return CHAIN_INFO[chainId]
 }
+export const AVERAGE_L1_BLOCK_TIME = ms`12s`

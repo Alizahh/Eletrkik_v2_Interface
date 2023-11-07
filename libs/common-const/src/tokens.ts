@@ -1,5 +1,6 @@
 import { SupportedChainId } from '@cowprotocol/cow-sdk'
 import { Currency, Ether, NativeCurrency, Token, WETH9 } from '@uniswap/sdk-core'
+import { SupportedChainId as SChainId } from '../../../apps/cowswap-frontend/src/common/constants/chains'
 
 import cowLogo from '@cowprotocol/assets/cow-swap/cow.svg'
 import gnoLogo from '@cowprotocol/assets/cow-swap/gno.png'
@@ -24,6 +25,41 @@ export const USDC_MAINNET = new Token(
   6,
   'USDC',
   'USD//C'
+)
+export const BRIDGED_USDC_ARBITRUM = new Token(
+  SChainId.ARBITRUM_ONE,
+  '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
+  6,
+  'USDC',
+  'USD//C'
+)
+export const DAI_OPTIMISM = new Token(
+  SChainId.OPTIMISM,
+  '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1',
+  18,
+  'DAI',
+  'Dai stable coin'
+)
+export const USDC_POLYGON = new Token(
+  SChainId.POLYGON,
+  '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+  6,
+  'USDC',
+  'USD//C'
+)
+export const CUSD_CELO = new Token(
+  SChainId.CELO,
+  '0x765DE816845861e75A25fCA122bb6898B8B1282a',
+  18,
+  'cUSD',
+  'Celo Dollar'
+)
+export const USDT_BSC = new Token(
+  SChainId.BNB,
+  '0x55d398326f99059fF775485246999027B3197955',
+  18,
+  'USDT',
+  'USDT'
 )
 export const USDC_GOERLI = new Token(
   SupportedChainId.GOERLI,

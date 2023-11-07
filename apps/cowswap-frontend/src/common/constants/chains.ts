@@ -75,3 +75,7 @@ export function isSupportedChainLightLink(chainId: number | null | undefined): b
     chainId === SupportedChainId.LIGHTLINK_PHOENIX_MAINNET
   )
 }
+
+
+export function isPhoenixChain(chainId: number | undefined): chainId is SupportedChainId.LIGHTLINK_PHOENIX_MAINNET{
+  return chainId == SupportedChainId.LIGHTLINK_PHOENIX_MAINNET}
