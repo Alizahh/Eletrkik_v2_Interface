@@ -43,6 +43,7 @@
     ]
   },
   "dependencies": {
+    "@aaran1337/smart-order-router-test": "0.0.10",
     "@1inch/permit-signed-approvals-utils": "^1.4.8",
     "@amplitude/analytics-browser": "^1.1.4",
     "@apollo/client": "^3.8.5",
@@ -86,6 +87,7 @@
     "@types/hdkey": "^2.0.1",
     "@uniswap/analytics": "^1.5.0",
     "@uniswap/analytics-events": "^2.25.0",
+    "@uniswap/conedison": "^1.7.1",
     "@uniswap/default-token-list": "^11.5.0",
     "@uniswap/redux-multicall": "^1.1.5",
     "@uniswap/sdk-core": "^3.0.1",
