@@ -70,8 +70,8 @@ const lazyRoutes: LazyRouteProps[] = [
   { route: RoutesEnum.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { route: RoutesEnum.COOKIE_POLICY, element: <CookiePolicy /> },
   { route: RoutesEnum.TERMS_CONDITIONS, element: <TermsAndConditions /> },
-  // { route: RoutesEnum.POOL, element: <Pool /> },
-  // { route: RoutesEnum.ADD_LIQUIDITY, element: <RedirectDuplicateTokenIds /> }
+  { route: RoutesEnum.POOL, element: <Pool /> },
+  { route: RoutesEnum.ADD_LIQUIDITY, element: <RedirectDuplicateTokenIds /> }
 
 
 ]

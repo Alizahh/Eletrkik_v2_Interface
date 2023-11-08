@@ -389,7 +389,7 @@ export function AddLiquidity() {
     setTxHash('')
   }, [navigate, onFieldAInput, txHash])
 
-  const addIsUnsupported = useIsSwapUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
+  // const addIsUnsupported = useIsSwapUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
 
   const clearAll = useCallback(() => {
     onFieldAInput('')
@@ -462,7 +462,7 @@ export function AddLiquidity() {
   const isPhoenix = isPhoenixChain(chainId)
 
   const Buttons = () =>
-    addIsUnsupported ? (
+    false ? (
       <ButtonPrimary disabled={true} $borderRadius="12px" padding="12px">
         <ThemedText.DeprecatedMain mb="4px">
           <Trans>Unsupported Asset</Trans>
@@ -922,9 +922,9 @@ export function AddLiquidity() {
           approvalA === ApprovalState.PENDING ||
           approvalB === ApprovalState.NOT_APPROVED ||
           approvalB === ApprovalState.PENDING) && <ApprovalWarning />}
-        {addIsUnsupported && (
+        {false && (
           <UnsupportedCurrencyFooter
-            show={addIsUnsupported}
+            show={false}
             currencies={[currencies.CURRENCY_A, currencies.CURRENCY_B]}
           />
         )}

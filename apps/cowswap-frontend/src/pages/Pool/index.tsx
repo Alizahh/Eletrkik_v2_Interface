@@ -47,7 +47,7 @@ function WrongNetworkCard() {
                         </TitleRow>
                         <MainContentWrapper>
                             <ErrorContainer>
-                                <ThemedText.DeprecatedBody color={'#fff'} textAlign="center">
+                                <ThemedText.DeprecatedBody color={'#000'} textAlign="center">
                                     <NetworkIcon strokeWidth={1.2} />
                                     <div data-testid="pools-unsupported-err">
                                         <Trans>Your connected network is unsupported.</Trans>
@@ -87,7 +87,6 @@ export default function Pool() {
     const filteredPositions = useFilterPossiblyMaliciousPositions(userSelectedPositionSet)
 
     const showConnectAWallet = Boolean(!account)
-
     if (!(SupportedChainId.LIGHTLINK_PEGASUS_TESTNET === chainId)) {
         return <WrongNetworkCard />
     }

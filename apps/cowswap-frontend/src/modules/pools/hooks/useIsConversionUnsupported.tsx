@@ -7,14 +7,14 @@ import { useMemo } from 'react'
  * @param currencyIn the input currency to check
  * @param currencyOut the output currency to check
  */
-export function useIsConversionUnsupported(currencyIn?: Currency | null, currencyOut?: Currency | null): boolean {
-  const unsupportedTokens = useUnsupportedTokens()
-  return useMemo(() => {
-    if (!unsupportedTokens) {
-      return false
-    }
-    const currencyInUnsupported = Boolean(currencyIn?.isToken && unsupportedTokens[currencyIn.address])
-    const currencyOutUnsupported = Boolean(currencyOut?.isToken && unsupportedTokens[currencyOut.address])
-    return currencyInUnsupported || currencyOutUnsupported
-  }, [currencyIn, currencyOut, unsupportedTokens])
-}
+// export function useIsConversionUnsupported(currencyIn?: Currency | null, currencyOut?: Currency | null): boolean {
+//   const unsupportedTokens = useUnsupportedTokens()
+//   return useMemo(() => {
+//     if (!unsupportedTokens) {
+//       return false
+//     }
+//     const currencyInUnsupported = Boolean(currencyIn?.isToken && unsupportedTokens[currencyIn.address])
+//     const currencyOutUnsupported = Boolean(currencyOut?.isToken && unsupportedTokens[currencyOut.address])
+//     return currencyInUnsupported || currencyOutUnsupported
+//   }, [currencyIn, currencyOut, unsupportedTokens])
+// }
