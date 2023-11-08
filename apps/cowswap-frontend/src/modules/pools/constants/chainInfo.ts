@@ -2,15 +2,15 @@ import bnbCircleLogoUrl from 'assets/images/bnbCircle.svg'
 import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
 import lightlinkLogoUrl from 'assets/images/lightlink_logo.png'
 import polygonCircleLogoUrl from 'assets/images/polygonCircle.png'
-import { default as arbitrumCircleLogoUrl, default as arbitrumLogoUrl } from 'assets/svg/arbitrum_logo.svg'
-import bnbSquareLogoUrl from 'assets/svg/bnb_square_logo.svg'
-import bnbLogo from 'assets/svg/bnb-logo.svg'
-import celoLogo from 'assets/svg/celo_logo.svg'
-import celoSquareLogoUrl from 'assets/svg/celo_square_logo.svg'
-import optimismSquareLogoUrl from 'assets/svg/optimism_square_logo.svg'
-import optimismLogoUrl from 'assets/svg/optimistic_ethereum.svg'
-import polygonSquareLogoUrl from 'assets/svg/polygon_square_logo.svg'
-import polygonMaticLogo from 'assets/svg/polygon-matic-logo.svg'
+import { default as arbitrumCircleLogoUrl, default as arbitrumLogoUrl } from 'assets/svgs/arbitrum_logo.svg'
+import bnbSquareLogoUrl from 'assets/svgs/bnb_square_logo.svg'
+import bnbLogo from 'assets/svgs/bnb-logo.svg'
+import celoLogo from 'assets/svgs/celo_logo.svg'
+import celoSquareLogoUrl from 'assets/svgs/celo_square_logo.svg'
+import optimismSquareLogoUrl from 'assets/svgs/optimism_square_logo.svg'
+import optimismLogoUrl from 'assets/svgs/optimistic_ethereum.svg'
+import polygonSquareLogoUrl from 'assets/svgs/polygon_square_logo.svg'
+import polygonMaticLogo from 'assets/svgs/polygon-matic-logo.svg'
 import ms from 'ms.macro'
 
 import {
@@ -21,7 +21,7 @@ import {
   OPTIMISM_LIST,
   PLASMA_BNB_LIST,
 } from './lists'
-import { SupportedChainId,SupportedL1ChainId, SupportedL2ChainId } from 'common/constants/chains'
+import { SupportedChainId, SupportedL1ChainId, SupportedL2ChainId } from 'common/constants/chains'
 
 export const AVERAGE_L1_BLOCK_TIME = ms`12s`
 

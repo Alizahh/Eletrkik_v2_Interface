@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { ButtonPrimary, ButtonText } from "../../../../../libs/ui/src/pure/Button";
 import { useToggleWalletModal } from "legacy/state/application/hooks";
 import { useUserHideClosedPositions } from "legacy/state/user/hooks";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useV3Positions } from "legacy/hooks/pools/useV3positions";
 import { PositionDetails } from "legacy/types/position";
 import { useFilterPossiblyMaliciousPositions } from "legacy/hooks/pools/useFilterPossiblyMaliciousPositions";
