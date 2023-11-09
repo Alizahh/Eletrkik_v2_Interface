@@ -1,8 +1,8 @@
 import { atom, useAtomValue, useSetAtom } from 'jotai'
 
 import { isAddress } from '@cowprotocol/common-utils'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
-import { ALL_SUPPORTED_CHAIN_IDS } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
+import { ALL_SUPPORTED_CHAIN_IDS } from 'test-cow-v2'
 
 import * as Sentry from '@sentry/react'
 import useSWR from 'swr'
@@ -19,6 +19,8 @@ function isValidQuery(query: string): boolean {
 const SUPPORTED_CHAINS: Partial<Record<Chain, SupportedChainId>> = {
   ETHEREUM: SupportedChainId.MAINNET,
   ETHEREUM_GOERLI: SupportedChainId.GOERLI,
+  PHOENIX: SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  PEGASUS: SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
 } as const
 
 const UNSUPPORTED_CHAIN_ID = null

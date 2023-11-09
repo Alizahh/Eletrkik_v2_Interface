@@ -1,4 +1,4 @@
-import { SupportedChainId as ChainId, UID } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId, UID } from 'test-cow-v2'
 
 import { isLocal, isDev, isPr, isStaging, isBarn } from './environments'
 
@@ -19,6 +19,9 @@ function _getExplorerUrlByEnvironment() {
     [ChainId.MAINNET]: baseUrl,
     [ChainId.GOERLI]: `${baseUrl}/goerli`,
     [ChainId.GNOSIS_CHAIN]: `${baseUrl}/gc`,
+    //ElektrikV2Changed
+    [ChainId.LIGHTLINK_PEGASUS_TESTNET]: '',
+    [ChainId.LIGHTLINK_PHOENIX_MAINNET]: '',
   }
 }
 

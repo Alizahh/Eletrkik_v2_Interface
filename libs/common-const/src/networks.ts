@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { SupportedChainId as SChainId } from '../../../apps/cowswap-frontend/src/common/constants/chains'
 
@@ -7,15 +7,27 @@ if (typeof QUICKNODE_RPC_URL === 'undefined') {
   throw new Error(`REACT_APP_BNB_RPC_URL must be a defined environment variable`)
 }
 
+//ELektrikV2Changed
 function initRpcUrls(): Record<SupportedChainId, string> {
   const REACT_APP_INFURA_KEY = process.env.REACT_APP_INFURA_KEY
   const REACT_APP_NETWORK_URL_1 = process.env.REACT_APP_NETWORK_URL_1
   const REACT_APP_NETWORK_URL_5 = process.env.REACT_APP_NETWORK_URL_5
   const REACT_APP_NETWORK_URL_100 = process.env.REACT_APP_NETWORK_URL_100
+  const REACT_APP_NETWORK_URL_1890 = process.env.REACT_APP_NETWORK_URL_1890
+  const REACT_APP_NETWORK_URL_1891 = process.env.REACT_APP_NETWORK_URL_1891
 
-  if (!REACT_APP_INFURA_KEY && !(REACT_APP_NETWORK_URL_1 && REACT_APP_NETWORK_URL_5 && REACT_APP_NETWORK_URL_100)) {
+  if (
+    !REACT_APP_INFURA_KEY &&
+    !(
+      REACT_APP_NETWORK_URL_1 &&
+      REACT_APP_NETWORK_URL_5 &&
+      REACT_APP_NETWORK_URL_100 &&
+      REACT_APP_NETWORK_URL_1890 &&
+      REACT_APP_NETWORK_URL_1891
+    )
+  ) {
     throw new Error(
-      `Either REACT_APP_INFURA_KEY or REACT_APP_NETWORK_URL_{1,5,100} environment variables must be defined`
+      `Either REACT_APP_INFURA_KEY or REACT_APP_NETWORK_URL_{1,5,100,1890,1891} environment variables must be defined`
     )
   }
 
@@ -23,6 +35,12 @@ function initRpcUrls(): Record<SupportedChainId, string> {
     [SupportedChainId.MAINNET]: REACT_APP_NETWORK_URL_1 || `https://mainnet.infura.io/v3/${INFURA_KEY}`,
     [SupportedChainId.GNOSIS_CHAIN]: REACT_APP_NETWORK_URL_100 || `https://rpc.gnosis.gateway.fm`,
     [SupportedChainId.GOERLI]: REACT_APP_NETWORK_URL_5 || `https://goerli.infura.io/v3/${INFURA_KEY}`,
+    [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]:
+      REACT_APP_NETWORK_URL_1890 ||
+      `https://replicator.phoenix.lightlink.io/rpc/v1/elektrik-1b2218236b172e6b9ead3069735102f3`,
+    [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]:
+      REACT_APP_NETWORK_URL_1891 ||
+      `https://replicator-03.pegasus.lightlink.io/rpc/v1/elektrik-1b2218236b172e6b9ead3069735102f3`,
   }
 }
 

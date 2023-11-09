@@ -54,13 +54,7 @@ export const CUSD_CELO = new Token(
   'cUSD',
   'Celo Dollar'
 )
-export const USDT_BSC = new Token(
-  SChainId.BNB,
-  '0x55d398326f99059fF775485246999027B3197955',
-  18,
-  'USDT',
-  'USDT'
-)
+export const USDT_BSC = new Token(SChainId.BNB, '0x55d398326f99059fF775485246999027B3197955', 18, 'USDT', 'USDT')
 export const USDC_GOERLI = new Token(
   SupportedChainId.GOERLI,
   '0x07865c6e87b9f70255377e024ace6630c1eaa37f',
@@ -309,7 +303,6 @@ export const TOKEN_DISTRO_CONTRACT_ADDRESSES: Record<number, string> = {
   [SupportedChainId.GOERLI]: '0x2f453f48a374Dd286d0Dc9aa110309c1623b29Fd',
   [SupportedChainId.GNOSIS_CHAIN]: '0x3d610e917130f9D036e85A030596807f57e11093',
 }
-
 
 export function isMatic(chainId: number): chainId is SChainId.POLYGON | SChainId.POLYGON_MUMBAI {
   return chainId === SChainId.POLYGON_MUMBAI || chainId === SChainId.POLYGON

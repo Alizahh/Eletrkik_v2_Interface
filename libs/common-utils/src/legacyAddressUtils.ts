@@ -1,4 +1,4 @@
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { Contract, ContractInterface } from '@ethersproject/contracts'
@@ -54,7 +54,7 @@ export function escapeRegExp(string: string): string {
 }
 
 const COW_ORDER_ID_LENGTH = 114 // 112 (56 bytes in hex) + 2 (it's prefixed with "0x")
-
+//Elektrikv2Changed
 const ETHERSCAN_URLS: { [chainId in ChainId]: string } = {
   1: 'etherscan.io',
   // 3: 'ropsten.etherscan.io',
@@ -62,6 +62,8 @@ const ETHERSCAN_URLS: { [chainId in ChainId]: string } = {
   5: 'goerli.etherscan.io',
   // 42: 'kovan.etherscan.io',
   100: 'gnosisscan.io',
+  1890: 'https://pegasus.lightlink.io/',
+  1891: 'https://pegasus.lightlink.io/',
 }
 
 export type BlockExplorerLinkType =

@@ -1,4 +1,4 @@
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 import { Token } from '@uniswap/sdk-core'
 
 // Todo: address should be updated

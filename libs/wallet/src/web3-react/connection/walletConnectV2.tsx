@@ -3,7 +3,7 @@ import { useState, useSyncExternalStore } from 'react'
 import { RPC_URLS } from '@cowprotocol/common-const'
 import { getCurrentChainIdFromUrl } from '@cowprotocol/common-utils'
 
-import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from '@cowprotocol/cow-sdk'
+import { ALL_SUPPORTED_CHAIN_IDS, SupportedChainId } from 'test-cow-v2'
 import { initializeConnector, Web3ReactHooks } from '@web3-react/core'
 import { Web3ReactStore } from '@web3-react/types'
 

@@ -1735,9 +1735,9 @@
   resolved "https://registry.yarnpkg.com/@cowprotocol/cow-runner-game/-/cow-runner-game-0.2.9.tgz#3f94b3f370bd114f77db8b1d238cba3ef4e9d644"
   integrity sha512-rX7HnoV+HYEEkBaqVUsAkGGo0oBrExi+d6Io+8nQZYwZk+IYLmS9jdcIObsLviM2h4YX8+iin6NuKl35AaiHmg==
 
-"@cowprotocol/cow-sdk@^3.0.0-rc.0":
+"test-cow-v2@^3.0.0-rc.0":
   version "3.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@cowprotocol/cow-sdk/-/cow-sdk-3.0.0-rc.0.tgz#2583d3726a0f559b2a2faf86ed86261820b93311"
+  resolved "https://registry.yarnpkg.com/test-cow-v2/-/cow-sdk-3.0.0-rc.0.tgz#2583d3726a0f559b2a2faf86ed86261820b93311"
   integrity sha512-hdAkLKdda7kPXHZxhDKvRo01MbFMHM+WV8okPJL0xgpVsjzQTCitKkitUf3e9kSdyUebdaGe3iWVZviCiI72ew==
   dependencies:
     "@cowprotocol/contracts" "^1.4.0"
@@ -14106,6 +14106,11 @@ graphql@^15.5.0:
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.8.0.tgz#33410e96b012fa3bdb1091cc99a94769db212b38"
   integrity sha512-5gghUc24tP9HRznNpV2+FIoq3xKkj5dTQqf4v0CpdPbFVwFkWoxOM+o+2OC9ZSvjEMTjfmG9QT+gcvggTwW1zw==
 
+graphql@^16.3.0:
+  version "16.8.1"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
+  integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
+
 graphql@^16.8.0:
   version "16.8.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.0.tgz#374478b7f27b2dc6153c8f42c1b80157f79d79d4"
@@ -22970,6 +22975,20 @@ terser@^5.0.0, terser@^5.10.0, terser@^5.16.8:
     acorn "^8.8.2"
     commander "^2.20.0"
     source-map-support "~0.5.20"
+
+test-cow-v2@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/test-cow-v2/-/test-cow-v2-1.0.1.tgz#cd4b6307f2c13bfb84a1df357fcf15f4770327ba"
+  integrity sha512-6tJX5AOFjDkSIeDKh9mTjggXJ6BiXUhW07EkNlkHWH9heyeUJClV00pwD0/fmqvBisd1bDNzKoNafQY5ep4jvA==
+  dependencies:
+    "@cowprotocol/contracts" "^1.4.0"
+    "@ethersproject/abstract-signer" "^5.7.0"
+    "@openzeppelin/merkle-tree" "^1.0.5"
+    cross-fetch "^3.1.5"
+    exponential-backoff "^3.1.1"
+    graphql "^16.3.0"
+    graphql-request "^4.3.0"
+    limiter "^2.1.0"
 
 test-exclude@^6.0.0:
   version "6.0.0"

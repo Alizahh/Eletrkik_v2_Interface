@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { getChainInfo } from '@cowprotocol/common-const'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { AutoRow } from '@cowprotocol/ui'
 
 import { Trans } from '@lingui/macro'

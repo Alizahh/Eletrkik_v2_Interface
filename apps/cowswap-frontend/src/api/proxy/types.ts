@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 export type Address = `0x${string}`
 export type Chain =
@@ -10,6 +10,8 @@ export type Chain =
   | 'CELO'
   | 'BNB'
   | 'UNKNOWN_CHAIN'
+  | 'PHOENIX'
+  | 'PEGASUS'
 
 export interface FetchTokensResult {
   chainId: SupportedChainId

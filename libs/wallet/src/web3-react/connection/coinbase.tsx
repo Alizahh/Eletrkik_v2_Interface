@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { initializeConnector } from '@web3-react/core'
 
 import CowImage from '@cowprotocol/assets/cow-swap/cow_v2.svg'

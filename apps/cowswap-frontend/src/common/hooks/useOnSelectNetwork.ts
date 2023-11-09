@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { getWeb3ReactConnection } from '@cowprotocol/wallet'
 import { switchChain } from '@cowprotocol/wallet'
 import { useWeb3React } from '@web3-react/core'
@@ -22,13 +22,14 @@ export function useOnSelectNetwork(): (chainId: SupportedChainId, skipClose?: bo
   return useCallback(
     async (targetChain: SupportedChainId, skipClose?: boolean) => {
       if (!connector) return
+      console.log('1', connector, targetChain)
 
       const connectionType = getWeb3ReactConnection(connector).type
+      console.log('2', connectionType)
 
       try {
         dispatch(updateConnectionError({ connectionType, error: undefined }))
         await switchChain(connector, targetChain)
-
         setChainIdToUrl(targetChain)
       } catch (error: any) {
         console.error('Failed to switch networks', error)

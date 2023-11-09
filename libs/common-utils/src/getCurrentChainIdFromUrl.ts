@@ -1,9 +1,11 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 const chainNameToIdMap: { [key: string]: SupportedChainId } = {
   mainnet: SupportedChainId.MAINNET,
   gnosis_chain: SupportedChainId.GNOSIS_CHAIN,
   goerli: SupportedChainId.GOERLI,
+  pegasus: SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  phoenix: SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
 }
 
 export function getCurrentChainIdFromUrl(): SupportedChainId {

@@ -1,7 +1,6 @@
 import { getChainInfo } from '@cowprotocol/common-const'
 import { getExplorerBaseUrl } from '@cowprotocol/common-utils'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
-import { ALL_SUPPORTED_CHAIN_IDS } from '@cowprotocol/cow-sdk'
+import { SupportedChainId,ALL_SUPPORTED_CHAIN_IDS } from 'test-cow-v2'
 import { ExternalLink } from '@cowprotocol/ui'
 
 import { Trans } from '@lingui/macro'
@@ -13,6 +12,7 @@ export interface NetworksListProps {
 
   onSelectChain(targetChainId: SupportedChainId): void
 }
+
 
 export function NetworksList(props: NetworksListProps) {
   const { currentChainId, onSelectChain } = props
@@ -61,7 +61,7 @@ export function NetworksList(props: NetworksListProps) {
               )}
 
               <ExternalLink href={getExplorerBaseUrl(targetChainId)}>
-                <Trans>CoW Protocol Explorer</Trans>
+                <Trans>Elektrik Protocol Explorer</Trans>
                 <styledEl.LinkOutCircle />
               </ExternalLink>
             </styledEl.ActiveRowLinkList>

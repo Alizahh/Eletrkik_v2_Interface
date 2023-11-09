@@ -1,9 +1,14 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
+
+//ElektrikV2Changed
+import lightlinkLogoUrl from '../../../apps/cowswap-frontend/src/assets/images/lightlink_logo.png'
 
 import GnosisChainLogo from '@cowprotocol/assets/cow-swap/network-gnosis-chain-logo.svg'
 import GoerliLogo from '@cowprotocol/assets/cow-swap/network-goerli-logo.svg'
 import EthereumLogo from '@cowprotocol/assets/cow-swap/network-mainnet-logo.svg'
 import ms from 'ms.macro'
+
+export const AVERAGE_L1_BLOCK_TIME = ms`12s`
 
 export enum NetworkType {
   L1,
@@ -71,9 +76,34 @@ export const CHAIN_INFO: ChainInfoMap = {
     logoUrl: GnosisChainLogo,
     nativeCurrency: { name: 'xDai', symbol: 'XDAI', decimals: 18 },
   },
+
+  //ElektrikV2Changed
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: {
+    networkType: NetworkType.L1,
+    docs: 'https://docs.lightlink.io/',
+    bridge: 'https://bridge-test.lightlink.io/bridge?typeBridge=deposit&tokenBridge=ETH',
+    explorer: 'https://pegasus.lightlink.io',
+    infoLink: 'https://docs.lightlink.io/',
+    label: 'Pegasus',
+    name: '',
+    explorerTitle: '',
+    logoUrl: lightlinkLogoUrl,
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  },
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: {
+    networkType: NetworkType.L1,
+    docs: 'https://docs.lightlink.io/',
+    bridge: 'https://bridge-test.lightlink.io/bridge?typeBridge=deposit&tokenBridge=ETH',
+    explorer: 'https://phoenix.lightlink.io/',
+    infoLink: 'https://docs.lightlink.io/',
+    label: 'Phoenix',
+    name: '',
+    explorerTitle: '',
+    logoUrl: lightlinkLogoUrl,
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  },
 }
 
 export function getChainInfo(chainId: SupportedChainId): L1ChainInfo {
   return CHAIN_INFO[chainId]
 }
-export const AVERAGE_L1_BLOCK_TIME = ms`12s`

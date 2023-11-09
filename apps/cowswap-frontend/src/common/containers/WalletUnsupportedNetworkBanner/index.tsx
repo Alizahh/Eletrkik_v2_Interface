@@ -1,5 +1,5 @@
 import { getChainInfo } from '@cowprotocol/common-const'
-import { ALL_SUPPORTED_CHAIN_IDS } from '@cowprotocol/cow-sdk'
+import { ALL_SUPPORTED_CHAIN_IDS } from 'test-cow-v2'
 
 import { Trans } from '@lingui/macro'
 import { AlertCircle } from 'react-feather'

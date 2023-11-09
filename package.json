@@ -43,8 +43,8 @@
     ]
   },
   "dependencies": {
-    "@aaran1337/smart-order-router-test": "0.0.10",
     "@1inch/permit-signed-approvals-utils": "^1.4.8",
+    "@aaran1337/smart-order-router-test": "0.0.10",
     "@amplitude/analytics-browser": "^1.1.4",
     "@apollo/client": "^3.8.5",
     "@babel/runtime": "^7.17.0",
@@ -169,6 +169,7 @@
     "styled-components": "5.3.6",
     "styled-jsx": "5.1.2",
     "swr": "^2.2.0",
+    "test-cow-v2": "^1.0.1",
     "text-encoding-polyfill": "^0.6.7",
     "timeago.js": "^4.0.2",
     "tiny-invariant": "^1.2.0",

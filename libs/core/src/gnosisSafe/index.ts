@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { JsonRpcFetchFunc, Web3Provider } from '@ethersproject/providers'
 import SafeApiKit, { SafeInfoResponse } from '@safe-global/api-kit'
 import Safe, { EthersAdapter } from '@safe-global/protocol-kit'
@@ -11,6 +11,8 @@ const SAFE_TRANSACTION_SERVICE_URL: Partial<Record<number, string>> = {
   [SupportedChainId.MAINNET]: 'https://safe-transaction-mainnet.safe.global',
   [SupportedChainId.GNOSIS_CHAIN]: 'https://safe-transaction-gnosis-chain.safe.global',
   [SupportedChainId.GOERLI]: 'https://safe-transaction-goerli.safe.global',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: '',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: '',
 }
 
 const SAFE_BASE_URL = 'https://app.safe.global'
@@ -18,6 +20,8 @@ const CHAIN_SHORT_NAME: Record<SupportedChainId, string> = {
   [SupportedChainId.MAINNET]: 'eth', // https://github.com/ethereum-lists/chains/blob/master/_data/chains/eip155-1.json
   [SupportedChainId.GNOSIS_CHAIN]: 'gno', // https://github.com/ethereum-lists/chains/blob/master/_data/chains/eip155-100.json
   [SupportedChainId.GOERLI]: 'gor', // https://github.com/ethereum-lists/chains/blob/master/_data/chains/eip155-5.json
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'peg',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'pho',
 }
 
 const SAFE_TRANSACTION_SERVICE_CACHE: Partial<Record<number, SafeApiKit | null>> = {}

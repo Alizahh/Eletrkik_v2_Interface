@@ -1,9 +1,11 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
-
+import { SupportedChainId } from 'test-cow-v2'
+//Changedv2Elektrik
 const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [SupportedChainId.MAINNET]: 'https://etherscan.io',
   [SupportedChainId.GNOSIS_CHAIN]: 'https://gnosisscan.io',
   [SupportedChainId.GOERLI]: 'https://goerli.etherscan.io',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'https://pegasus.lightlink.io/',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'https://pegasus.lightlink.io/',
 }
 
 export enum ExplorerDataType {

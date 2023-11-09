@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Web3ReactHooks } from '@web3-react/core'
 import { Connector } from '@web3-react/types'
 

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { getChainInfo } from '@cowprotocol/common-const'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -21,6 +21,7 @@ export function useLegacySetChainIdToUrl() {
       if (tradeTypeInfo) return
 
       const chainInfo = getChainInfo(chainId)
+      console.log('CHAININFO11', chainInfo)
       if (!chainInfo) return
 
       navigate(
