@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Currency, CurrencyAmount, Percent } from '@uniswap/sdk-core'
 
 import { NavLink } from 'react-router-dom'
@@ -29,11 +29,14 @@ export interface TwapSuggestionBannerProps {
   sellAmount: string | undefined
 }
 
+//Elektrikv2Changed
 const PRICE_IMPACT_LIMIT = 1 // 1%
 const AMOUNT_LIMIT: Record<SupportedChainId, number> = {
   [SupportedChainId.MAINNET]: 50_000, // $50,000
   [SupportedChainId.GNOSIS_CHAIN]: 500, // $500
   [SupportedChainId.GOERLI]: 100, // $100
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]:100,
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]:100,
 }
 
 export function TwapSuggestionBanner({

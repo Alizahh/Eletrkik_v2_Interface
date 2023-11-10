@@ -1,11 +1,14 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 const EXPECTED_EXECUTION_TIME_PERCENTAGE = 75
 
+//Elektrikv2Changed
 export const EXPECTED_EXECUTION_TIME: Record<SupportedChainId, number> = {
   [SupportedChainId.MAINNET]: 120,
   [SupportedChainId.GNOSIS_CHAIN]: 50,
   [SupportedChainId.GOERLI]: 50,
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 50,
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 50,
 }
 
 const LOG_FUNCTION = Math.log2

@@ -1,8 +1,14 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 export type AddressMap = { [chainId: number]: string }
 
-const DEFAULT_NETWORKS = [SupportedChainId.MAINNET, SupportedChainId.GOERLI]
+//Elektrikv2Changed
+const DEFAULT_NETWORKS = [
+  SupportedChainId.MAINNET,
+  SupportedChainId.GOERLI,
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+]
 
 function constructSameAddressMap<T extends string>(
   address: T,
@@ -14,9 +20,12 @@ function constructSameAddressMap<T extends string>(
   }, {})
 }
 
+//Elektrikv2Changed
 export const MULTICALL_ADDRESS: AddressMap = {
   ...constructSameAddressMap('0x1F98415757620B543A52E61c46B32eB19261F984', []),
   [SupportedChainId.GNOSIS_CHAIN]: '0x0f41c16b8ad27c11f181eca85f0941868c1297af',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: '0xC6a4B6667c44Fd56dC6E15C45108c4e8fC22F517',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: '0xC8F2B723338dA040c8565b4f0A24113F2420a895',
 }
 
 export const ARGENT_WALLET_DETECTOR_ADDRESS: AddressMap = {

@@ -1,12 +1,15 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 import { ClientError, gql, GraphQLClient } from 'graphql-request'
 
 import { EnsNamesQuery } from 'pages/Account/ens/types'
 
+//Elektrikv2Changed
 const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [SupportedChainId.MAINNET]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
   [SupportedChainId.GOERLI]: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'https://subgraph.elektrik.network/subgraphs/name/ELEKTRIK-GRAPH',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: ' https://subgraph.elektriktest.net/subgraphs/name/ELEKTRIK-GRAPH',
 }
 
 const DOMAINS_BY_ADDRESS_QUERY = gql`

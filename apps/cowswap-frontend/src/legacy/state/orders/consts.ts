@@ -1,11 +1,14 @@
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 import { Percent } from '@uniswap/sdk-core'
 
 import ms from 'ms.macro'
 
+//Elektrikv2Changed
 export const ContractDeploymentBlocks: Partial<Record<ChainId, number>> = {
   [ChainId.MAINNET]: 11469934,
   [ChainId.GNOSIS_CHAIN]: 13566914,
+  [ChainId.LIGHTLINK_PHOENIX_MAINNET]: 1890,
+  [ChainId.LIGHTLINK_PEGASUS_TESTNET]: 1891,
 }
 
 export const MARKET_OPERATOR_API_POLL_INTERVAL = ms`2s`

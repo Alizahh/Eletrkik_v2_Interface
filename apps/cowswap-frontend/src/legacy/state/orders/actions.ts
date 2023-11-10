@@ -1,4 +1,4 @@
-import { EnrichedOrder, OrderClass, OrderCreation, SupportedChainId as ChainId, UID } from '@cowprotocol/cow-sdk'
+import { EnrichedOrder, OrderClass, OrderCreation, SupportedChainId as ChainId, UID } from 'test-cow-v2'
 import { BigNumberish } from '@ethersproject/bignumber'
 import { SafeMultisigTransactionResponse } from '@safe-global/safe-core-sdk-types'
 import { Token } from '@uniswap/sdk-core'

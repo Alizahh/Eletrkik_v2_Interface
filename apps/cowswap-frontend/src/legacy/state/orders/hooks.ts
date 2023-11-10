@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { isTruthy } from '@cowprotocol/common-utils'
-import { OrderClass, SupportedChainId } from '@cowprotocol/cow-sdk'
+import { OrderClass, SupportedChainId } from 'test-cow-v2'
 
 import { useDispatch, useSelector } from 'react-redux'
 

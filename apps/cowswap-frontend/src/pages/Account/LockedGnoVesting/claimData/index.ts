@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 import gnosisChainIndex from './gnosisChain.json'
 import goerliIndex from './goerli.json'
@@ -10,16 +10,21 @@ interface Claim {
   proof: string[]
 }
 
+//Elektrikv2Changed
 const indexFiles = {
   [SupportedChainId.MAINNET]: mainnetIndex,
   [SupportedChainId.GNOSIS_CHAIN]: gnosisChainIndex,
   [SupportedChainId.GOERLI]: goerliIndex,
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: [],
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: [],
 }
 
 const chainNames = {
   [SupportedChainId.MAINNET]: 'mainnet',
   [SupportedChainId.GNOSIS_CHAIN]: 'gnosisChain',
   [SupportedChainId.GOERLI]: 'goerli',
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'lightlink_phoenix_mainnet',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'lightlink_pegasus_testnet',
 }
 
 const DISTRO_REPO_BRANCH_NAME = 'main'

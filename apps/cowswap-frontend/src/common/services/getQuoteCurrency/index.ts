@@ -1,12 +1,12 @@
-import { DAI, USDC_MAINNET, USDT } from '@cowprotocol/common-const'
+import { DAI, LIGHTLINK_PEGASUS_TESTNET, LIGHTLINK_PHOENIX_MAINNET, USDC_MAINNET, USDT } from '@cowprotocol/common-const'
 import { NATIVE_CURRENCY_BUY_ADDRESS } from '@cowprotocol/common-const'
 import { DAI_GOERLI, USDT_GOERLI, USDC_GOERLI } from '@cowprotocol/common-const'
 import { USDC_GNOSIS_CHAIN, USDT_GNOSIS_CHAIN, WXDAI } from '@cowprotocol/common-const'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Currency, CurrencyAmount } from '@uniswap/sdk-core'
 
 import { Nullish } from 'types'
-
+//ELektrikv2Changed
 // TODO: Find a solution for using API: https://www.coingecko.com/en/categories/stablecoins
 const STABLE_COINS: { [key in SupportedChainId]: string[] } = {
   [SupportedChainId.MAINNET]: [USDC_MAINNET, USDT, DAI].map((token) => token.address.toLowerCase()),
@@ -15,6 +15,8 @@ const STABLE_COINS: { [key in SupportedChainId]: string[] } = {
     // XDAI and WXDAI are stable-coins
     .concat(NATIVE_CURRENCY_BUY_ADDRESS),
   [SupportedChainId.GOERLI]: [USDC_GOERLI, USDT_GOERLI, DAI_GOERLI].map((token) => token.address.toLowerCase()),
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]:[LIGHTLINK_PHOENIX_MAINNET].map((token)=> token.address.toLowerCase()),
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]:[LIGHTLINK_PEGASUS_TESTNET].map((token)=> token.address.toLowerCase())
 }
 
 /**

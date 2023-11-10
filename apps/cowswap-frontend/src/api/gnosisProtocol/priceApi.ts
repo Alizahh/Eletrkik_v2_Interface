@@ -7,6 +7,8 @@ import { GpPriceStrategy } from 'legacy/state/gas/atoms'
 const API_NAME = 'CoW Protocol'
 const STRATEGY_URL_BASE = RAW_CODE_LINK + '/configuration/config/'
 
+
+//ELektrikv2Changed
 function getPriceStrategyUrl(): Record<SupportedChainId, string> {
   const environment = environmentName !== 'production' ? 'barn' : environmentName
   const url = STRATEGY_URL_BASE + environment + '/strategies'

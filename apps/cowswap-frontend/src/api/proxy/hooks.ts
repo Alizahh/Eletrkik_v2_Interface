@@ -16,6 +16,7 @@ function isValidQuery(query: string): boolean {
   return typeof query === 'string' && query.length > 0
 }
 
+//Elektrikv2Changed
 const SUPPORTED_CHAINS: Partial<Record<Chain, SupportedChainId>> = {
   ETHEREUM: SupportedChainId.MAINNET,
   ETHEREUM_GOERLI: SupportedChainId.GOERLI,

@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Currency, Ether, NativeCurrency, Token, WETH9 } from '@uniswap/sdk-core'
 import { SupportedChainId as SChainId } from '../../../apps/cowswap-frontend/src/common/constants/chains'
 
@@ -18,6 +18,23 @@ import {
 } from './gnosis_chain/constants'
 import { DAI_GOERLI, USDT_GOERLI, WBTC_GOERLI, WETH_GOERLI } from './goerli/constants'
 import { COW_CONTRACT_ADDRESS, V_COW_CONTRACT_ADDRESS } from './common'
+
+//Elektrikv2Changed
+export const LIGHTLINK_PHOENIX_MAINNET = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0xF42991f02C07AB66cFEa282E7E482382aEB85461',
+  18,
+  'WETH',
+  'Wrapped Ether'
+)
+
+export const LIGHTLINK_PEGASUS_TESTNET = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x7EbeF2A4b1B09381Ec5B9dF8C5c6f2dBECA59c73',
+  18,
+  'WETH',
+  'Wrapped Ether'
+)
 
 export const USDC_MAINNET = new Token(
   SupportedChainId.MAINNET,
@@ -73,6 +90,8 @@ export const USDC: { [chainId in SupportedChainId]: Token } = {
   [SupportedChainId.MAINNET]: USDC_MAINNET,
   [SupportedChainId.GOERLI]: USDC_GOERLI,
   [SupportedChainId.GNOSIS_CHAIN]: USDC_GNOSIS_CHAIN,
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: LIGHTLINK_PHOENIX_MAINNET,
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: LIGHTLINK_PEGASUS_TESTNET,
 }
 export const USDT = new Token(
   SupportedChainId.MAINNET,
@@ -88,10 +107,13 @@ export const WBTC = new Token(
   'WBTC',
   'Wrapped BTC'
 )
+
 export const WRAPPED_NATIVE_CURRENCY: { [chainId in SupportedChainId]: Token } = {
   [SupportedChainId.MAINNET]: WETH9[SupportedChainId.MAINNET],
   [SupportedChainId.GNOSIS_CHAIN]: WXDAI,
   [SupportedChainId.GOERLI]: WETH_GOERLI,
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: LIGHTLINK_PHOENIX_MAINNET,
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: LIGHTLINK_PEGASUS_TESTNET,
 }
 
 export class ExtendedEther extends Ether {
@@ -251,6 +273,8 @@ export const GNO: Record<SupportedChainId, Token> = {
   [SupportedChainId.MAINNET]: GNO_MAINNET,
   [SupportedChainId.GNOSIS_CHAIN]: GNO_GNOSIS_CHAIN,
   [SupportedChainId.GOERLI]: GNO_GOERLI,
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: LIGHTLINK_PHOENIX_MAINNET,
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: LIGHTLINK_PEGASUS_TESTNET,
 }
 
 export const EURE_GNOSIS_CHAIN = new Token(

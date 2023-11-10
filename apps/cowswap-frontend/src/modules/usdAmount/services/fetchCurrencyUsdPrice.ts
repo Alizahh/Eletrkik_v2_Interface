@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Fraction, Token } from '@uniswap/sdk-core'
 
 import {
@@ -12,10 +12,13 @@ import { getCowProtocolUsdPrice } from '../apis/getCowProtocolUsdPrice'
 
 let coingeckoRateLimitHitTimestamp: null | number = null
 
+//Elektrikv2Changed
 const coingeckoUnknownCurrencies: Record<SupportedChainId, { [address: string]: true }> = {
   [SupportedChainId.MAINNET]: {},
   [SupportedChainId.GNOSIS_CHAIN]: {},
   [SupportedChainId.GOERLI]: {},
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: {},
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: {},
 }
 
 function getShouldSkipCoingecko(currency: Token): boolean {

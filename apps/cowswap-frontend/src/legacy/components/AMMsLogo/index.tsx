@@ -11,7 +11,9 @@ import Sushi from '@cowprotocol/assets/cow-swap/ammslogo/sushi.png'
 import Swapr from '@cowprotocol/assets/cow-swap/ammslogo/swapr.png'
 import Symmetric from '@cowprotocol/assets/cow-swap/ammslogo/symmetric.png'
 import Uniswap from '@cowprotocol/assets/cow-swap/ammslogo/uniswap.png'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import lightlinkLogoUrl from '../../../assets/images/lightlink_logo.png'
+
+import { SupportedChainId } from 'test-cow-v2'
 
 import styled from 'styled-components/macro'
 
@@ -42,7 +44,7 @@ export const Wrapper = styled.div<{ logosLength: number }>`
 `
 
 type Image = { src: string; alt: string }
-
+//Elektrikv2Changed
 const SushiImage = { src: Sushi, alt: 'AMMs Sushi' }
 const OneInchImage = { src: Oneinch, alt: 'AMMs 1inch' }
 const ParaSwapImage = { src: Paraswap, alt: 'AMMs ParaSwap' }
@@ -56,6 +58,9 @@ const ElkImage = { src: Elk, alt: 'AMMs Elk' }
 const LevinSwapImage = { src: Levinswap, alt: 'Levinswap 0x' }
 const SymmetricImage = { src: Symmetric, alt: 'Symmetric 0x' }
 const ZeroXImage = { src: ZeroX, alt: 'AMMs 0x' }
+const phoenixImage = {src:lightlinkLogoUrl, alt:'Phoenix'}
+const pegasusImage = {src:lightlinkLogoUrl, alt:'Pegasus'}
+
 
 const LogosPerNetwork: Record<SupportedChainId, Array<Image>> = {
   [SupportedChainId.MAINNET]: [
@@ -84,6 +89,12 @@ const LogosPerNetwork: Record<SupportedChainId, Array<Image>> = {
     SymmetricImage,
     ElkImage,
     LevinSwapImage,
+  ],
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: [
+    phoenixImage
+  ],
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: [
+    pegasusImage
   ],
 }
 

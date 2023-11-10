@@ -1,5 +1,5 @@
 import { FractionUtils } from '@cowprotocol/common-utils'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Fraction, Token } from '@uniswap/sdk-core'
 
 import ms from 'ms.macro'
@@ -12,10 +12,13 @@ export interface CoinGeckoUsdQuote {
   }
 }
 
+//Elektrikv2Changed
 export const COINGECK_PLATFORMS: Record<SupportedChainId, string | null> = {
   [SupportedChainId.MAINNET]: 'ethereum',
   [SupportedChainId.GNOSIS_CHAIN]: 'xdai',
   [SupportedChainId.GOERLI]: null,
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: null,
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: null,
 }
 
 const BASE_URL = 'https://api.coingecko.com/api/v3/simple/token_price'

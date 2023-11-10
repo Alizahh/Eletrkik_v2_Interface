@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 import { AddPermitTokenParams, PermittableTokens } from '../types'
 
@@ -12,10 +12,13 @@ import { AddPermitTokenParams, PermittableTokens } from '../types'
  * Contains either the permit info with `type` and `gasLimit` when supported or
  * `false` when not supported
  */
+//Elektrikv2Changed
 export const permittableTokensAtom = atomWithStorage<PermittableTokens>('permittableTokens:v0', {
   [SupportedChainId.MAINNET]: {},
   [SupportedChainId.GOERLI]: {},
   [SupportedChainId.GNOSIS_CHAIN]: {},
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: {},
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: {},
 })
 
 /**

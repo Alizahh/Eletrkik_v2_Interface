@@ -1,5 +1,5 @@
 import { latest } from '@cowprotocol/app-data'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Web3Provider } from '@ethersproject/providers'
 import { Token } from '@uniswap/sdk-core'
 

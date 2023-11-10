@@ -1,5 +1,5 @@
 import { GpEther, USDC, GNO, ZERO_PERCENT, ONE_HUNDRED_PERCENT } from '@cowprotocol/common-const'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Currency, CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
 
 import { CLAIMS_REPO, FREE_CLAIM_TYPES, PAID_CLAIM_TYPES } from './const'
@@ -79,7 +79,7 @@ export function getIndexes(data: RepoClaims | UserClaims): number[] {
 export function getClaimsRepoPath(id: SupportedChainId): string {
   return `${CLAIMS_REPO}${_repoNetworkIdMapping(id)}/`
 }
-
+//Elektrikv2Changed
 function _repoNetworkIdMapping(id: SupportedChainId): string {
   switch (id) {
     case SupportedChainId.MAINNET:
@@ -88,6 +88,10 @@ function _repoNetworkIdMapping(id: SupportedChainId): string {
       return 'gnosis-chain'
     case SupportedChainId.GOERLI:
       return 'goerli'
+    case SupportedChainId.LIGHTLINK_PHOENIX_MAINNET:
+      return 'lightlink_phoenix_mainnet'
+    case SupportedChainId.LIGHTLINK_PEGASUS_TESTNET:
+      return 'lightlink_pegasus_mainnet'
     default:
       throw new Error('Network not supported')
   }

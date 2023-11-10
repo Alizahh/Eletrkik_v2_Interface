@@ -3,7 +3,6 @@ import { FACTORY_ADDRESS as V2_FACTORY_ADDRESS } from '@uniswap/v2-sdk'
 
 import { SupportedChainId } from 'common/constants/chains'
 
-
 type AddressMap = { [chainId: number]: string }
 
 const DEFAULT_NETWORKS = [SupportedChainId.MAINNET, SupportedChainId.GOERLI, SupportedChainId.SEPOLIA]

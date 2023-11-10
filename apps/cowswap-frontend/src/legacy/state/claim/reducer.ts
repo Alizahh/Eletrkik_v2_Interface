@@ -1,4 +1,4 @@
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 import { createReducer, current } from '@reduxjs/toolkit'
 
@@ -35,10 +35,13 @@ const DEFAULT_CLAIM_INFO: ClaimInfo = {
 
 type ClaimInfoPerChain = Record<SupportedChainId, ClaimInfo>
 
+//Elektrikv2Changed
 const DEFAULT_CLAIM_INFO_PER_CHAIN: ClaimInfoPerChain = {
   [SupportedChainId.MAINNET]: { ...DEFAULT_CLAIM_INFO },
   [SupportedChainId.GNOSIS_CHAIN]: { ...DEFAULT_CLAIM_INFO },
   [SupportedChainId.GOERLI]: { ...DEFAULT_CLAIM_INFO },
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: { ...DEFAULT_CLAIM_INFO },
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: { ...DEFAULT_CLAIM_INFO },
 }
 
 type ClaimInfoPerAccount = Record<string, ClaimInfoPerChain>

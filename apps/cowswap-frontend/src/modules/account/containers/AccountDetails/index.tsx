@@ -7,7 +7,7 @@ import {
   getExplorerAddressLink,
   isMobile,
 } from '@cowprotocol/common-utils'
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 import { MouseoverTooltip } from '@cowprotocol/ui'
 import { ExternalLink } from '@cowprotocol/ui'
 import {
@@ -66,9 +66,12 @@ import { SurplusCard } from './SurplusCard'
 import { useDisconnectWallet } from '../../hooks/useDisconnectWallet'
 import { CreationDateText } from '../Transaction/styled'
 
+//Elektrikv2Changed
 export const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
   [ChainId.GOERLI]: 'Görli',
   [ChainId.GNOSIS_CHAIN]: 'Gnosis Chain',
+  [ChainId.LIGHTLINK_PHOENIX_MAINNET]:'lighlink_phoenix_mainnet',
+  [ChainId.LIGHTLINK_PEGASUS_TESTNET]: 'lightlink_phoenix_testnet'
 }
 
 export const DATE_FORMAT_OPTION: Intl.DateTimeFormatOptions = {
