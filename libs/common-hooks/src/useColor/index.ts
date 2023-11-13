@@ -5,8 +5,8 @@ import { shade } from 'polished'
 import { hex } from 'wcag-contrast'
 import { uriToHttp } from '@cowprotocol/common-utils'
 import { Token } from '@uniswap/sdk-core'
-import {SupportedChainId} from '../../../../apps/cowswap-frontend/src/common/constants/chains'
-import {WrappedTokenInfo} from '../../../../apps/cowswap-frontend/src/legacy/state/lists/wrappedTokenInfo'
+import { SupportedChainId } from '../../../../apps/cowswap-frontend/src/common/constants/chains'
+import { WrappedTokenInfo } from '../../../../apps/cowswap-frontend/src/legacy/state/lists/wrappedTokenInfo'
 
 function URIForEthToken(address: string) {
   return `https://raw.githubusercontent.com/uniswap/assets/master/blockchains/ethereum/assets/${address}/logo.png`
@@ -61,7 +61,6 @@ export async function getColorFromUriPath(uri: string): Promise<string | null> {
   return detectedHex
 }
 
-
 async function getColorFromToken(token: Token): Promise<string | null> {
   if (!(token instanceof WrappedTokenInfo)) {
     return null
@@ -71,7 +70,7 @@ async function getColorFromToken(token: Token): Promise<string | null> {
   const { address } = wrappedToken
   let { logoURI } = wrappedToken
   if (!logoURI) {
-    if (token.chainId !== SupportedChainId.MAINNET) {
+    if (token.chainId !== SupportedChainId.LIGHTLINK_PHOENIX_MAINNET) {
       return null
     } else {
       logoURI = URIForEthToken(address)
@@ -94,7 +93,6 @@ async function getColorFromToken(token: Token): Promise<string | null> {
     }
   }
 }
-
 
 export function useColor(token?: Token) {
   const [color, setColor] = useState('#2172E5')

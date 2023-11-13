@@ -1,5 +1,5 @@
 import { COMMON_BASES, DEFAULT_DEADLINE_FROM_NOW, SupportedLocale } from '@cowprotocol/common-const'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { ConnectionType } from '@cowprotocol/wallet'
 import { Token } from '@uniswap/sdk-core'
 
@@ -103,7 +103,13 @@ function _initialStatePerChain(chainId: number) {
   )
 }
 
-const ALL_SUPPORTED_CHAIN_IDS = [SupportedChainId.MAINNET, SupportedChainId.GNOSIS_CHAIN, SupportedChainId.GOERLI]
+const ALL_SUPPORTED_CHAIN_IDS = [
+  SupportedChainId.MAINNET,
+  SupportedChainId.GNOSIS_CHAIN,
+  SupportedChainId.GOERLI,
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+]
 
 function _initialSavedTokensState() {
   return ALL_SUPPORTED_CHAIN_IDS.reduce((acc, chain) => {

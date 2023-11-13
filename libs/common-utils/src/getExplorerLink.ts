@@ -5,7 +5,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [SupportedChainId.GNOSIS_CHAIN]: 'https://gnosisscan.io',
   [SupportedChainId.GOERLI]: 'https://goerli.etherscan.io',
   [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'https://pegasus.lightlink.io/',
-  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'https://pegasus.lightlink.io/',
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'https://phoenix.lightlink.io/',
 }
 
 export enum ExplorerDataType {

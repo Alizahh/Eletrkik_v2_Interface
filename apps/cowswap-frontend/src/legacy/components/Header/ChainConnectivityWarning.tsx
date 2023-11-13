@@ -1,5 +1,5 @@
 import { getChainInfo } from '@cowprotocol/common-const'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { useWalletInfo } from '@cowprotocol/wallet'
 
 import { Trans } from '@lingui/macro'
@@ -56,7 +56,7 @@ export function ChainConnectivityWarning() {
         </TitleText>
       </TitleRow>
       <BodyRow>
-        {chainId === SupportedChainId.MAINNET ? (
+        {chainId === SupportedChainId.LIGHTLINK_PHOENIX_MAINNET ? (
           <Trans>You may have lost your network connection.</Trans>
         ) : (
           <Trans>You may have lost your network connection, or {label} might be down right now.</Trans>

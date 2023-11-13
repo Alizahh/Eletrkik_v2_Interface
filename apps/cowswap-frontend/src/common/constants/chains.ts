@@ -22,18 +22,18 @@ export enum SupportedChainId {
 }
 
 export const CHAIN_IDS_TO_NAMES = {
-  [SupportedChainId.MAINNET]: 'mainnet',
-  [SupportedChainId.GOERLI]: 'goerli',
-  [SupportedChainId.SEPOLIA]: 'sepolia',
-  [SupportedChainId.POLYGON]: 'polygon',
-  [SupportedChainId.POLYGON_MUMBAI]: 'polygon_mumbai',
-  [SupportedChainId.CELO]: 'celo',
-  [SupportedChainId.CELO_ALFAJORES]: 'celo_alfajores',
-  [SupportedChainId.ARBITRUM_ONE]: 'arbitrum',
-  [SupportedChainId.ARBITRUM_GOERLI]: 'arbitrum_goerli',
-  [SupportedChainId.OPTIMISM]: 'optimism',
-  [SupportedChainId.OPTIMISM_GOERLI]: 'optimism_goerli',
-  [SupportedChainId.BNB]: 'bnb',
+  // [SupportedChainId.MAINNET]: 'mainnet',
+  // [SupportedChainId.GOERLI]: 'goerli',
+  // [SupportedChainId.SEPOLIA]: 'sepolia',
+  // [SupportedChainId.POLYGON]: 'polygon',
+  // [SupportedChainId.POLYGON_MUMBAI]: 'polygon_mumbai',
+  // [SupportedChainId.CELO]: 'celo',
+  // [SupportedChainId.CELO_ALFAJORES]: 'celo_alfajores',
+  // [SupportedChainId.ARBITRUM_ONE]: 'arbitrum',
+  // [SupportedChainId.ARBITRUM_GOERLI]: 'arbitrum_goerli',
+  // [SupportedChainId.OPTIMISM]: 'optimism',
+  // [SupportedChainId.OPTIMISM_GOERLI]: 'optimism_goerli',
+  // [SupportedChainId.BNB]: 'bnb',
   // [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'local',
   [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: 'lightlink_phoenix_mainnet',
   [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: 'lightlink_pegasus_testnet',
@@ -76,6 +76,6 @@ export function isSupportedChainLightLink(chainId: number | null | undefined): b
   )
 }
 
-
-export function isPhoenixChain(chainId: number | undefined): chainId is SupportedChainId.LIGHTLINK_PHOENIX_MAINNET{
-  return chainId == SupportedChainId.LIGHTLINK_PHOENIX_MAINNET}
+export function isPhoenixChain(chainId: number | undefined): chainId is SupportedChainId.LIGHTLINK_PHOENIX_MAINNET {
+  return chainId == SupportedChainId.LIGHTLINK_PHOENIX_MAINNET
+}

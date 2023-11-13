@@ -8,12 +8,12 @@ export function useIsPermitEnabled(chainId: SupportedChainId | undefined): boole
     useFeatureFlags()
 
   switch (chainId) {
-    case SupportedChainId.MAINNET:
-      return !!permitEnabledMainnet
-    case SupportedChainId.GNOSIS_CHAIN:
-      return !!permitEnabledGnosis
-    case SupportedChainId.GOERLI:
-      return !!permitEnabledGoerli
+    // case SupportedChainId.MAINNET:
+    //   return !!permitEnabledMainnet
+    // case SupportedChainId.GNOSIS_CHAIN:
+    //   return !!permitEnabledGnosis
+    // case SupportedChainId.GOERLI:
+    //   return !!permitEnabledGoerli
     case SupportedChainId.LIGHTLINK_PHOENIX_MAINNET:
       return !!permitEnabledPhoenix
     case SupportedChainId.LIGHTLINK_PEGASUS_TESTNET:

@@ -35,7 +35,136 @@ export const LIGHTLINK_PEGASUS_TESTNET = new Token(
   'WETH',
   'Wrapped Ether'
 )
-
+// lightlink phoenix addresses
+export const USDC_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x18fB38404DADeE1727Be4b805c5b242B5413Fa40',
+  6,
+  'USDC',
+  'USD//C'
+)
+export const USDT_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x6308fa9545126237158778e74AE1b6b89022C5c0',
+  6,
+  'USDT',
+  'Tether USD'
+)
+export const DAI_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x49F65C3FfC6e45104ff5cB00e6030C626157a90b',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+)
+export const WBTC_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x46A5e3Fa4a02B9Ae43D9dF9408C86eD643144A67',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+)
+export const ARB_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x8fd8bc93518ea586be25c31a8973636192734555',
+  18,
+  'ARB',
+  'Arbitrum'
+)
+//TODO get op address on phoenix !not supported
+// export const OP_PHOENIX = new Token(
+//   SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+//   '0xecf6Bdde77C77863Ae842b145f9ab296E5eAcAF9',
+//   18,
+//   'OP',
+//   'Optimism'
+// )
+export const MATIC_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0x0B0a417dC62721b16A8A2a6a3807b97F557D6209',
+  18,
+  'WMATIC',
+  'Wrapped MATIC'
+)
+export const UNI_PHOENIX = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0xb4c16Cc8d80fdD59B6937Ce9072f4863DCe20077',
+  18,
+  'UNI',
+  'Uni token'
+)
+export const LINK = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0xb4c16Cc8d80fdD59B6937Ce9072f4863DCe20077',
+  18,
+  'LINK.e',
+  'LINK'
+)
+export const KUB = new Token(
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  '0xd80bef7938ddfd95ba0c13410fb7708e63f6f204',
+  18,
+  'KUB.e',
+  'KUB'
+)
+//changes
+// lightlink pegasus addresses
+export const USDC_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x3cf2c147d43C98Fa96d267572e3FD44A4D3940d4',
+  6,
+  'USDC',
+  'USD//C'
+)
+export const USDT_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x057e8e2bC40ECff87e6F9b28750D5E7AC004Eab9',
+  6,
+  'USDT',
+  'Tether USD'
+)
+export const DAI_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x4B6b9B31c72836806B0B1104Cf1CdAB8A0E3BD66',
+  18,
+  'DAI',
+  'Dai Stablecoin'
+)
+export const WBTC_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x9Ee1Aa18F3FEB435f811d6AE2F71B7D2a4Adce0B',
+  8,
+  'WBTC',
+  'Wrapped BTC'
+)
+export const ARB_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x124ABC63F20c6e2088078bd61e2Db100Ff30836e',
+  18,
+  'ARB',
+  'Arbitrum'
+)
+export const OP_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0xecf6Bdde77C77863Ae842b145f9ab296E5eAcAF9',
+  18,
+  'OP',
+  'Optimism'
+)
+export const MATIC_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x8bA5b0452b0a4da211579AA2e105c3da7C0Ad36c',
+  18,
+  'WMATIC',
+  'Wrapped MATIC'
+)
+export const UNI_PEGASUS = new Token(
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  '0x8488c316e23504B8554e4BdE9651802CD45aea24',
+  18,
+  'UNI',
+  'Uni token'
+)
 export const USDC_MAINNET = new Token(
   SupportedChainId.MAINNET,
   '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
@@ -115,7 +244,14 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in SupportedChainId]: Token } =
   [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: LIGHTLINK_PHOENIX_MAINNET,
   [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: LIGHTLINK_PEGASUS_TESTNET,
 }
-
+type ChainTokenList = {
+  readonly [chainId: number]: Token[]
+}
+export const WRAPPED_NATIVE_CURRENCIES_ONLY: ChainTokenList = Object.fromEntries(
+  Object.entries(WRAPPED_NATIVE_CURRENCY)
+    .map(([key, value]) => [key, [value]])
+    .filter(Boolean)
+)
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId as SupportedChainId]
@@ -174,6 +310,8 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: { [chainId in SupportedCha
     [SupportedChainId.MAINNET]: USDC_MAINNET.address,
     [SupportedChainId.GOERLI]: USDC_GOERLI.address,
     [SupportedChainId.GNOSIS_CHAIN]: USDC_GNOSIS_CHAIN.address,
+    [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: USDC_PEGASUS.address,
+    [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: USDC_PHOENIX.address,
   },
 }
 

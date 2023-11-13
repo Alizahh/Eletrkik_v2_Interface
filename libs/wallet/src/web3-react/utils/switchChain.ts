@@ -11,11 +11,11 @@ import { getChainInfo, RPC_URLS } from '@cowprotocol/common-const'
 //ElektrikV2Changed
 function getRpcUrls(chainId: SupportedChainId): [string] {
   switch (chainId) {
-    case SupportedChainId.MAINNET:
-    case SupportedChainId.GOERLI:
-      return [RPC_URLS[chainId]]
-    case SupportedChainId.GNOSIS_CHAIN:
-      return ['https://rpc.gnosischain.com/']
+    // case SupportedChainId.MAINNET:
+    // case SupportedChainId.GOERLI:
+    //   return [RPC_URLS[chainId]]
+    // case SupportedChainId.GNOSIS_CHAIN:
+    //   return ['https://rpc.gnosischain.com/']
     case SupportedChainId.LIGHTLINK_PEGASUS_TESTNET:
       return [RPC_URLS[chainId]]
     case SupportedChainId.LIGHTLINK_PHOENIX_MAINNET:

@@ -8,11 +8,12 @@ import {
   USDC_MAINNET,
   USDC_POLYGON,
   USDT_BSC,
+  USDC_PHOENIX,
 } from '../../../../../../libs/common-const/src/tokens'
-import { useRoutingAPITrade } from 'legacy/state/routing/useRoutingAPITrade';
+import { useRoutingAPITrade } from 'legacy/state/routing/useRoutingAPITrade'
+import { USDC_LOCAL } from '@aaran1337/smart-order-router-test'
 
-
-export const INTERNAL_ROUTER_PREFERENCE_PRICE = "price" as const;
+export const INTERNAL_ROUTER_PREFERENCE_PRICE = 'price' as const
 
 const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> } = {
   [SupportedChainId.MAINNET]: CurrencyAmount.fromRawAmount(USDC_MAINNET, 100_000e6),
@@ -21,6 +22,8 @@ const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> } = {
   [SupportedChainId.POLYGON]: CurrencyAmount.fromRawAmount(USDC_POLYGON, 10_000e6),
   [SupportedChainId.CELO]: CurrencyAmount.fromRawAmount(CUSD_CELO, 10_000e18),
   [SupportedChainId.BNB]: CurrencyAmount.fromRawAmount(USDT_BSC, 100e18),
+  [SupportedChainId.LIGHTLINK_PEGASUS_TESTNET]: CurrencyAmount.fromRawAmount(USDC_LOCAL, 10e6),
+  [SupportedChainId.LIGHTLINK_PHOENIX_MAINNET]: CurrencyAmount.fromRawAmount(USDC_PHOENIX, 10e6),
 }
 
 export default function useStablecoinPrice(currency?: Currency): Price<Currency, Token> | undefined {

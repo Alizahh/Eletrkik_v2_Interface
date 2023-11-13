@@ -12,14 +12,17 @@ export interface NetworksListProps {
 
   onSelectChain(targetChainId: SupportedChainId): void
 }
-
+const NETWORK_SELECTOR_CHAINS = [
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+]
 
 export function NetworksList(props: NetworksListProps) {
   const { currentChainId, onSelectChain } = props
 
   return (
     <>
-      {ALL_SUPPORTED_CHAIN_IDS.map((targetChainId: SupportedChainId) => {
+      {NETWORK_SELECTOR_CHAINS.map((targetChainId: SupportedChainId) => {
         const info = getChainInfo(targetChainId)
         const { label, logoUrl, bridge, explorer, explorerTitle, helpCenterUrl } = info
 

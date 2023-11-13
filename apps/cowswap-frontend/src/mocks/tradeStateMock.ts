@@ -1,5 +1,5 @@
 import { COW, GNO } from '@cowprotocol/common-const'
-import { OrderClass, OrderKind, SupportedChainId } from '@cowprotocol/cow-sdk'
+import { OrderClass, OrderKind, SupportedChainId } from 'test-cow-v2'
 import { CurrencyAmount, Percent } from '@uniswap/sdk-core'
 
 import { PriceImpact } from 'legacy/hooks/usePriceImpact'
@@ -10,7 +10,7 @@ import { TradeFlowContext } from 'modules/limitOrders/services/types'
 
 import { CurrencyInfo } from 'common/pure/CurrencyInputPanel/types'
 
-const chainId = SupportedChainId.MAINNET
+const chainId = SupportedChainId.LIGHTLINK_PHOENIX_MAINNET
 
 const inputCurrency = COW[chainId]
 const outputCurrency = GNO[chainId]
