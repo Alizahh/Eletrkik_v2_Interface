@@ -175,17 +175,17 @@ export function CurrencyInputPanel(props: CurrencyInputPanelProps) {
           subsidyAndBalance={subsidyAndBalance}
         />
       )}
-
       <CurrencySearchModal
         isOpen={isCurrencySearchModalOpen}
         onDismiss={() => setCurrencySearchModalOpen(false)}
         onCurrencySelect={onCurrencySelect}
         selectedCurrency={currency}
         otherSelectedCurrency={currency}
-        showCommonBases={true}
+        showCommonBases={false}
         showCurrencyAmount={true}
         disableNonToken={disableNonToken}
       />
     </styledEl.OuterWrapper>
   )
 }
+//Elektrikv2Changed

@@ -36,7 +36,6 @@ export function SelectTokenModal(props: SelectTokenModalProps) {
   const [tokensFromExternal, setTokensFromExternal] = useState<TokenWithLogo[]>([])
 
   const importToken = (token: TokenWithLogo) => {
-    console.log('TODO: import token', token)
   }
 
   const isTokenNotFound = useMemo(() => {

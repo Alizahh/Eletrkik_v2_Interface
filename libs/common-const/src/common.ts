@@ -1,5 +1,5 @@
 import networksJson from '@cowprotocol/contracts/networks.json'
-import { IpfsConfig, SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { IpfsConfig, SupportedChainId as ChainId } from 'test-cow-v2'
 import { ethFlowBarnJson, ethFlowProdJson } from '@cowprotocol/abis'
 import { Fraction, Percent, Token } from '@uniswap/sdk-core'
 

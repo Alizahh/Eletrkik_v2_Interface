@@ -5,7 +5,7 @@ import {
   UNSUPPORTED_LIST_URLS,
 } from '@cowprotocol/common-const'
 import { getChainIdValues } from '@cowprotocol/common-utils'
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 import { getVersionUpgrade, TokenList, VersionUpgrade } from '@uniswap/token-lists'
 
 import { createReducer } from '@reduxjs/toolkit'

@@ -1,6 +1,6 @@
 import { getTokensFromMarket } from '@cowprotocol/common-utils'
 import { OrderKind } from '@cowprotocol/contracts'
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 
 import { PriceInformation } from 'types'
 
@@ -12,7 +12,13 @@ import { fetchWithRateLimit } from 'common/utils/fetch'
 export const API_NAME = '1inch'
 const ENABLED = process.env.REACT_APP_PRICE_FEED_1INCH_ENABLED !== 'false'
 
-const SUPPORTED_CHAINS = [ChainId.MAINNET, ChainId.GNOSIS_CHAIN]
+//ELektrikv2Changed
+const SUPPORTED_CHAINS = [
+  ChainId.MAINNET,
+  ChainId.GNOSIS_CHAIN,
+  ChainId.LIGHTLINK_PHOENIX_MAINNET,
+  ChainId.LIGHTLINK_PEGASUS_TESTNET,
+]
 
 // 1inch API
 // Docs: https://docs.1inch.io/docs/aggregation-protocol/api/swagger

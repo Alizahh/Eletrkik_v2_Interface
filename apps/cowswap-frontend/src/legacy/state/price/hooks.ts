@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 
 import { useDispatch, useSelector } from 'react-redux'
 

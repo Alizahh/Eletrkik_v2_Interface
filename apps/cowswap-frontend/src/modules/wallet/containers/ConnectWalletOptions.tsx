@@ -75,20 +75,20 @@ export function ConnectWalletOptions({ tryActivation }: { tryActivation: TryActi
   // Injected
   // const tallyOption = (showTally && <TallyWalletOption {...connectionProps} />) ?? null
   const trustOption = (!isInjectedMobileBrowser && <TrustWalletOption {...connectionProps} />) ?? null
-
+//Elektrikv2Changed
   return (
     <>
       {injectedOption}
       {walletConnectionV2Option}
       {coinbaseWalletOption}
-      {ledgerOption}
-      <FeatureGuard featureFlag="trezorEnabled">{trezorOption}</FeatureGuard>
+      {/* {ledgerOption} */}
+      {/* <FeatureGuard featureFlag="trezorEnabled">{trezorOption}</FeatureGuard> */}
       {/*{zengoOption}*/}
-      {ambireOption}
-      {alphaOption}
+      {/* {ambireOption}
+      {alphaOption} */}
       {/* {tallyOption} */}
-      {trustOption}
-      {keystoneOption}
+      {/* {trustOption}
+      {keystoneOption} */}
     </>
   )
 }

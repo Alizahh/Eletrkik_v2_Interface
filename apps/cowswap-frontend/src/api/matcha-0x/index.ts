@@ -1,6 +1,6 @@
 import { getTokensFromMarket } from '@cowprotocol/common-utils'
 import { OrderKind } from '@cowprotocol/contracts'
-import { SupportedChainId as ChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId } from 'test-cow-v2'
 
 import { PriceInformation } from 'types'
 
@@ -62,11 +62,12 @@ function getMatchaChainId(chainId: ChainId): number | null {
   }
 }
 
+//Elektrikv2Changed
 function getApiUrl(): Partial<Record<ChainId, string>> {
   // Support: Mainnet, Ropsten, Polygon, Binance Smart Chain
   // See https://0x.org/docs/api#introduction
   return {
-    [ChainId.MAINNET]: 'https://api.0x.org/swap',
+    [ChainId.MAINNET]: 'https://elektrik.network/',
   }
 }
 

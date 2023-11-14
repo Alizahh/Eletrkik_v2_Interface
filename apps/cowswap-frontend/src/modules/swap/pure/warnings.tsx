@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { genericPropsChecker } from '@cowprotocol/common-utils'
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 import { Currency, CurrencyAmount, Percent } from '@uniswap/sdk-core'
 
 import styled from 'styled-components/macro'

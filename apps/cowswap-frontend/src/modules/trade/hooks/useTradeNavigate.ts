@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId } from 'test-cow-v2'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 

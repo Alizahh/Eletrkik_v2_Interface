@@ -3,7 +3,8 @@ import type { TokenList } from '@uniswap/token-lists'
 
 import validateTokenList from './validateTokenList'
 
-export const DEFAULT_TOKEN_LIST = 'https://gateway.ipfs.io/ipns/tokens.uniswap.org'
+//Elektrikv2Changed
+export const DEFAULT_TOKEN_LIST = 'https://ipfs.io/ipfs/QmdtsuxFmKNV6sKqgvLNGpjViz5FwpZjV7zTfAQhFa1upk/'
 
 const listCache = new Map<string, TokenList>()
 

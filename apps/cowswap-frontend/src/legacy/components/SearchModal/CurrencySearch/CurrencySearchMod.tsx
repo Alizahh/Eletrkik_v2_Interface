@@ -106,6 +106,7 @@ export function CurrencySearch({
   }, [allTokens, debouncedQuery])
 
   const [balances, balancesIsLoading] = useAllTokenBalances()
+
   const sortedTokens: Token[] = useMemo(() => {
     void balancesIsLoading // creates a new array once balances load to update hooks
     return [...filteredTokens].sort(tokenComparator.bind(null, balances))
@@ -204,6 +205,8 @@ export function CurrencySearch({
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
+ 
+
 
   return (
     <>
