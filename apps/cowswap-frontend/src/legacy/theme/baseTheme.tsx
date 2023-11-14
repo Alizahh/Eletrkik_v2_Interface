@@ -74,6 +74,7 @@ export function colors(darkMode: boolean): Colors {
     // ****** secondary colors ******
     secondary1: darkMode ? '#2172E5' : '#8958FF',
     secondary3: darkMode ? '#17000b26' : 'rgba(137,88,255,0.6)',
+    freeTransaction:'#00FF00',
 
     // ****** other ******
     blue1: '#3F77FF',

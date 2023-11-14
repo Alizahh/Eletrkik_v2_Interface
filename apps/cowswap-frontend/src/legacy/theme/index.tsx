@@ -195,6 +195,20 @@ export const ThemedText = {
   DeprecatedItalic(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={12} fontStyle="italic" color="textSecondary" {...props} />
   },
+  //Elektrikv2Changed
+
+  BodySecondary(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={16} color="textSecondary" {...props} />
+  },
+  DeprecatedSubHeader(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={14} {...props} />
+  },
+  BodySmall(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={14} color="textPrimary" {...props} />
+  },
+  FreeTransaction(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={14} color="textFreeTransaction" {...props} />
+  },
 }
 
 export function theme(darkmode: boolean): DefaultTheme {

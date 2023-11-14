@@ -28,7 +28,7 @@ import { ThemedText } from 'legacy/theme'
 
 import { useIsEoaEthFlow } from 'modules/swap/hooks/useIsEoaEthFlow'
 import { getNativeOrderDeadlineTooltip, getNonNativeOrderDeadlineTooltip } from 'modules/swap/pure/Row/RowDeadline'
-import { getNativeSlippageTooltip, getNonNativeSlippageTooltip } from 'modules/swap/pure/Row/RowSlippageContent'
+import { elektrikMessageTooltip, getNativeSlippageTooltip, getNonNativeSlippageTooltip } from 'modules/swap/pure/Row/RowSlippageContent'
 
 import { UI } from 'common/constants/theme'
 import useNativeCurrency from 'lib/hooks/useNativeCurrency'
@@ -228,14 +228,15 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
     }
   }
 
-  const showCustomDeadlineRow = Boolean(chainId)
+  const showCustomDeadlineRow = false
+//Elektrikv2Changed
 
   return (
     <AutoColumn gap="md">
       <AutoColumn gap="sm">
         <RowFixed>
           <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
-            <Trans>MEV protected slippage</Trans>
+            <Trans>Max.slippage</Trans>
           </ThemedText.Black>
           <QuestionHelper
             // bgColor={theme.bg3}
@@ -243,9 +244,10 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
             color={theme.text1}
             text={
               // <Trans>Your transaction will revert if the price changes unfavorably by more than this percentage.</Trans>
-              isEoaEthFlow
-                ? getNativeSlippageTooltip([nativeCurrency.symbol, nativeCurrency.wrapped.symbol])
-                : getNonNativeSlippageTooltip()
+              // isEoaEthFlow
+              //   ? getNativeSlippageTooltip([nativeCurrency.symbol, nativeCurrency.wrapped.symbol])
+              //   : getNonNativeSlippageTooltip()
+              elektrikMessageTooltip(null)
             }
           />
         </RowFixed>

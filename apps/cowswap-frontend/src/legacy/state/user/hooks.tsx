@@ -20,6 +20,7 @@ import {
   updateUserDeadline,
   updateUserExpertMode,
   updateUserLocale,
+  updateUserRouterPreference,
   updateUserSlippageTolerance,
 } from './reducer'
 import { SerializedToken } from './types'
@@ -27,6 +28,7 @@ import { SerializedToken } from './types'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { AppState } from '../index'
 import { setRecipient } from '../swap/actions'
+import { RouterPreference } from '../routing/slice'
 
 export function deserializeToken(serializedToken: SerializedToken): Token {
   return new Token(
@@ -304,4 +306,17 @@ export function useUserHideClosedPositions(): [boolean, (newHideClosedPositions:
   )
 
   return [hideClosedPositions, setHideClosedPositions]
+}
+//Elektrikv2Changed
+
+export function useRouterPreference(): [RouterPreference, (routerPreference: RouterPreference) => void] {
+  const dispatch = useAppDispatch()
+  const routerPreference = useAppSelector((state) => state.user.userRouterPreference)
+  const setRouterPreference = useCallback(
+    (newRouterPreference: RouterPreference) => {
+      dispatch(updateUserRouterPreference({ userRouterPreference: newRouterPreference }))
+    },
+    [dispatch]
+  )
+  return [routerPreference, setRouterPreference]
 }

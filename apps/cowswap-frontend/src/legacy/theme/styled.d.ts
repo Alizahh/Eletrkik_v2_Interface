@@ -30,24 +30,25 @@ interface ColorsUniswap {
   bg5: Color
   bg6: Color
   bg7: Color
-  backgroundSurface:Color
-  backgroundOutline:Color
-  backgroundInteractive:Color
+  backgroundSurface: Color
+  backgroundOutline: Color
+  backgroundInteractive: Color
   accentAction: Color
   deprecated_bg1: Color
-  accentActionSoft:Color
+  accentActionSoft: Color
   deprecated_bg4: Color
   deprecated_primary5: Color
-  textTertiary:Color
-  brandedGradient:Color
-  accentCritical:Color
-  accentSuccess:Color
-  accentWarning:Color
-  promotionalGradient:Color
-  accentTextDarkPrimary:Color
-  accentFailure:Color
-  deprecated_bg3:Color
-  accentWarningSoft:Color
+  textTertiary: Color
+  brandedGradient: Color
+  accentCritical: Color
+  accentSuccess: Color
+  accentWarning: Color
+  promotionalGradient: Color
+  accentTextDarkPrimary: Color
+  accentFailure: Color
+  deprecated_bg3: Color
+  accentWarningSoft: Color
+  freeTransaction: Color
 
   modalBG: Color
   advancedBG: Color

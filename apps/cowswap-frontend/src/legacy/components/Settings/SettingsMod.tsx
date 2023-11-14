@@ -26,6 +26,7 @@ import { UI } from 'common/constants/theme'
 import { ExpertModeModal } from 'common/pure/ExpertModeModal'
 
 import { SettingsTabProp } from './index'
+import RouterPreferenceSettings from './RouterpreferencesSettings'
 
 export const StyledMenuIcon = styled(Settings)`
   height: 20px;
@@ -93,6 +94,13 @@ export const MenuFlyout = styled.span`
 
   user-select: none;
 `
+export const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  border-width: 0;
+  margin: 0;
+  background-color: ${({ theme }) => theme.backgroundOutline};
+`
 
 export default function SettingsTab({ className, placeholderSlippage, SettingsButton }: SettingsTabProp) {
   const node = useRef<HTMLDivElement>()
@@ -133,7 +141,6 @@ export default function SettingsTab({ className, placeholderSlippage, SettingsBu
   useOnClickOutside(node, open ? toggle : undefined)
 
   return (
-    // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledMenu ref={node as any} className={className}>
       <ExpertModeModal
         isOpen={showConfirmation}
@@ -150,12 +157,15 @@ export default function SettingsTab({ className, placeholderSlippage, SettingsBu
             <Text fontWeight={600} fontSize={14}>
               <Trans>Transaction Settings</Trans>
             </Text>
-            <TransactionSettings placeholderSlippage={placeholderSlippage} />
-            <Text fontWeight={600} fontSize={14}>
-              <Trans>Interface Settings</Trans>
-            </Text>
 
-            <RowBetween>
+            <RouterPreferenceSettings />
+            <Divider/>
+            <TransactionSettings placeholderSlippage={placeholderSlippage} />
+            {/* <Text fontWeight={600} fontSize={14}>
+              <Trans>Interface Settings</Trans>
+            </Text> */}
+
+            {/* <RowBetween>
               <RowFixed>
                 <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
                   <Trans>Expert Mode</Trans>
@@ -183,8 +193,8 @@ export default function SettingsTab({ className, placeholderSlippage, SettingsBu
                       }
                 }
               />
-            </RowBetween>
-
+            </RowBetween> */}
+{/* 
             <RowBetween>
               <RowFixed>
                 <ThemedText.Black fontWeight={400} fontSize={14} color={theme.text2}>
@@ -203,10 +213,11 @@ export default function SettingsTab({ className, placeholderSlippage, SettingsBu
                 isActive={recipientToggleVisible}
                 toggle={toggleRecipientVisibility}
               />
-            </RowBetween>
+            </RowBetween> */}
           </AutoColumn>
         </MenuFlyout>
       )}
     </StyledMenu>
   )
 }
+//Elektrikv2Changed

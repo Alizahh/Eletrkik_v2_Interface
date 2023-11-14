@@ -1,6 +1,10 @@
 import { useCallback, useMemo } from 'react'
 
-import { UNSUPPORTED_LIST_URLS } from '@cowprotocol/common-const'
+import {
+  DEFAULT_ACTIVE_LIST_URLS,
+  DEFAULT_ACTIVE_LIST_URLS_BY_NETWORK,
+  UNSUPPORTED_LIST_URLS,
+} from '@cowprotocol/common-const'
 import { SupportedChainId as ChainId } from 'test-cow-v2'
 import { useWalletInfo } from '@cowprotocol/wallet'
 import DEFAULT_TOKEN_LIST from '@uniswap/default-token-list'
@@ -193,4 +197,11 @@ export function useInactiveListUrls(): string[] {
   return Object.keys(lists).filter(
     (url) => !allActiveListUrls?.includes(url) && !UNSUPPORTED_LIST_URLS[chainId].includes(url)
   )
+}
+//Elektrikv2Changed
+
+// get all the tokens from active lists, combine with local default tokens
+export function useCombinedActiveList(): TokenAddressMap {
+  const activeTokens = useCombinedTokenMapFromUrls(DEFAULT_ACTIVE_LIST_URLS)
+  return activeTokens
 }

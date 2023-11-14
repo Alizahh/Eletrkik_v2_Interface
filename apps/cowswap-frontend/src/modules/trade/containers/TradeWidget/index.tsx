@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useMemo } from 'react'
 
 import { maxAmountSpend } from '@cowprotocol/common-utils'
 import { useIsSafeWallet, useWalletDetails, useWalletInfo } from '@cowprotocol/wallet'
@@ -28,6 +28,12 @@ import { DisableNativeTokenSellingUpdater } from '../../updaters/DisableNativeTo
 import { PriceImpactUpdater } from '../../updaters/PriceImpactUpdater'
 import { WrapFlowActionButton } from '../WrapFlowActionButton'
 import { WrapNativeModal } from '../WrapNativeModal'
+import { useDerivedSwapInfo } from 'modules/swap/hooks/useSwapState'
+import PriceImpactWarning from 'modules/trade/pure/PriceImpactWarning'
+import SwapDetailsDropdown from '../SwapDetailsDropDown'
+import { TradeState } from 'legacy/state/routing/types'
+import { warningSeverity } from 'legacy/utils/prices'
+import JSBI from 'jsbi'
 
 export interface TradeWidgetActions {
   onCurrencySelection: CurrencyInputPanelProps['onCurrencySelection']
@@ -122,6 +128,68 @@ export function TradeWidget(props: TradeWidgetProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+
+//Elektrikv2Changed
+
+  const {
+    trade: { state: tradeState, trade },
+    allowedSlippage,
+    autoSlippage,
+    currencyBalances,
+    parsedAmount,
+    currencies,
+    inputError: swapInputError,
+  } = useDerivedSwapInfo(state, chainId);
+
+  const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
+
+
+
+
+
+
+  const [routeNotFound, routeIsLoading, routeIsSyncing] = useMemo(
+    () => [
+      !trade?.swaps,
+      TradeState.LOADING === tradeState,
+      TradeState.LOADING === tradeState && Boolean(trade),
+    ],
+    [trade, tradeState]
+  );
+  const userHasSpecifiedInputOutput = Boolean(
+    currencies[Field.INPUT] &&
+      currencies[Field.OUTPUT] &&
+      parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+  );
+
+
+  // warnings on the greater of fiat value price impact and execution price impact
+  const { priceImpactSeverity, largerPriceImpact } = useMemo(() => {
+    const marketPriceImpact = trade?.priceImpact
+      ? computeRealizedPriceImpact(trade)
+      : undefined;
+    const largerPriceImpact = largerPercentValue(
+      marketPriceImpact,
+      stablecoinPriceImpact
+    );
+    return {
+      priceImpactSeverity: warningSeverity(largerPriceImpact),
+      largerPriceImpact,
+    };
+  }, [stablecoinPriceImpact, trade]);
+
+
+
+
+
+
+
+  const showPriceImpactWarning = largerPriceImpact && priceImpactSeverity > 3;
+
+  const showDetailsDropdown = Boolean(
+    !showWrap && userHasSpecifiedInputOutput && (trade || routeIsLoading || routeIsSyncing)
+  )
+
   return (
     <styledEl.Container id={id}>
       <RecipientAddressUpdater />
@@ -187,6 +255,16 @@ export function TradeWidget(props: TradeWidgetProps) {
               {!isWrapOrUnwrap && showRecipient && (
                 <styledEl.StyledRemoveRecipient recipient={recipient || ''} onChangeRecipient={onChangeRecipient} />
               )}
+
+              {showDetailsDropdown && (
+                <SwapDetailsDropdown
+                  trade={trade}
+                  syncing={routeIsSyncing}
+                  loading={routeIsLoading}
+                  allowedSlippage={allowedSlippage}
+                />
+              )}
+              {showPriceImpactWarning && <PriceImpactWarning priceImpact={largerPriceImpact} />}
 
               {isWrapOrUnwrap ? <WrapFlowActionButton /> : bottomContent}
             </>

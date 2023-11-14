@@ -67,6 +67,9 @@ export const DEFAULT_LIST_OF_LISTS_BY_NETWORK: NetworkLists = {
     networkLists: [LIGHTLINK_PHOENIX_LIST],
   }),
 }
+//Elektrikv2Changed
+
+export const DEFAULT_ACTIVE_LIST_URLS: string[] = [LIGHTLINK_PEGASUS_LIST, LIGHTLINK_PHOENIX_LIST]
 
 // default lists to be 'active' aka searched across
 export const DEFAULT_ACTIVE_LIST_URLS_BY_NETWORK: NetworkLists = {

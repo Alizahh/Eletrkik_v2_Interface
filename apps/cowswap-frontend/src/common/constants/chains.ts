@@ -79,3 +79,11 @@ export function isSupportedChainLightLink(chainId: number | null | undefined): b
 export function isPhoenixChain(chainId: number | undefined): chainId is SupportedChainId.LIGHTLINK_PHOENIX_MAINNET {
   return chainId == SupportedChainId.LIGHTLINK_PHOENIX_MAINNET
 }
+//Elektrikv2Changed
+export const SUPPORTED_GAS_ESTIMATE_CHAIN_IDS = [
+  SupportedChainId.MAINNET,
+
+  //Change
+  SupportedChainId.LIGHTLINK_PEGASUS_TESTNET,
+  SupportedChainId.LIGHTLINK_PHOENIX_MAINNET,
+] as const

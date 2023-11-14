@@ -42,6 +42,16 @@ export const getNonNativeSlippageTooltip = () => (
     <p>{INPUT_OUTPUT_EXPLANATION}</p>
   </Trans>
 )
+//Elektrikv2Changed
+
+export const elektrikMessageTooltip = (description:string | null | undefined) =>{
+  return (
+  <Trans>
+  <p>Your Transaction will revert if the price changes unfavorably by more than this percentage</p>
+  {description && <p>{description}</p>}
+</Trans>
+  )
+}
 
 export interface RowSlippageContentProps extends RowSlippageProps {
   toggleSettings: () => void

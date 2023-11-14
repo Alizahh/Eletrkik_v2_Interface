@@ -8,6 +8,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { SerializedPair, SerializedToken } from './types'
 
 import { updateVersion } from '../global/actions'
+import { RouterPreference } from '../routing/slice'
 
 // MOD imports
 // import { serializeToken } from './hooks'
@@ -29,6 +30,9 @@ export interface UserState {
 
   userDarkMode: boolean | null // the user's choice for dark mode or light mode
   userLocale: SupportedLocale | null
+  //Elektrikv2Changed
+
+  userRouterPreference: RouterPreference
 
   userExpertMode: boolean
 
@@ -127,6 +131,9 @@ export const initialState: UserState = {
   // TODO: mod, shouldn't be here
   recipientToggleVisible: false,
   userLocale: null,
+  //Elektrikv2Changed
+
+  userRouterPreference: RouterPreference.AUTO,
   userClientSideRouter: false,
   userHideClosedPositions: false,
   userSlippageTolerance: 'auto',
@@ -173,6 +180,11 @@ const userSlice = createSlice({
     updateUserDeadline(state, action) {
       state.userDeadline = action.payload.userDeadline
       state.timestamp = currentTimestamp()
+    },
+    //Elektrikv2Changed
+
+    updateUserRouterPreference(state, action) {
+      state.userRouterPreference = action.payload.userRouterPreference
     },
     updateUserClientSideRouter(state, action) {
       state.userClientSideRouter = action.payload.userClientSideRouter
@@ -282,7 +294,12 @@ const userSlice = createSlice({
       ) {
         state.userDeadline = DEFAULT_DEADLINE_FROM_NOW
       }
+      //Elektrikv2Changed
 
+      // If `userRouterPreference` is not present, reset to default
+      if (typeof state.userRouterPreference !== 'string') {
+        state.userRouterPreference = RouterPreference.AUTO
+      }
       state.lastUpdateVersionTimestamp = currentTimestamp()
     })
   },
@@ -301,6 +318,7 @@ export const {
   updateUserClientSideRouter,
   updateUserDarkMode,
   updateUserDeadline,
+  updateUserRouterPreference,
   updateUserExpertMode,
   updateUserLocale,
   updateUserSlippageTolerance,

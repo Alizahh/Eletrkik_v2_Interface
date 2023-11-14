@@ -6,6 +6,7 @@ export function colorsUniswap(darkMode: boolean): Colors {
     // base
     white: '#FFFFFF',
     black: '#000000',
+    freeTransaction: '#00FF00',
 
     // text
     text1: darkMode ? '#FFFFFF' : '#000000',

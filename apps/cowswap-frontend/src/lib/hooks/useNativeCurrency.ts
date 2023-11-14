@@ -12,3 +12,5 @@ export default function useNativeCurrency(): NativeCurrency {
 
   return useMemo(() => nativeOnChain(chainId), [chainId])
 }
+
+

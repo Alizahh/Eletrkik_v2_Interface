@@ -77,15 +77,13 @@ export function WalletModal(props: WalletModalProps) {
     </CowModal>
   )
 }
+//Elektrikv2Changed
 
 function CustomTerms() {
   return (
     <TermsWrapper>
       <Trans>
-        By connecting a wallet, you acknowledge that you have read, understood and agree to the interface’s{' '}
-        <StyledInternalLink style={{ marginRight: 5 }} to={Routes.TERMS_CONDITIONS} target="_blank">
-          Terms &amp; Conditions.
-        </StyledInternalLink>
+        By connecting a wallet, you acknowledge that you have read, understood and agree to the interface’s Terms &amp; Conditions.
       </Trans>
     </TermsWrapper>
   )
