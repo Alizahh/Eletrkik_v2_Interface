@@ -14,6 +14,8 @@ import {
   DISCORD_LINK,
   DOCS_LINK,
   DUNE_DASHBOARD_LINK,
+  ELEKTRIK_ANALYTICS_INFO,
+  ELEKTRIK_DOCS_LINK,
   TWITTER_LINK,
 } from '@cowprotocol/common-const'
 import { getExplorerBaseUrl } from '@cowprotocol/common-utils'
@@ -32,7 +34,7 @@ function ExplorerMenuLink() {
 
   return (
     <ExternalLink href={url}>
-      <Globe /> CoW Explorer
+      <Globe /> Elektrik Explorer
     </ExternalLink>
   )
 }
@@ -75,24 +77,24 @@ export const MAIN_MENU: MenuTreeItem[] = [
       },
     ],
   },
-  {
-    kind: MenuItemKind.DROP_DOWN,
-    title: 'Account',
-    items: [
-      {
-        links: ACCOUNT_MENU,
-      },
-    ],
-  },
-  {
-    kind: MenuItemKind.DROP_DOWN,
-    title: 'FAQ',
-    items: [
-      {
-        links: FAQ_MENU,
-      },
-    ],
-  },
+  // {
+  //   kind: MenuItemKind.DROP_DOWN,
+  //   title: 'Account',
+  //   items: [
+  //     {
+  //       links: ACCOUNT_MENU,
+  //     },
+  //   ],
+  // },
+  // {
+  //   kind: MenuItemKind.DROP_DOWN,
+  //   title: 'FAQ',
+  //   items: [
+  //     {
+  //       links: FAQ_MENU,
+  //     },
+  //   ],
+  // },
   {
     kind: MenuItemKind.DROP_DOWN,
     title: 'More',
@@ -103,79 +105,66 @@ export const MAIN_MENU: MenuTreeItem[] = [
           {
             id: MainMenuItemId.MORE_DOCUMENTATION,
             title: 'Documentation',
-            url: DOCS_LINK,
+            url: ELEKTRIK_DOCS_LINK,
             iconSVG: IMAGE_DOCS,
             kind: MenuItemKind.EXTERNAL_LINK,
           },
-          { id: MainMenuItemId.MORE_ABOUT, title: 'About', url: Routes.ABOUT, iconSVG: IMAGE_INFO },
           {
             kind: MenuItemKind.CUSTOM_ITEM,
             Item: ExplorerMenuLink,
           },
-          {
-            id: MainMenuItemId.MORE_STATISTICS,
-            title: 'Statistics',
-            url: DUNE_DASHBOARD_LINK,
-            iconSVG: IMAGE_PIE,
-            kind: MenuItemKind.EXTERNAL_LINK,
-          },
-          {
-            id: MainMenuItemId.MORE_CONTRACT,
-            title: 'Contract',
-            url: CONTRACTS_CODE_LINK,
-            iconSVG: IMAGE_CODE,
-            kind: MenuItemKind.EXTERNAL_LINK,
-          },
+         
         ],
       },
-      {
-        sectionTitle: 'Community',
-        links: [
-          {
-            id: MainMenuItemId.MORE_DISCORD,
-            title: 'Discord',
-            url: DISCORD_LINK,
-            iconSVG: IMAGE_DISCORD,
-            kind: MenuItemKind.EXTERNAL_LINK,
-          },
-          {
-            id: MainMenuItemId.MORE_TWITTER,
-            title: 'Twitter',
-            url: TWITTER_LINK,
-            iconSVG: IMAGE_TWITTER,
-            kind: MenuItemKind.EXTERNAL_LINK,
-          },
-        ],
-      },
-      {
-        sectionTitle: 'Other',
-        links: [
-          { kind: MenuItemKind.DARK_MODE_BUTTON },
-          { id: MainMenuItemId.OTHER_COW_RUNNER, title: 'CoW Runner', url: Routes.PLAY_COWRUNNER, icon: IMAGE_GAME },
-          { id: MainMenuItemId.OTHER_MEV_SLICER, title: 'MEV Slicer', url: Routes.PLAY_MEVSLICER, icon: IMAGE_SLICER },
-          {
-            id: MainMenuItemId.OTHER_TERMS_AND_CONDITIONS,
-            title: 'Terms and Conditions',
-            url: Routes.TERMS_CONDITIONS,
-            iconSVG: IMAGE_TERMS_AND_CONDITIONS,
-          },
-          {
-            id: MainMenuItemId.OTHER_COOKIE_POLICY,
-            title: 'Cookie Policy',
-            url: Routes.COOKIE_POLICY,
-            iconSVG: IMAGE_COOKIE_POLICY,
-          },
-          {
-            id: MainMenuItemId.OTHER_PRIVACY_POLICY,
-            title: 'Privacy Policy',
-            url: Routes.PRIVACY_POLICY,
-            iconSVG: IMAGE_PRIVACY_POLICY,
-          },
-        ],
-      },
+      // {
+      //   sectionTitle: 'Community',
+      //   links: [
+      //     {
+      //       id: MainMenuItemId.MORE_DISCORD,
+      //       title: 'Discord',
+      //       url: DISCORD_LINK,
+      //       iconSVG: IMAGE_DISCORD,
+      //       kind: MenuItemKind.EXTERNAL_LINK,
+      //     },
+      //     {
+      //       id: MainMenuItemId.MORE_TWITTER,
+      //       title: 'Twitter',
+      //       url: TWITTER_LINK,
+      //       iconSVG: IMAGE_TWITTER,
+      //       kind: MenuItemKind.EXTERNAL_LINK,
+      //     },
+      //   ],
+      // },
+      // {
+      //   sectionTitle: 'Other',
+      //   links: [
+      //     { kind: MenuItemKind.DARK_MODE_BUTTON },
+      //     { id: MainMenuItemId.OTHER_COW_RUNNER, title: 'CoW Runner', url: Routes.PLAY_COWRUNNER, icon: IMAGE_GAME },
+      //     { id: MainMenuItemId.OTHER_MEV_SLICER, title: 'MEV Slicer', url: Routes.PLAY_MEVSLICER, icon: IMAGE_SLICER },
+      //     {
+      //       id: MainMenuItemId.OTHER_TERMS_AND_CONDITIONS,
+      //       title: 'Terms and Conditions',
+      //       url: Routes.TERMS_CONDITIONS,
+      //       iconSVG: IMAGE_TERMS_AND_CONDITIONS,
+      //     },
+      //     {
+      //       id: MainMenuItemId.OTHER_COOKIE_POLICY,
+      //       title: 'Cookie Policy',
+      //       url: Routes.COOKIE_POLICY,
+      //       iconSVG: IMAGE_COOKIE_POLICY,
+      //     },
+      //     {
+      //       id: MainMenuItemId.OTHER_PRIVACY_POLICY,
+      //       title: 'Privacy Policy',
+      //       url: Routes.PRIVACY_POLICY,
+      //       iconSVG: IMAGE_PRIVACY_POLICY,
+      //     },
+      //   ],
+      // },
     ],
   },
-
   { id: MainMenuItemId.POOL, kind: MenuItemKind.PARAMETRIZED_LINK, title: 'Pools', url: Routes.POOL },
+
+
 
 ]

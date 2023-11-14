@@ -1,5 +1,5 @@
 import { WRAPPED_NATIVE_CURRENCY as WETH } from '@cowprotocol/common-const'
-import { OrderKind, SupportedChainId } from '@cowprotocol/cow-sdk'
+import { OrderKind, SupportedChainId } from 'test-cow-v2'
 
 export interface TradeUrlParams {
   readonly chainId: string | undefined

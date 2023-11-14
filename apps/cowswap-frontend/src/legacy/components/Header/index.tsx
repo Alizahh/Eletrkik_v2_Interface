@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { toggleDarkModeAnalytics } from '@cowprotocol/analytics'
 import { isInjectedWidget } from '@cowprotocol/common-utils'
 import { addBodyClass, removeBodyClass } from '@cowprotocol/common-utils'
-import { SupportedChainId as ChainId, SupportedChainId } from '@cowprotocol/cow-sdk'
+import { SupportedChainId as ChainId, SupportedChainId } from 'test-cow-v2'
 import { TokenAmount } from '@cowprotocol/ui'
 import { useWalletInfo } from '@cowprotocol/wallet'
 

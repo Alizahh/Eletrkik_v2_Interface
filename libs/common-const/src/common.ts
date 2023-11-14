@@ -119,6 +119,9 @@ export const CODE_LINK = 'https://github.com/' + GITHUB_REPOSITORY
 export const RAW_CODE_LINK = 'https://raw.githubusercontent.com/' + GITHUB_REPOSITORY
 
 export const DOCS_LINK = 'https://docs.cow.fi'
+//Elektrikv2Changed
+export const ELEKTRIK_DOCS_LINK = 'https://docs.elektrik.network/protocol-overview/welcome-to-elektrik'
+export const ELEKTRIK_ANALYTICS_INFO = 'https://analytics.elektrik.network/#/'
 export const CONTRACTS_CODE_LINK = 'https://github.com/cowprotocol/contracts'
 export const DISCORD_LINK = 'https://discord.com/invite/cowprotocol'
 export const DUNE_DASHBOARD_LINK = 'https://dune.com/cowprotocol/cowswap'

@@ -2,17 +2,18 @@ import { SupportedChainId as ChainId, UID } from 'test-cow-v2'
 
 import { isLocal, isDev, isPr, isStaging, isBarn } from './environments'
 
+//Elektrikv2Changed
 function _getExplorerUrlByEnvironment() {
   let baseUrl: string | undefined
   if (isLocal || isDev || isPr) {
-    baseUrl = process.env.REACT_APP_EXPLORER_URL_DEV || 'https://dev.explorer.cow.fi'
+    baseUrl = process.env.REACT_APP_EXPLORER_URL_DEV || 'https://analytics.elektrik.network/#/'
   } else if (isStaging) {
-    baseUrl = process.env.REACT_APP_EXPLORER_URL_STAGING || 'https://staging.explorer.cow.fi'
+    baseUrl = process.env.REACT_APP_EXPLORER_URL_STAGING || 'https://analytics.elektrik.network/#/'
   } else if (isBarn) {
-    baseUrl = process.env.REACT_APP_EXPLORER_URL_BARN || 'https://barn.explorer.cow.fi'
+    baseUrl = process.env.REACT_APP_EXPLORER_URL_BARN || 'https://analytics.elektrik.network/#/'
   } else {
     // Production by default
-    baseUrl = process.env.REACT_APP_EXPLORER_URL_PROD || 'https://explorer.cow.fi'
+    baseUrl = process.env.REACT_APP_EXPLORER_URL_PROD || 'https://analytics.elektrik.network/#/'
   }
 
   return {

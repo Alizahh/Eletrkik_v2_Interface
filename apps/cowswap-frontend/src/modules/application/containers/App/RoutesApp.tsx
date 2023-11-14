@@ -100,7 +100,6 @@ export function RoutesApp() {
         <Route path="pools/:tokenId" element={<PositionPage />} />
 
         <Route path="add" element={<RedirectDuplicateTokenIds />}>
-          {/* this is workaround since react-router-dom v6 doesn't support optional parameters any more */}
           <Route path=":currencyIdA" />
           <Route path=":currencyIdA/:currencyIdB" />
           <Route path=":currencyIdA/:currencyIdB/:feeAmount" />
