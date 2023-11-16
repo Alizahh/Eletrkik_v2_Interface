@@ -131,52 +131,52 @@ export function TradeWidget(props: TradeWidgetProps) {
 
 //Elektrikv2Changed
 
-  const {
-    trade: { state: tradeState, trade },
-    allowedSlippage,
-    autoSlippage,
-    currencyBalances,
-    parsedAmount,
-    currencies,
-    inputError: swapInputError,
-  } = useDerivedSwapInfo(state, chainId);
+  // const {
+  //   trade: { state: tradeState, trade },
+  //   allowedSlippage,
+  //   autoSlippage,
+  //   currencyBalances,
+  //   parsedAmount,
+  //   currencies,
+  //   inputError: swapInputError,
+  // } = useDerivedSwapInfo(state, chainId);
 
-  const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
-
-
+  // const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE;
 
 
 
 
-  const [routeNotFound, routeIsLoading, routeIsSyncing] = useMemo(
-    () => [
-      !trade?.swaps,
-      TradeState.LOADING === tradeState,
-      TradeState.LOADING === tradeState && Boolean(trade),
-    ],
-    [trade, tradeState]
-  );
-  const userHasSpecifiedInputOutput = Boolean(
-    currencies[Field.INPUT] &&
-      currencies[Field.OUTPUT] &&
-      parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
-  );
+
+
+  // const [routeNotFound, routeIsLoading, routeIsSyncing] = useMemo(
+  //   () => [
+  //     !trade?.swaps,
+  //     TradeState.LOADING === tradeState,
+  //     TradeState.LOADING === tradeState && Boolean(trade),
+  //   ],
+  //   [trade, tradeState]
+  // );
+  // const userHasSpecifiedInputOutput = Boolean(
+  //   currencies[Field.INPUT] &&
+  //     currencies[Field.OUTPUT] &&
+  //     parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+  // );
 
 
   // warnings on the greater of fiat value price impact and execution price impact
-  const { priceImpactSeverity, largerPriceImpact } = useMemo(() => {
-    const marketPriceImpact = trade?.priceImpact
-      ? computeRealizedPriceImpact(trade)
-      : undefined;
-    const largerPriceImpact = largerPercentValue(
-      marketPriceImpact,
-      stablecoinPriceImpact
-    );
-    return {
-      priceImpactSeverity: warningSeverity(largerPriceImpact),
-      largerPriceImpact,
-    };
-  }, [stablecoinPriceImpact, trade]);
+  // const { priceImpactSeverity, largerPriceImpact } = useMemo(() => {
+  //   const marketPriceImpact = trade?.priceImpact
+  //     ? computeRealizedPriceImpact(trade)
+  //     : undefined;
+  //   const largerPriceImpact = largerPercentValue(
+  //     marketPriceImpact,
+  //     stablecoinPriceImpact
+  //   );
+  //   return {
+  //     priceImpactSeverity: warningSeverity(largerPriceImpact),
+  //     largerPriceImpact,
+  //   };
+  // }, [stablecoinPriceImpact, trade]);
 
 
 
@@ -184,11 +184,11 @@ export function TradeWidget(props: TradeWidgetProps) {
 
 
 
-  const showPriceImpactWarning = largerPriceImpact && priceImpactSeverity > 3;
+  // const showPriceImpactWarning = largerPriceImpact && priceImpactSeverity > 3;
 
-  const showDetailsDropdown = Boolean(
-    !showWrap && userHasSpecifiedInputOutput && (trade || routeIsLoading || routeIsSyncing)
-  )
+  // const showDetailsDropdown = Boolean(
+  //   !showWrap && userHasSpecifiedInputOutput && (trade || routeIsLoading || routeIsSyncing)
+  // )
 
   return (
     <styledEl.Container id={id}>
@@ -255,7 +255,7 @@ export function TradeWidget(props: TradeWidgetProps) {
               {!isWrapOrUnwrap && showRecipient && (
                 <styledEl.StyledRemoveRecipient recipient={recipient || ''} onChangeRecipient={onChangeRecipient} />
               )}
-
+{/* 
               {showDetailsDropdown && (
                 <SwapDetailsDropdown
                   trade={trade}
@@ -264,7 +264,7 @@ export function TradeWidget(props: TradeWidgetProps) {
                   allowedSlippage={allowedSlippage}
                 />
               )}
-              {showPriceImpactWarning && <PriceImpactWarning priceImpact={largerPriceImpact} />}
+              {showPriceImpactWarning && <PriceImpactWarning priceImpact={largerPriceImpact} />} */}
 
               {isWrapOrUnwrap ? <WrapFlowActionButton /> : bottomContent}
             </>
